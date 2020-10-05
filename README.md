@@ -1,4 +1,4 @@
-# {Platform Game}
+# {PLATFORMER GAME}
 
 ## Description
 
