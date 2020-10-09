@@ -2,7 +2,7 @@
 
 ## Description
 
-{project description}
+{This is our development project repository}
 
 ## Key Features
 
@@ -17,11 +17,10 @@
 
 ## Developers
 
- - {Dev01} - {Role(s)}
- - {Dev02} - {Role(s)}
- - {Dev03} - {Role(s)}
- - {Dev04} - {Role(s)}
- - {Dev05} - {Role(s)}
+ - {Oscar Cuatrecases} - {developer}
+ - {Martí Davicino} - {developer}
+ - {Eduard Minguell} - {developer}
+
 
 ## License
 
