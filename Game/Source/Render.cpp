@@ -9,7 +9,7 @@
 
 Render::Render() : Module()
 {
-	name.create("renderer");
+	name.Create("renderer");
 	background.r = 0;
 	background.g = 0;
 	background.b = 0;
@@ -88,11 +88,23 @@ bool Render::CleanUp()
 	return true;
 }
 
-// TODO 6: Create a method to load the state
-// for now it will be camera's x and y
+// L02: TODO 6: Implement a method to load the state, for now load camera's x and y
+// Load Game State
+bool Render::LoadState(pugi::xml_node& data)
+{
+	//...
 
-// TODO 8: Create a method to save the state of the renderer
-// using append_child and append_attribute
+	return true;
+}
+
+// L02: TODO 8: Create a method to save the state of the renderer
+// Save Game State
+bool Render::SaveState(pugi::xml_node& data) const
+{
+	//...
+
+	return true;
+}
 
 void Render::SetBackgroundColor(SDL_Color color)
 {
