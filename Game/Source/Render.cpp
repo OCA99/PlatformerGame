@@ -20,6 +20,8 @@ Render::Render() : Module()
 Render::~Render()
 {}
 
+#include <iostream>
+
 // Called before render is available
 bool Render::Awake(pugi::xml_node& config)
 {
