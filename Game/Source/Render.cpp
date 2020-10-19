@@ -9,7 +9,7 @@
 
 Render::Render() : Module()
 {
-	name.Create("renderer");
+	name.create("renderer");
 	background.r = 0;
 	background.g = 0;
 	background.b = 0;
@@ -19,8 +19,6 @@ Render::Render() : Module()
 // Destructor
 Render::~Render()
 {}
-
-#include <iostream>
 
 // Called before render is available
 bool Render::Awake(pugi::xml_node& config)
@@ -90,23 +88,20 @@ bool Render::CleanUp()
 	return true;
 }
 
-// L02: TODO 6: Implement a method to load the state, for now load camera's x and y
-// Load Game State
-bool Render::LoadState(pugi::xml_node& data)
-{
-	//...
+// L02: TODO 6: Implement a method to load the state
+// for now load camera's x and y
+bool Render::Load(pugi::xml_node& savedGame) {
+	camera.x = savedGame.attribute("x").as_int();
+	camera.y = savedGame.attribute("y").as_int();
+	return true;
+}
 
+bool Render::Save(pugi::xml_node& savedGame) {
 	return true;
 }
 
 // L02: TODO 8: Create a method to save the state of the renderer
-// Save Game State
-bool Render::SaveState(pugi::xml_node& data) const
-{
-	//...
-
-	return true;
-}
+// using append_child and append_attribute
 
 void Render::SetBackgroundColor(SDL_Color color)
 {
@@ -246,3 +241,4 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
 	return ret;
 }
+
