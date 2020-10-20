@@ -15,7 +15,7 @@
 Audio::Audio() : Module()
 {
 	music = NULL;
-	name.Create("audio");
+	name.create("audio");
 }
 
 // Destructor
@@ -87,7 +87,6 @@ bool Audio::CleanUp()
 // Play a music file
 bool Audio::PlayMusic(const char* path, float fade_time)
 {
-	return true;
 	bool ret = true;
 
 	if(!active)
