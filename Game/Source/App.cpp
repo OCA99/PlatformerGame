@@ -6,6 +6,8 @@
 #include "Audio.h"
 #include "Scene.h"
 
+#include "Map.h"
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -23,6 +25,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	tex = new Textures();
 	audio = new Audio();
 	scene = new Scene();
+	map = new Map();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -31,6 +34,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(scene);
+	AddModule(map);
 
 	// Render last to swap buffer
 	AddModule(render);
@@ -68,7 +72,7 @@ bool App::Awake()
 	if(ret == true)
 	{
 		// L01: DONE 4: Read the title from the config file
-		title.create(configApp.child("title").child_value());
+		title.Create(configApp.child("title").child_value());
 		win->SetTitle(title.GetString());
 
 		ListItem<Module*>* item;
@@ -80,6 +84,7 @@ bool App::Awake()
 			// If the section with the module name exists in config.xml, fill the pointer with the valid xml_node
 			// that can be used to read all variables for that module.
 			// Send nullptr if the node does not exist in config.xml
+
 			ret = item->data->Awake(config.child(item->data->name.GetString()));
 			item = item->next;
 		}
@@ -100,6 +105,9 @@ bool App::Start()
 		ret = item->data->Start();
 		item = item->next;
 	}
+
+
+	map->Load("level1.tmx");
 
 	return ret;
 }
@@ -144,7 +152,6 @@ bool App::LoadConfig()
 	{
 		config = configFile.child("config");
 		configApp = config.child("app");
-		
 	}
 
 	return ret;

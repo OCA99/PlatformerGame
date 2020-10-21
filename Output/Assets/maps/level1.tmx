@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="32" tilewidth="16" tileheight="16" infinite="0" nextlayerid="2" nextobjectid="1">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="64" height="32" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#404060" nextlayerid="2" nextobjectid="1">
  <tileset firstgid="1" name="platforms" tilewidth="16" tileheight="16" tilecount="242" columns="22">
   <image source="Terrain (16x16).png" width="352" height="176"/>
+  <terraintypes>
+   <terrain name="Grass" tile="-1"/>
+  </terraintypes>
  </tileset>
- <layer id="1" name="Tile Layer 1" width="64" height="32">
+ <layer id="1" name="Foreground" width="64" height="32">
   <data>
    <tile/>
    <tile/>
@@ -1806,6 +1809,11 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="7"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="9"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1860,10 +1868,19 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="7"/>
+   <tile gid="9"/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="29"/>
+   <tile gid="10"/>
+   <tile gid="52"/>
+   <tile gid="52"/>
+   <tile gid="53"/>
    <tile/>
+   <tile gid="7"/>
+   <tile gid="9"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1911,10 +1928,25 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="7"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="33"/>
+   <tile gid="32"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="8"/>
+   <tile gid="33"/>
+   <tile gid="31"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="29"/>
+   <tile gid="32"/>
+   <tile gid="8"/>
+   <tile gid="9"/>
    <tile/>
    <tile/>
    <tile/>
@@ -1960,54 +1992,25 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="51"/>
+   <tile gid="52"/>
+   <tile gid="52"/>
+   <tile gid="52"/>
+   <tile gid="52"/>
+   <tile gid="52"/>
+   <tile gid="52"/>
+   <tile gid="52"/>
+   <tile gid="52"/>
+   <tile gid="52"/>
+   <tile gid="53"/>
    <tile/>
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="51"/>
+   <tile gid="52"/>
+   <tile gid="52"/>
+   <tile gid="53"/>
    <tile/>
    <tile/>
    <tile/>
