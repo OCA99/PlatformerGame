@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="192" height="64" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#ffffff" nextlayerid="7" nextobjectid="8">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="192" height="64" tilewidth="16" tileheight="16" infinite="0" backgroundcolor="#434563" nextlayerid="7" nextobjectid="8">
  <editorsettings>
   <export target="../../../../../../level1..json" format="json"/>
  </editorsettings>
@@ -7364,7 +7364,7 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile gid="30"/>
+   <tile gid="29"/>
    <tile gid="30"/>
    <tile gid="30"/>
    <tile gid="31"/>
