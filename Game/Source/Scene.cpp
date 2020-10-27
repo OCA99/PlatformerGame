@@ -66,6 +66,15 @@ bool Scene::Update(float dt)
 		LOG("SAVE REQUESTED");
 	}
 
+	// 8 to volume down and 9 to volume up
+	if (app->input->GetKey(SDL_SCANCODE_8) == KEY_REPEAT) {
+		app->audio->VolumeDown();
+		LOG("Volume down");
+	}if (app->input->GetKey(SDL_SCANCODE_9) == KEY_REPEAT) {
+		app->audio->VolumeUp();
+		LOG("Volume up");
+	}
+
 	return true;
 }
 
