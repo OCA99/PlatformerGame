@@ -46,12 +46,26 @@ void Map::Draw()
 {
 	if (mapLoaded == false) return;
 
-	app->render->DrawTexture(data.tilesets[0]->texture, 0, 0, NULL, 0, 0, 0, 0);
+	for (int i = 0; i < data.maplayers.count(); i++) {
+		int layerSize = data.maplayers[i]->width * data.maplayers[i]->height;
+		for (int j = 0; j < layerSize; j++) {
+			uint tileGid = data.maplayers[i]->data[j];
+			int layerWidth = data.maplayers[i]->width;
 
-	// L04: TODO 5: Prepare the loop to draw all tilesets + DrawTexture()
-	
-	// L04: TODO 9: Complete the draw function
+			for (int k = 0; k < data.tilesets.count(); k++) {
+				TileSet* tileset = data.tilesets[k];
 
+				if (data.tilesets.count() > k + 1 && data.tilesets[k + 1]->firstgid <= tileGid) {
+					continue;
+				}
+
+				int tilesetPosition = tileGid - tileset->firstgid;
+				SDL_Rect section = { tilesetPosition % tileset->numTilesWidth * tileset->tile_width, tilesetPosition / tileset->numTilesWidth * tileset->tile_height, tileset->tile_width, tileset->tile_height };
+				app->render->DrawTexture(tileset->texture, j % layerWidth * data.tileWidth, j / layerWidth * data.tileHeight, &section);
+				break;
+			}
+		}
+	}
 }
 
 // L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
@@ -135,7 +149,19 @@ bool Map::Load(const char* filename)
 		data.tilesets.add(set);
 	}
 	// L04: TODO 4: Iterate all layers and load each of them
-    
+	pugi::xml_node layerNode;
+
+	for (layerNode = mapFile.child("map").child("layer"); layerNode && ret; layerNode = layerNode.next_sibling("layer"))
+	{
+		MapLayer* layerSet = new MapLayer();
+
+		if (ret == true) ret = LoadLayer(layerNode, layerSet);
+
+		data.maplayers.add(layerSet);
+	}
+
+
+
 
     if(ret == true)
     {
@@ -154,6 +180,8 @@ bool Map::Load(const char* filename)
 
 		// L04: TODO 4: LOG the info for each loaded layer
     }
+
+
 
     mapLoaded = ret;
 
@@ -253,8 +281,31 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	bool ret = true;
-	
-	// L04: TODO 3: Load a single layer
+
+	layer->name.Create(node.attribute("name").as_string("Not Found"));
+	layer->width = node.attribute("width").as_int(0);
+	layer->height = node.attribute("height").as_int(0);
+	layer->data = new uint[(data.width * data.height * sizeof(uint))];
+	memset(layer->data, 0, size_t(data.width * data.height * sizeof(uint)));
+
+	pugi::xml_node nodeID;
+
+	int counter = 0;
+	for (nodeID = node.child("data").child("tile"); nodeID && ret; nodeID = nodeID.next_sibling("tile"))
+	{
+		if (ret == true) ret = StoreID(nodeID, layer, counter);
+		counter++;
+	}
+
+	return ret;
+}
+
+
+bool Map::StoreID(pugi::xml_node& node, MapLayer* layer, int ID)
+{
+	bool ret = true;
+
+	layer->data[ID] = node.attribute("gid").as_uint(0);
 
 	return ret;
 }
