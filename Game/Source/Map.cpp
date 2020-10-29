@@ -9,8 +9,6 @@
 
 #include <math.h>
 
-#include <iostream>
-
 Map::Map() : Module(), mapLoaded(false)
 {
     name.Create("map");
@@ -20,20 +18,7 @@ Map::Map() : Module(), mapLoaded(false)
 Map::~Map()
 {}
 
-int Properties::GetProperty(const char* name, int defaultValue) const
-{
-	
-	
-	for (int i = 0; i < list.count(); i++)
-	{
-		if (list[i]->name == name)
-		{
-			return list[i]->value;
-		}
-	}
-
-	return defaultValue;
-}
+#include <iostream>
 
 // Called before render is available
 bool Map::Awake(pugi::xml_node& config)
@@ -62,8 +47,6 @@ void Map::Draw()
 	if (mapLoaded == false) return;
 
 	for (int i = 0; i < data.maplayers.count(); i++) {
-		printf("%s %d\n", data.maplayers[i]->name.GetString(), data.maplayers[i]->properties.GetProperty("draw", 1));
-		if (data.maplayers[i]->properties.GetProperty("draw", 1) == 0) continue;
 		int layerSize = data.maplayers[i]->width * data.maplayers[i]->height;
 		for (int j = 0; j < layerSize; j++) {
 			uint tileGid = data.maplayers[i]->data[j];
@@ -173,7 +156,6 @@ bool Map::Load(const char* filename)
 		MapLayer* layerSet = new MapLayer();
 
 		if (ret == true) ret = LoadLayer(layerNode, layerSet);
-
 
 		data.maplayers.add(layerSet);
 	}
@@ -315,30 +297,9 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		counter++;
 	}
 
-	LoadProperties(node.child("properties"), &layer->properties);
-
 	return ret;
 }
 
-bool Map::LoadProperties(pugi::xml_node& node, Properties* properties)
-{
-	bool ret = true;
-	
-	pugi::xml_node propertyNode;
-
-	for (propertyNode = node.child("property"); propertyNode && ret; propertyNode = propertyNode.next_sibling("property"))
-	{
-		Properties::Property prop;
-		prop.name.Create(propertyNode.attribute("name").as_string("Not Found"));
-		prop.type.Create(propertyNode.attribute("type").as_string("Not Found"));
-		prop.value = propertyNode.attribute("value").as_int(1);
-		printf("%s %s %d\n", prop.name.GetString(), prop.type.GetString(), prop.value);
-	}
-
-
-
-	return ret;
-}
 
 bool Map::StoreID(pugi::xml_node& node, MapLayer* layer, int ID)
 {
