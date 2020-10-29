@@ -43,12 +43,12 @@ enum MapTypes
 // L06: TODO 5: Create a generic structure to hold properties
 struct Properties
 {
-	//struct Property
-	//{
+	struct Property
+	{
 		SString name;
 		SString type;
 		int value;
-	//};
+	};
 
 
 	~Properties()
@@ -56,7 +56,7 @@ struct Properties
 
 	}
 
-	List<Properties*> propertyList;
+	List<Property*> propertyList;
 
 	// L06: TODO 7: Method to ask for the value of a custom property
 	int GetProperty(const char* name, int default_value = 1) const;

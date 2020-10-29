@@ -22,15 +22,13 @@ Map::~Map()
 
 int Properties::GetProperty(const char* name, int defaultValue) const
 {
-	
-printf("%d",propertyList.count());
-	/*for (int i = 0; i < propertyList.count(); i++)
+	for (int i = 0; i < propertyList.count(); i++)
 	{
 		if (propertyList[i]->name == name)
 		{
 			return propertyList[i]->value;
 		}
-	}*/
+	}
 
 	return defaultValue;
 }
@@ -62,8 +60,6 @@ void Map::Draw()
 	if (mapLoaded == false) return;
 
 	for (int i = 0; i < data.maplayers.count(); i++) {
-		printf("%d", data.maplayers.count());
-		printf("%s %d\n", data.maplayers[i]->name.GetString(), data.maplayers[i]->properties.GetProperty("draw", 1));
 		if (data.maplayers[i]->properties.GetProperty("draw", 1) == 0) continue;
 		int layerSize = data.maplayers[i]->width * data.maplayers[i]->height;
 		for (int j = 0; j < layerSize; j++) {
@@ -315,6 +311,8 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		counter++;
 	}
 
+	LoadProperties(node.child("properties"), &layer->properties);
+
 	return ret;
 }
 
@@ -326,11 +324,11 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties* properties)
 
 	for (propertyNode = node.child("property"); propertyNode && ret; propertyNode = propertyNode.next_sibling("property"))
 	{
-		Properties prop;
-		prop.name.Create(propertyNode.attribute("name").as_string("Not Found"));
-		prop.type.Create(propertyNode.attribute("type").as_string("Not Found"));
-		prop.value = propertyNode.attribute("value").as_int(1);
-		printf("%s %s %d\n", prop.name.GetString(), prop.type.GetString(), prop.value);
+		Properties::Property* prop = new Properties::Property();
+		prop->name.Create(propertyNode.attribute("name").as_string("Not Found"));
+		prop->type.Create(propertyNode.attribute("type").as_string("Not Found"));
+		prop->value = propertyNode.attribute("value").as_int(1);
+		properties->propertyList.add(prop);
 	}
 
 	return ret;
