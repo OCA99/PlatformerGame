@@ -1,7 +1,7 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
-#include "../Module.h"
+#include "Module.h"
 #include "Animation.h"
 
 struct Animation;
@@ -16,7 +16,7 @@ enum PLAYER_STATE {
 
 	IDLE,
 	RUNNING,
-	JUMPING,  //while jumping aply down force
+	JUMPING,
 	DOUBLE_JUMPING,
 	FALLING,
 	DYING

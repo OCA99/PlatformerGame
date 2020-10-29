@@ -1,9 +1,9 @@
 #include "Player.h"
 
-#include "../App.h"
-#include "../Input.h"
+#include "App.h"
+#include "Input.h"
 #include "Animation.h"
-#include "../Textures.h"
+#include "Textures.h"
 #include "SDL/include/SDL_scancode.h"
 
 #include "../Defs.h"

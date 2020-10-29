@@ -60,21 +60,21 @@ bool Scene::Update(float dt)
 	if(app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 		app->render->camera.x -= 5;
 
-	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN) {
 		app->RequestLoad();
 		LOG("LOAD REQUESTED");
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT){
+	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN){
 		app->RequestSave();
 		LOG("SAVE REQUESTED");
 	}
 
 	// 8 to volume down and 9 to volume up
-	if (app->input->GetKey(SDL_SCANCODE_8) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN) {
 		app->audio->VolumeDown();
 		LOG("Volume down");
-	}if (app->input->GetKey(SDL_SCANCODE_9) == KEY_REPEAT) {
+	}if (app->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN) {
 		app->audio->VolumeUp();
 		LOG("Volume up");
 	}
