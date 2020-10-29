@@ -3,6 +3,10 @@
  <editorsettings>
   <export target="../../../../../../level1..json" format="json"/>
  </editorsettings>
+ <properties>
+  <property name="playerX" type="int" value="0"/>
+  <property name="playerY" type="int" value="0"/>
+ </properties>
  <tileset firstgid="1" name="platforms" tilewidth="16" tileheight="16" tilecount="242" columns="22">
   <image source="Terrain (16x16).png" width="352" height="176"/>
   <terraintypes>
@@ -49192,6 +49196,7 @@
  <layer id="7" name="groundColliders" width="192" height="64">
   <properties>
    <property name="draw" type="int" value="0"/>
+   <property name="navigation" type="int" value="1"/>
   </properties>
   <data>
    <tile/>
@@ -61487,6 +61492,7 @@
  <layer id="8" name="deathColliders" width="192" height="64">
   <properties>
    <property name="draw" type="int" value="0"/>
+   <property name="navigation" type="int" value="1"/>
   </properties>
   <data>
    <tile/>
@@ -73782,6 +73788,7 @@
  <layer id="9" name="fallingPlatColliders" width="192" height="64">
   <properties>
    <property name="draw" type="int" value="0"/>
+   <property name="navigation" type="int" value="1"/>
   </properties>
   <data>
    <tile/>

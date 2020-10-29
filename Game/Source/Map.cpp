@@ -31,6 +31,17 @@ int Properties::GetProperty(const char* name, int defaultValue) const
 	return defaultValue;
 }
 
+void Properties::SetProperty(const char* name, int value)
+{
+	for (int i = 0; i < propertyList.count(); i++)
+	{
+		if (propertyList[i]->name == name)
+		{
+			propertyList[i]->value = value;
+		}
+	}
+}
+
 // Called before render is available
 bool Map::Awake(pugi::xml_node& config)
 {
@@ -54,6 +65,13 @@ void Map::Draw()
 	if (mapLoaded == false) return;
 
 	for (int i = 0; i < data.maplayers.count(); i++) {
+		if (data.maplayers[i]->properties.GetProperty("navigation", 0) == 1)
+		{
+			if (showColliders == true)
+			{
+				data.maplayers[i]->properties.SetProperty("draw", 1);
+			}
+		}
 		if (data.maplayers[i]->properties.GetProperty("draw", 1) == 0) continue;
 		int layerSize = data.maplayers[i]->width * data.maplayers[i]->height;
 		for (int j = 0; j < layerSize; j++) {
