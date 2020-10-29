@@ -35,16 +35,15 @@ void Player::UpdateState()
 	{
 	case IDLE:
 	{
-		if(app->input->GetKey(SDL_SCANCODE_A)==KEY_REPEAT)
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT
-			 )
-			ChangeState(playerState, RUNNING);
+			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+				ChangeState(playerState, RUNNING);
 
-		if (app->input->GetKey(SDL_SCANCODE_SPACE)==KEY_DOWN )
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			ChangeState(playerState, JUMPING);
-		
+
 		}
 
 		if (isDead == true) ChangeState(playerState, DYING);
@@ -54,18 +53,18 @@ void Player::UpdateState()
 
 	case RUNNING:
 	{
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT &&app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT )
-			
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+
 		{
 			ChangeState(playerState, IDLE);
-			
+
 		}
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 			ChangeState(playerState, JUMPING);
 		}
-		
+
 
 
 		break;
@@ -75,7 +74,7 @@ void Player::UpdateState()
 	{
 		//once animation is done change to falling
 		// or simply add the falling sprite on jumping animations
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT &&app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT && app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT
 			)
 		{
 			ChangeState(playerState, DOUBLE_JUMPING);
@@ -111,7 +110,7 @@ void Player::UpdateState()
 	}
 
 	}
-	
+
 }
 
 void Player::UpdateLogic()
@@ -120,12 +119,12 @@ void Player::UpdateLogic()
 	{
 	case(IDLE):
 	{
-		
+
 		break;
 	}
 	case(RUNNING):
 	{
-		
+
 
 
 		break;
@@ -153,14 +152,14 @@ void Player::UpdateLogic()
 		if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 		{
 			--position.y;
-		
+
 		}
 		if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		{
 			++position.y;
 
 		}
-		
+
 		//currentAnimation->Update();
 		break;
 	}
@@ -175,14 +174,14 @@ void Player::UpdateLogic()
 
 	}
 
-	
+
 }
 
 
 
 void Player::ChangeState(PLAYER_STATE previousState, PLAYER_STATE newState)
 {
-	
+
 	switch (newState)
 	{
 	case(IDLE):
@@ -193,7 +192,7 @@ void Player::ChangeState(PLAYER_STATE previousState, PLAYER_STATE newState)
 	case(RUNNING):
 	{
 
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN ||app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT
 			)
 			isGoingRight = false;
 		else
@@ -203,7 +202,7 @@ void Player::ChangeState(PLAYER_STATE previousState, PLAYER_STATE newState)
 	}
 	case(JUMPING):
 	{
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN ||app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			isGoingRight = false;
 		else
 			isGoingRight = true;
@@ -212,8 +211,8 @@ void Player::ChangeState(PLAYER_STATE previousState, PLAYER_STATE newState)
 	}
 	case(DOUBLE_JUMPING):
 	{
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN ||app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-			
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+
 			isGoingRight = false;
 		else
 			isGoingRight = true;
