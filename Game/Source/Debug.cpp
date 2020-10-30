@@ -6,9 +6,9 @@
 #include "Input.h"
 #include "Map.h"
 
-Debug::Debug()
+Debug::Debug() : Module()
 {
-
+	name.Create("debug");
 }
 
 
@@ -35,7 +35,7 @@ bool Debug::PreUpdate()
 bool Debug::Update()
 {
 	bool ret = true;
-
+	printf("ahhh\n");
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
 		printf("ahhh\n");
