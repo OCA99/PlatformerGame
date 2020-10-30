@@ -8,7 +8,7 @@
 class Debug : public Module
 {
 public:
-	Debug(bool startEnabled);
+	Debug();
 
 	// Destructor
 	~Debug();
@@ -40,6 +40,7 @@ public:
 
 	inline bool IsEnabled() const { return isEnabled; }
 
+	void ShowColliders();
 
 private:
 	bool isEnabled = true;

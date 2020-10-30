@@ -6,7 +6,7 @@
 #include "Input.h"
 #include "Map.h"
 
-Debug::Debug(bool startEnabled)
+Debug::Debug()
 {
 
 }
@@ -38,7 +38,8 @@ bool Debug::Update()
 
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
-		//app->map->showColliders == true;
+		printf("ahhh\n");
+		ShowColliders();
 	}
 
 	return ret;
@@ -70,5 +71,16 @@ void Debug::Disable()
 	{
 		isEnabled = false;
 		CleanUp();
+	}
+}
+
+void Debug::ShowColliders()
+{
+	if (app->map->showColliders == false)
+	{
+		app->map->showColliders = true;
+	}
+	else if(app->map->showColliders == true){
+		app->map->showColliders = false;
 	}
 }
