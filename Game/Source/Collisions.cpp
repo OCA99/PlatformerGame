@@ -36,7 +36,6 @@ bool Collisions::PreUpdate() {
 					if (m == nullptr) break;
 					m->OnCollision(dynamicColliders[i], staticColliders[j]);
 				}
-
 				for each (Module * m in staticColliders[j]->listeners) {
 					if (m == nullptr) break;
 					m->OnCollision(staticColliders[j], dynamicColliders[i]);
@@ -49,12 +48,20 @@ bool Collisions::PreUpdate() {
 }
 
 bool Collisions::Update(float dt) {
+
 	bool ret = true;
 	return ret;
 }
 
 bool Collisions::PostUpdate() {
 	bool ret = true;
+
+	for (uint i = 0; i < staticColliders.count(); ++i)
+	{
+		printf("x:%d y:%d\n", staticColliders[i]->rect.x, staticColliders[i]->rect.y);
+		DrawCollider(&staticColliders[i]->rect);
+	}
+
 	return ret;
 }
 
@@ -81,6 +88,15 @@ Collider* Collisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* li
 	{
 		dynamicColliders.add(ret);
 	}
+
+	return ret;
+}
+
+Collider* Collisions::DrawCollider(const SDL_Rect* section)
+{
+	Collider* ret = nullptr;
+
+	app->render->DrawRectangle(*section,255,255,0,true,false);
 
 	return ret;
 }

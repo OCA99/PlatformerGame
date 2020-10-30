@@ -37,10 +37,9 @@ bool Debug::Update(float dt)
 {
 	LOG("hello");
 	bool ret = true;
-	printf("ahhh\n");
+
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{
-		printf("ahhh\n");
 		ToggleColliders();
 	}
 
@@ -60,11 +59,5 @@ bool Debug::CleanUp()
 
 void Debug::ToggleColliders()
 {
-	if (app->map->showColliders == false)
-	{
-		app->map->showColliders = true;
-	}
-	else if(app->map->showColliders == true){
-		app->map->showColliders = false;
-	}
+
 }
