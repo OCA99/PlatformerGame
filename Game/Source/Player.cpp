@@ -20,7 +20,7 @@ bool Player::Start()
 }
 
 void Player::OnCollision(Collider* a, Collider* b) {
-	LOG("Detected collision");
+
 }
 
 //bool Player::Awake()

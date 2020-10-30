@@ -11,10 +11,10 @@ public:
 	Debug();
 
 	// Destructor
-	~Debug();
+	virtual ~Debug();
 
 	//Called at the beginning of the application execution
-	bool Init();
+	bool Awake();
 
 	//Called when the module is activated
 	//By now we will consider all modules to be permanently active
@@ -24,7 +24,7 @@ public:
 	bool PreUpdate();
 
 	//Called at the middle of each application loop
-	bool Update();
+	bool Update(float dt);
 
 	//Called at the end of each application loop
 	bool PostUpdate();
@@ -32,15 +32,7 @@ public:
 	//Called at the end of the application
 	bool CleanUp();
 
-	// Switches isEnabled and calls Start() method
-	void Enable();
-
-	// Switches isEnabled and calls CleanUp() method
-	void Disable();
-
-	inline bool IsEnabled() const { return isEnabled; }
-
-	void ShowColliders();
+	void ToggleColliders();
 
 private:
 	bool isEnabled = true;
