@@ -55,13 +55,10 @@ bool Collisions::Update(float dt) {
 
 bool Collisions::PostUpdate() {
 	bool ret = true;
-	printf("%d", showColliders);
-	if (showColliders == true)
+
+	for (uint i = 0; i < staticColliders.count(); ++i)
 	{
-		for (uint i = 0; i < staticColliders.count(); ++i)
-		{
-			DrawCollider(&staticColliders[i]->rect);
-		}
+		DrawCollider(&staticColliders[i]->rect);
 	}
 
 	return ret;
