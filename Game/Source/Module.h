@@ -7,6 +7,8 @@
 
 class App;
 
+struct Collider;
+
 class Module
 {
 public:
@@ -77,6 +79,10 @@ public:
 	virtual bool RequestSave()
 	{
 		return true;
+	}
+
+	virtual void OnCollision(Collider* a, Collider* b) {
+
 	}
 
     

@@ -1,10 +1,9 @@
 #ifndef __COLLISIONS_H__
 #define __COLLISIONS_H__
 
-#define MAX_COLLIDERS 150
-
 #include "Module.h"
 #include "Collider.h"
+#include "List.h"
 
 class Collisions : public Module
 {
@@ -36,7 +35,8 @@ public:
 
 private:
 	// All existing colliders in the scene
-	Collider* colliders[MAX_COLLIDERS] = { nullptr };
+	List<Collider*> staticColliders;
+	List<Collider*> dynamicColliders;
 };
 
 #endif // __COLLISIONS_H__

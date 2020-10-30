@@ -2,11 +2,11 @@
 
 #include "App.h"
 #include "Render.h"
+#include "Log.h"
 
 Collisions::Collisions() : Module()
 {
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
-		colliders[i] = nullptr;
+
 }
 
 Collisions::~Collisions() {
@@ -28,6 +28,23 @@ bool Collisions::Start() {
 // Called each loop iteration
 bool Collisions::PreUpdate() {
 	bool ret = true;
+
+	for (int i = 0; i < dynamicColliders.count(); i++) {
+		for (int j = 0; j < staticColliders.count(); j++) {
+			if (dynamicColliders[i]->Intersects(staticColliders[j]->rect)) {
+				for each (Module * m in dynamicColliders[i]->listeners) {
+					if (m == nullptr) break;
+					m->OnCollision(dynamicColliders[i], staticColliders[j]);
+				}
+
+				for each (Module * m in staticColliders[j]->listeners) {
+					if (m == nullptr) break;
+					m->OnCollision(staticColliders[j], dynamicColliders[i]);
+				}
+			}
+		}
+	}
+
 	return ret;
 }
 
@@ -44,14 +61,8 @@ bool Collisions::PostUpdate() {
 // Called before quitting
 bool Collisions::CleanUp()
 {
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
-	{
-		if (colliders[i] != nullptr)
-		{
-			delete colliders[i];
-			colliders[i] = nullptr;
-		}
-	}
+	staticColliders.clear();
+	dynamicColliders.clear();
 
 	return true;
 }
@@ -60,27 +71,21 @@ Collider* Collisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* li
 {
 	Collider* ret = nullptr;
 
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
+	ret = new Collider(rect, type, listener);
+
+	if (type == Collider::Type::STATIC)
 	{
-		if (colliders[i] == nullptr)
-		{
-			ret = colliders[i] = new Collider(rect, type, listener);
-			break;
-		}
+		staticColliders.add(ret);
+	}
+	else if (type == Collider::Type::DYNAMIC)
+	{
+		dynamicColliders.add(ret);
 	}
 
 	return ret;
 }
 
-
 void Collisions::RemoveCollider(Collider* collider)
 {
-	for (uint i = 0; i < MAX_COLLIDERS; ++i)
-	{
-		if (colliders[i] == collider)
-		{
-			delete colliders[i];
-			colliders[i] = nullptr;
-		}
-	}
+
 }

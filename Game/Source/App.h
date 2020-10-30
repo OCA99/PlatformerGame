@@ -15,6 +15,8 @@ class Audio;
 class Scene;
 class Map;
 class Debug;
+class Collisions;
+class Player;
 
 class App
 {
@@ -81,6 +83,8 @@ public:
 	Scene* scene;
 	Map* map;
 	Debug* debug;
+	Collisions* collisions;
+	Player* player;
 
 	bool Load();
 	bool Save();
