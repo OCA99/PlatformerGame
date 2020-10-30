@@ -2,9 +2,7 @@
 #define __DEBUG_H__
 
 #include "Module.h"
-#include "App.h"
-#include "Input.h"
-//#include "Map.h"
+
 #include "SDL/include/SDL_scancode.h"
 
 class Debug : public Module

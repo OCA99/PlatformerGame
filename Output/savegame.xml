@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
 <renderer>
-	<camera x="-1325" y="-1210" />
+	<camera x="0" y="0" />
 </renderer>
-<audio volume="40" />
+<audio volume="128" />
