@@ -39,6 +39,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(scene);
 	AddModule(parallax);
+	AddModule(player);
 	AddModule(map);
 	AddModule(collisions);
 	AddModule(debug);
