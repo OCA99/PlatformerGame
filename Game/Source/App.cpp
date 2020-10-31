@@ -6,6 +6,7 @@
 #include "Audio.h"
 #include "Scene.h"
 #include "Debug.h"
+#include "Parallax.h"
 #include "Map.h"
 #include "Collisions.h"
 #include "Player.h"
@@ -28,6 +29,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	debug = new Debug();
 	collisions = new Collisions();
 	player = new Player();
+	parallax = new Parallax();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -36,6 +38,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(tex);
 	AddModule(audio);
 	AddModule(scene);
+	AddModule(parallax);
 	AddModule(map);
 	AddModule(collisions);
 	AddModule(player);

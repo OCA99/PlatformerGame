@@ -1,17 +1,18 @@
-#ifndef __DEBUG_H__
-#define __DEBUG_H__
+#ifndef __PARALLAX_H__
+#define __PARALLAX_H__
 
 #include "Module.h"
+#include "Animation.h"
 
-#include "SDL/include/SDL_scancode.h"
+struct SDL_Texture;
 
-class Debug : public Module
+class Parallax : public Module
 {
 public:
-	Debug();
+	Parallax();
 
 	// Destructor
-	virtual ~Debug();
+	virtual ~Parallax();
 
 	//Called at the beginning of the application execution
 	bool Awake();
@@ -32,10 +33,22 @@ public:
 	//Called at the end of the application
 	bool CleanUp();
 
-	void ToggleColliders();
-	void LoadLvl1();
-	void LoadLvL2();
+	void ParallaxBackground0();
+	void ParallaxBackground1();
+	void ParallaxBackground2();
+
+	int xstart = 112;
+	int ystart = 144;
+	int parallaxw = 719;
+
+	float x0 = 0;
+	float x1 = 0;
+	float x2 = 0;
+
+	SDL_Texture* bgTexture = nullptr;
+	SDL_Texture* bgTexture2 = nullptr;
+	SDL_Texture* bgTexture3 = nullptr;
 
 };
 
-#endif //__DEBUG_H__
+#endif //__PARALLAX_H__

@@ -17,6 +17,7 @@ class Map;
 class Debug;
 class Collisions;
 class Player;
+class Parallax;
 
 class App
 {
@@ -85,6 +86,7 @@ public:
 	Debug* debug;
 	Collisions* collisions;
 	Player* player;
+	Parallax* parallax;
 
 	bool Load();
 	bool Save();
