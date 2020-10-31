@@ -17,7 +17,7 @@ bool Player::Start()
 	bool ret = true;
 
 	position.x = 160;
-	position.y = 966;  
+	position.y = 966;
 	
 
 	LOG("Loading Player textures");
@@ -134,19 +134,54 @@ bool Player::PostUpdate()
 
 void Player::OnCollision(Collider* a, Collider* b) {
 
-	int diffPosX = a->rect.x + a->rect.w - b->rect.x;
-	int diffNegX = a->rect.x - (b->rect.x + b->rect.w);
-	int diffPosY = b->rect.y + b->rect.h - a->rect.y;
-	int diffNegY = b->rect.y - (a->rect.y + a->rect.h);
+	/*int diffPosX = a->rect.x + a->rect.w - b->rect.x;
+	int diffNegX = b->rect.x + b->rect.w - a->rect.x;
+	int diffPosY = a->rect.y + a->rect.h - b->rect.y;
+	int diffNegY = b->rect.y + b->rect.h - a->rect.y;
 
-	if (std::min(std::abs(diffPosX), std::abs(diffNegX)) < std::min(std::abs(diffPosY), std::abs(diffNegY)))
+	position.x += (diffPosX < diffNegX) ? -diffPosX : diffNegX;
+	position.y += (diffPosY < diffNegY) ? -diffPosY : diffNegY;*/
+
+	int deltaX = a->rect.x - b->rect.x;
+	int deltaY = a->rect.y - b->rect.y;
+
+	if (std::abs(deltaX) > std::abs(deltaY))
+	{
+		if (deltaX > 0) {
+			position.x += b->rect.x + b->rect.w - a->rect.x;
+		}
+		else
+		{
+			position.x -= a->rect.x + a->rect.w - b->rect.x;
+		}
+	}
+	else
+	{
+		if (deltaY > 0)
+		{
+			position.y += b->rect.y + b->rect.h - a->rect.y;
+		}
+		else
+		{
+			position.y -= a->rect.y + a->rect.h - b->rect.y;
+		}
+	}
+
+	/*if (diffPosX > 0) position.x -= diffPosX;
+	if (diffNegX > 0) position.x += diffNegX;
+	if (diffPosY > 0) position.y -= diffPosY;
+	if (diffNegY > 0) position.y += diffNegY;*/
+
+	/*if (std::min(std::abs(diffPosX), std::abs(diffNegX)) < std::min(std::abs(diffPosY), std::abs(diffNegY)))
 	{
 		if (std::abs(diffPosX) < std::abs(diffNegX))
 		{
+			LOG("COL RIGHT");
 			position.x -= diffPosX;
 		}
 		else
 		{
+			LOG("COL LEFT");
 			position.x -= diffNegX;
 		}
 	}
@@ -154,13 +189,17 @@ void Player::OnCollision(Collider* a, Collider* b) {
 	{
 		if (std::abs(diffPosY) < std::abs(diffNegY))
 		{
+			LOG("COL DOWN");
 			position.y -= diffPosY;
 		}
 		else
 		{
+			LOG("COL UP");
 			position.y -= diffNegY;
 		}
-	}
+	}*/
+
+	collider->SetPos(position.x, position.y);
 }
 
 
@@ -403,8 +442,7 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 	case(RUNNING):
 	{
 
-		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT
-			)
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
 			isGoingRight = false;
 		else
 			isGoingRight = true;
