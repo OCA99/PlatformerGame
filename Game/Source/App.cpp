@@ -41,7 +41,6 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(parallax);
 	AddModule(map);
 	AddModule(collisions);
-	AddModule(player);
 	AddModule(debug);
 
 	// Render last to swap buffer
@@ -121,6 +120,9 @@ bool App::Start()
 bool App::Update()
 {
 	bool ret = true;
+
+	frameStart = SDL_GetTicks();
+
 	PrepareUpdate();
 
 	if(input->GetWindowEvent(WE_QUIT) == true)
@@ -136,6 +138,13 @@ bool App::Update()
 		ret = PostUpdate();
 
 	FinishUpdate();
+
+	frameTime = SDL_GetTicks() - frameStart;
+
+	if (frameTime < frameDelay) {
+		SDL_Delay(frameDelay - frameTime);
+	}
+
 	return ret;
 }
 

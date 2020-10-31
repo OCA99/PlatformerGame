@@ -15,8 +15,8 @@ bool Player::Start()
 {
 	bool ret = true;
 
-	position.x = -30;
-	position.y = 30;
+	position.x = 160;
+	position.y = 966;
 
 	LOG("Loading Player textures");
 
@@ -30,11 +30,11 @@ bool Player::Start()
 
 	currentAnim = &idleRightAnim;
 
-	app->collisions->AddCollider(SDL_Rect({ 15, 303, 16, 16 }), Collider::Type::DYNAMIC, this);
+	collider = app->collisions->AddCollider(SDL_Rect({ position.x, position.y, 22, 26 }), Collider::Type::DYNAMIC, this);
 
 	idleRightAnim.loop = idleLeftAnim.loop = runRightAnim.loop = runLeftAnim.loop = true;
 	idleRightAnim.speed = idleLeftAnim.speed = 0.8f;
-	runRightAnim.speed = runLeftAnim.speed = 2.0f;
+	runRightAnim.speed = runLeftAnim.speed = 1.0f;
 
 	idleRightAnim.PushBack({ 0,0,22,26 });
 	idleRightAnim.PushBack({ 32,0,22,26 });
@@ -60,7 +60,7 @@ bool Player::Start()
 	idleLeftAnim.PushBack({ 288,26,28,26 });
 	idleLeftAnim.PushBack({ 320,26,28,26 });
 
-	runRightAnim.PushBack({0,62,24,28});
+	runRightAnim.PushBack({ 0,62,24,28 });
 	runRightAnim.PushBack({ 32,62,24,28 });
 	runRightAnim.PushBack({ 64,62,24,28 });
 	runRightAnim.PushBack({ 96,62,24,28 });
@@ -111,32 +111,33 @@ bool Player::Start()
 
 bool Player::Update(float dt)
 {
-	
-	
-
-	currentAnim->Update();
+	app->player->UpdateState();
+	app->player->UpdateLogic();
 
 	return true;
 }
 
 bool Player::PostUpdate()
 {
-
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
-	LOG("%d, %d, %d, %d", rect.x, rect.y, rect.w, rect.h);
-
 	app->render->DrawTexture(texture, position.x, position.y, &rect);
-
-	app->player->UpdateState();
-	app->player->UpdateLogic();
-	
 
 	return true;
 }
 
 void Player::OnCollision(Collider* a, Collider* b) {
+	Collider* c;
 
+	if (&a != &collider) {
+		c = a;
+		a = b;
+		b = c;
+	}
+
+	if (a->rect.x + a->rect.w > b->rect.x) {
+		position.x -= a->rect.x + a->rect.w - b->rect.x;
+	}
 }
 
 
@@ -147,99 +148,99 @@ void Player::UpdateState()
 	else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 		isGoingRight = true;
 
-		switch (playerState)
-		{
-		case IDLE:
-		{
-			
-	
-				if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT||
-					app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-					ChangeState(playerState, RUNNING);
-	
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-			{
-				ChangeState(playerState, JUMPING);
-	
-			}
-	
-			if (isDead == true) ChangeState(playerState, DYING);
-	
-			break;
-		}
-	
-		case RUNNING:
-		{
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-	
-			{
-				
-	
-			}
-			else
-				ChangeState(playerState, IDLE);
-	
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-			{
-				ChangeState(playerState, JUMPING);
-			}
-	
-	
-	
-			break;
-		}
-	
-		case JUMPING:
-		{
-			//once animation is done change to falling
-			// or simply add the falling sprite on jumping animations
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-			{
-				ChangeState(playerState, DOUBLE_JUMPING);
-	
-			}
-
-	
-	
-			break;
-		}
-	
-		case DOUBLE_JUMPING:
-		{
-	
-	
-	
-	
-			break;
-		}
-	
-		case FALLING:
-		{
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-			{
-				if (jumpsLeft == 2)
-					ChangeState(FALLING, JUMPING);
-				else if (jumpsLeft == 1)
-					ChangeState(FALLING, DOUBLE_JUMPING);
-			}
-	
-	
-	
-			break;
-		}
-		case DYING:
-		{
-	
-	
-			break;
-		}
-	
-		}
-	
-	}
-	
-void Player::UpdateLogic()
+	switch (playerState)
 	{
+	case IDLE:
+	{
+
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT ||
+			app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+			ChangeState(playerState, RUNNING);
+
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			ChangeState(playerState, JUMPING);
+
+		}
+
+		if (isDead == true) ChangeState(playerState, DYING);
+
+		break;
+	}
+
+	case RUNNING:
+	{
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+
+		{
+
+
+		}
+		else
+			ChangeState(playerState, IDLE);
+
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			ChangeState(playerState, JUMPING);
+		}
+
+
+
+		break;
+	}
+
+	case JUMPING:
+	{
+		//once animation is done change to falling
+		// or simply add the falling sprite on jumping animations
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			ChangeState(playerState, DOUBLE_JUMPING);
+
+		}
+
+
+
+		break;
+	}
+
+	case DOUBLE_JUMPING:
+	{
+
+
+
+
+		break;
+	}
+
+	case FALLING:
+	{
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+		{
+			if (jumpsLeft == 2)
+				ChangeState(FALLING, JUMPING);
+			else if (jumpsLeft == 1)
+				ChangeState(FALLING, DOUBLE_JUMPING);
+		}
+
+
+
+		break;
+	}
+	case DYING:
+	{
+
+
+		break;
+	}
+
+	}
+
+}
+
+void Player::UpdateLogic()
+{
 	//change to collider
 	if (position.y < 130)
 	{
@@ -249,158 +250,158 @@ void Player::UpdateLogic()
 
 	position.y -= jumpForce;
 
-		switch (playerState)
-		{
-		case(IDLE):
-		{
-			if (isGoingRight == true)
-				currentAnim = &idleRightAnim;
-			else
-				currentAnim = &idleLeftAnim;
-	
-			break;
-		}
-		case(RUNNING):
-		{
-			if (isGoingRight == true)
-			{
-				currentAnim = &runRightAnim;
-				position.x += speed;
-			}
-				
-			else
-			{
-				currentAnim = &runLeftAnim;
-				position.x -= speed;
-			}
-				
-	
-	
-			break;
-		}
-		case(JUMPING):
-		{
-
-			jumpForce = jumpForceValue; 
-			jumpsLeft--;
-
-			if (isGoingRight == true)
-				currentAnim = &jumpRightAnim;
-			else
-				currentAnim = &jumpLeftAnim;
-	
-			ChangeState(JUMPING, FALLING);
-	
-			break;
-		}
-
-		case(FALLING):
-		{
-			jumpForce = 0;
-
-			if (isGoingRight == true)
-				currentAnim = &fallRightAnim;
-			else
-				currentAnim = &fallLeftAnim;
-
-			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-			{
-				position.x += speed;
-
-			}
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-			{
-				position.x -= speed;
-
-			}
-
-			
-
-			ChangeState(FALLING, IDLE);
-		}
-	
-		case(DOUBLE_JUMPING):
-		{
-			jumpForce = jumpForceValue;
-
-			if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-			{
-				position.x += speed;
-
-			}
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-			{
-				position.x -= speed;
-
-			}
-	
-		
-			break;
-		}
-		case(DYING):
-		{
-			if (isGoingRight == true)
-				currentAnim = &disappearRightAnim;
-			else
-				currentAnim = &disappearLeftAnim;
-	
-			break;
-	
-		}
-	
-		}
-	
-	
-	}
-	
-void Player::ChangeState(PlayerState previousState, PlayerState newState)
+	switch (playerState)
 	{
-	
-		switch (newState)
+	case(IDLE):
+	{
+		if (isGoingRight == true)
+			currentAnim = &idleRightAnim;
+		else
+			currentAnim = &idleLeftAnim;
+
+		break;
+	}
+	case(RUNNING):
+	{
+		if (isGoingRight == true)
 		{
-		case(IDLE):
+			currentAnim = &runRightAnim;
+			position.x += speed;
+		}
+
+		else
 		{
-			//currentAnimation = &(goingRight == false ? idleLeftAnim : idleRightAnim);
-			break;
+			currentAnim = &runLeftAnim;
+			position.x -= speed;
 		}
-		case(RUNNING):
+
+
+
+		break;
+	}
+	case(JUMPING):
+	{
+
+		jumpForce = jumpForceValue;
+		jumpsLeft--;
+
+		if (isGoingRight == true)
+			currentAnim = &jumpRightAnim;
+		else
+			currentAnim = &jumpLeftAnim;
+
+		ChangeState(JUMPING, FALLING);
+
+		break;
+	}
+
+	case(FALLING):
+	{
+		jumpForce = 0;
+
+		if (isGoingRight == true)
+			currentAnim = &fallRightAnim;
+		else
+			currentAnim = &fallLeftAnim;
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-	
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT
-				)
-				isGoingRight = false;
-			else
-				isGoingRight = true;
-			//currentAnimation = &(goingRight == false ? leftAnim : rightAnim);
-			break;
+			position.x += speed;
+
 		}
-		case(JUMPING):
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-				isGoingRight = false;
-			else
-				isGoingRight = true;
-			//currentAnimation = &climbAnim;
-			break;
+			position.x -= speed;
+
 		}
-		case(DOUBLE_JUMPING):
+
+
+
+		ChangeState(FALLING, IDLE);
+	}
+
+	case(DOUBLE_JUMPING):
+	{
+		jumpForce = jumpForceValue;
+
+		if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		{
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-	
-				isGoingRight = false;
-			else
-				isGoingRight = true;
-			
-			break;
+			position.x += speed;
+
 		}
-		case(DYING):
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 		{
-			
-			break;
+			position.x -= speed;
+
 		}
-	
-		}
-	
-		playerState = newState;
+
+
+		break;
+	}
+	case(DYING):
+	{
+		if (isGoingRight == true)
+			currentAnim = &disappearRightAnim;
+		else
+			currentAnim = &disappearLeftAnim;
+
+		break;
+
+	}
+
+	}
+
+	collider->SetPos(position.x, position.y);
+
+	currentAnim->Update();
+}
+
+void Player::ChangeState(PlayerState previousState, PlayerState newState)
+{
+
+	switch (newState)
+	{
+	case(IDLE):
+	{
+		//currentAnimation = &(goingRight == false ? idleLeftAnim : idleRightAnim);
+		break;
+	}
+	case(RUNNING):
+	{
+
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT
+			)
+			isGoingRight = false;
+		else
+			isGoingRight = true;
+		//currentAnimation = &(goingRight == false ? leftAnim : rightAnim);
+		break;
+	}
+	case(JUMPING):
+	{
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+			isGoingRight = false;
+		else
+			isGoingRight = true;
+		//currentAnimation = &climbAnim;
+		break;
+	}
+	case(DOUBLE_JUMPING):
+	{
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN || app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
+
+			isGoingRight = false;
+		else
+			isGoingRight = true;
+
+		break;
+	}
+	case(DYING):
+	{
+		break;
+	}
+	}
+
+	playerState = newState;
 }
 
