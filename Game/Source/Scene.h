@@ -2,8 +2,17 @@
 #define __SCENE_H__
 
 #include "Module.h"
+#include "Animation.h"
 
 struct SDL_Texture;
+struct Animation;
+
+enum GameplayState
+{
+	TITLE_SCREEN,
+	PLAYING,
+	GAME_OVER_SCREEN
+};
 
 class Scene : public Module
 {
@@ -32,7 +41,19 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+public:
+	bool gameStarted = false;
+	bool gameOver = false;
 private:
+	SDL_Texture* screenTexture = nullptr;
+
+	Animation* screenDisplayAnim;
+	Animation titleScreenAnim;
+	Animation gameOverAnim;
+	Animation turnOffAnim;
+
+	GameplayState gameplayState;
+
 };
 
 #endif // __SCENE_H__

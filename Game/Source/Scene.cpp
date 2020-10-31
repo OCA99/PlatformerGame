@@ -32,6 +32,27 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
+	//screenTexture = app->tex->Load("title and end screen.png"); 
+
+	//screenTexture = app->tex->Load("Assets/title screen/title and end screen.png");
+	screenTexture = app->tex->Load("Assets/title screen/reduced title screen.png");
+	if (screenTexture == nullptr)LOG("could'nt load title screen");
+
+	titleScreenAnim.PushBack({ 0,0,640,480});
+	titleScreenAnim.PushBack({ 0,480,640,480 });
+
+	/*titleScreenAnim.PushBack({ 0,0,206,78 });
+	titleScreenAnim.PushBack({ 0,78,206,78 });*/
+
+	gameOverAnim.PushBack({ 0,960,640,480 });
+	gameOverAnim.PushBack({ 0,1040,640,480 });
+
+	turnOffAnim.PushBack({ 0,0,0,0, });
+
+
+	titleScreenAnim.loop = gameOverAnim.loop = true;
+	titleScreenAnim.speed = gameOverAnim.speed = 0.5f;
+
 
 	app->map->Load("level1.tmx");
 
@@ -47,7 +68,24 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	switch (gameplayState)
+	{
+	case(TITLE_SCREEN):
+		screenDisplayAnim = &titleScreenAnim;
+		break;
+	case(PLAYING):
+		screenDisplayAnim = &turnOffAnim;
+		break;
+	case(GAME_OVER_SCREEN):
+		screenDisplayAnim = &gameOverAnim;
+		break;
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && gameplayState == TITLE_SCREEN)
+		gameplayState = PLAYING;
+
+
+	if(app->input->GetKey(SDL_SCANCODE_UP) == KEY_DOWN)
 		app->render->camera.y += 10;
 
 	if(app->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
@@ -88,6 +126,12 @@ bool Scene::PostUpdate()
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		ret = false;
+
+	SDL_Rect rect = screenDisplayAnim->GetCurrentFrame();
+	
+	app->render->DrawTexture(screenTexture, 0, 800, &rect);
+	
+	
 
 	return ret;
 }
