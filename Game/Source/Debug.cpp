@@ -35,7 +35,6 @@ bool Debug::PreUpdate()
 
 bool Debug::Update(float dt)
 {
-	LOG("hello");
 	bool ret = true;
 
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)

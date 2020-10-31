@@ -15,8 +15,8 @@ bool Player::Start()
 {
 	bool ret = true;
 
-	position.x = 30;
-	position.y = 840;
+	position.x = -30;
+	position.y = 30;
 
 	LOG("Loading Player textures");
 
@@ -32,7 +32,7 @@ bool Player::Start()
 
 	app->collisions->AddCollider(SDL_Rect({ 15, 303, 16, 16 }), Collider::Type::DYNAMIC, this);
 
-	idleRightAnim.loop = idleLeftAnim.loop =runRightAnim.loop=runLeftAnim.loop= true;
+	idleRightAnim.loop = idleLeftAnim.loop = runRightAnim.loop = runLeftAnim.loop = true;
 	idleRightAnim.speed = idleLeftAnim.speed = 0.8f;
 	runRightAnim.speed = runLeftAnim.speed = 2.0f;
 
@@ -96,19 +96,15 @@ bool Player::Start()
 
 	appearAnim.loop = disappearLeftAnim.loop = disappearRightAnim.loop = false;
 
-	for (int i = 0; i < 390; i + 55)
+	for (int i = 0; i < 390; i += 55)
 	{
 		appearAnim.PushBack({ i,227,55,55 });
-
 	}
 
-	for (int i = 0; i < 390; i + 55)
+	for (int i = 0; i < 390; i += 55)
 	{
 		disappearLeftAnim.PushBack({ i,282,55,55 });
-
 	}
-	
-	
 
 	return ret;
 }
@@ -127,6 +123,8 @@ bool Player::PostUpdate()
 {
 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
+
+	LOG("%d, %d, %d, %d", rect.x, rect.y, rect.w, rect.h);
 
 	app->render->DrawTexture(texture, position.x, position.y, &rect);
 
