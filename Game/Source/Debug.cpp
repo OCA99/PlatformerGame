@@ -1,7 +1,7 @@
 #define _CRT_SECURE_NO_WARNINGS
 
 #include "Debug.h"
-
+#include "Map.h"
 #include "App.h"
 #include "Input.h"
 #include "Collisions.h"
@@ -43,6 +43,16 @@ bool Debug::Update(float dt)
 		ToggleColliders();
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
+		LoadLvl1();
+	}
+
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
+		LoadLvL2();
+	}
+
 	return ret;
 }
 
@@ -66,4 +76,16 @@ void Debug::ToggleColliders()
 	else if (app->collisions->showColliders == true) {
 		app->collisions->showColliders = false;
 	}
+}
+
+void Debug::LoadLvl1()
+{
+	app->map->CleanUp();
+	app->map->Load("level1.tmx");
+}
+
+void Debug::LoadLvL2()
+{
+	app->map->CleanUp();
+	app->map->Load("level2.tmx");
 }

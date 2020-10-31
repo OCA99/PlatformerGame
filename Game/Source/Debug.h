@@ -33,6 +33,8 @@ public:
 	bool CleanUp();
 
 	void ToggleColliders();
+	void LoadLvl1();
+	void LoadLvL2();
 
 private:
 	bool isEnabled = true;
