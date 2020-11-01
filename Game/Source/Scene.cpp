@@ -7,6 +7,7 @@
 #include "Scene.h"
 #include "Map.h"
 #include "Player.h"
+#include "Audio.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -33,7 +34,8 @@ bool Scene::Awake()
 // Called before the first frame
 bool Scene::Start()
 {
-	//screenTexture = app->tex->Load("title and end screen.png"); 
+
+	app->audio->PlayMusic("Assets/audio/music/song.ogg");
 
 	//screenTexture = app->tex->Load("Assets/title screen/title and end screen.png");
 	screenTexture = app->tex->Load("Assets/title screen/reduced title screen.png");
@@ -110,10 +112,10 @@ bool Scene::Update(float dt)
 	}
 
 	// 8 to volume down and 9 to volume up
-	if (app->input->GetKey(SDL_SCANCODE_8) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_8) == KEY_REPEAT) {
 		app->audio->VolumeDown();
 		LOG("Volume down");
-	}if (app->input->GetKey(SDL_SCANCODE_9) == KEY_DOWN) {
+	}if (app->input->GetKey(SDL_SCANCODE_9) == KEY_REPEAT) {
 		app->audio->VolumeUp();
 		LOG("Volume up");
 	}
@@ -123,6 +125,8 @@ bool Scene::Update(float dt)
 
 void Scene::LoadLevel(SString name)
 {
+	
+	app->player->isDead = false;
 	currentLevel = name;
 	app->map->Load(name.GetString());
 	app->player->Reload();

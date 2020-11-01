@@ -30,6 +30,7 @@ private:
 
 	bool isGoingRight = false;
 	unsigned int jumpsLeft = 2;
+public:
 	bool isDead;
 public:
 	Player();
@@ -84,6 +85,12 @@ private:
 	bool canMoveDown = true;
 
 	const char* texturePath;
+private:
+	uint jumpFx = 0;
+	uint doubleJumpFx = 0;
+	uint gameOverFx = 0;
+public:
+	uint gameStartFx = 0;
 
 };
 
