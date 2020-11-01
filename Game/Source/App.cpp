@@ -31,7 +31,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	player = new Player();
 	parallax = new Parallax();
 
-	// Ordered for awake / Start / Update
+	// Ordered for awake/Start/Update
 	// Reverse order of CleanUp
 	AddModule(input);
 	AddModule(win);
@@ -180,7 +180,7 @@ void App::PrepareUpdate()
 // ---------------------------------------------
 void App::FinishUpdate()
 {
-	// L02: TODO 1: This is a good place to call Load / Save methods
+	// L02: TODO 1: This is a good place to call Load/Save methods
 	if (requestLoad == true) {
 		Load();
 	}
@@ -188,7 +188,7 @@ void App::FinishUpdate()
 	if (requestSave == true) {
 		Save();
 	}
-	
+
 
 }
 
@@ -308,7 +308,7 @@ bool App::Load() {
 	bool ret = true;
 
 	pugi::xml_document saveGame;
-	
+
 	pugi::xml_parse_result result = saveGame.load_file(saveFileName);
 
 	if (result == NULL)

@@ -55,7 +55,7 @@ bool Player::Start()
 	doubleJumpFx = app->audio->LoadFx(doubleJumpFxPath);
 	gameOverFx = app->audio->LoadFx(gameOverFxPath);
 	gameStartFx = app->audio->LoadFx(gameStartFxPath);
-	
+
 	currentAnim = &idleRightAnim;
 
 	idleRightAnim.loop = idleLeftAnim.loop = runRightAnim.loop = runLeftAnim.loop = true;
@@ -145,7 +145,7 @@ bool Player::Start()
 
 bool Player::Update(float dt)
 {
-	
+
 	UpdateState(dt);
 	UpdateLogic(dt);
 	if (godMode)GodMovement();
@@ -199,7 +199,7 @@ void Player::OnCollision(Collider* a, Collider* b) {
 
 	if (b->type == Collider::Type::DEATH)
 	{
-		
+
 		ChangeState(playerState, DYING);
 	}
 
@@ -323,10 +323,10 @@ void Player::UpdateState(float dt)
 
 	case JUMPING:
 	{
-		
+
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
-			
+
 			if (availableJumps > 0) {
 				availableJumps--;
 
@@ -359,7 +359,7 @@ void Player::UpdateState(float dt)
 
 void Player::UpdateLogic(float dt)
 {
-	if(!godMode) verticalVelocity -= gravity * dt;
+	if(!godMode) verticalVelocity -= gravity*dt;
 
 	if (verticalVelocity > maxVerticalVelocity) {
 		verticalVelocity = maxVerticalVelocity;
@@ -386,7 +386,7 @@ void Player::UpdateLogic(float dt)
 
 	case(IDLE):
 	{
-		
+
 
 		if (isGoingRight == true)
 			currentAnim = &idleRightAnim;
@@ -456,8 +456,8 @@ void Player::UpdateLogic(float dt)
 				position.x += speed;
 			}
 		}
-			
-		
+
+
 		break;
 	}
 	case(DYING):
@@ -472,11 +472,11 @@ void Player::UpdateLogic(float dt)
 			app->audio->PlayFx(gameOverFx, 0);
 			isDead = true;
 		}
-		
+
 
 		if (currentAnim->HasFinished())
 		{
-			
+
 			app->scene->FadeToNewState(Scene::GAME_OVER_SCREEN);
 		}
 

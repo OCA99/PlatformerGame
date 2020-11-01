@@ -34,7 +34,7 @@ bool Scene::Awake(pugi::xml_node& config)
 	pugi::xml_node texture = config.child("texture");
 
 	screenTexturePath = texture.attribute("screen").as_string();
-	
+
 	bool ret = true;
 
 	return ret;
@@ -220,18 +220,18 @@ bool Scene::PostUpdate()
 		ret = false;
 
 	SDL_Rect rect = screenDisplayAnim->GetCurrentFrame();
-	
+
 	app->render->DrawTexture(screenTexture, 0, 0, &rect);
 
 	float adjustedFade = currentFade;
 	if (adjustedFade < 0.0f) adjustedFade = 0.0f;
 	if (adjustedFade > 1.0f) adjustedFade = 1.0f;
 
-	int alpha = adjustedFade * 255.0f;
+	int alpha = adjustedFade*255.0f;
 
 	app->render->DrawRectangle(fullScreenRect, 0, 0, 0, alpha, true, false);
-	
-	
+
+
 
 	return ret;
 }

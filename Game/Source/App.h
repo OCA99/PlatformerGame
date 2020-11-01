@@ -50,7 +50,7 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
-    // L02: TODO 1: Create methods to request Load / Save
+	// L02: TODO 1: Create methods to request Load/Save
 
 private:
 
@@ -58,7 +58,7 @@ private:
 	bool LoadConfig();
 
 	// Call modules before each loop iteration
-	void PrepareUpdate(); 
+	void PrepareUpdate();
 
 
 	// Call modules before each loop iteration
@@ -97,7 +97,7 @@ public:
 
 	void RequestLoad() {
 		requestLoad = true;
-		
+
 	}
 
 private:
@@ -107,7 +107,7 @@ private:
 	SString title;
 	SString organization;
 
-	List<Module *> modules;
+	List<Module*> modules;
 
 	pugi::xml_document configFile;
 	pugi::xml_node config;
@@ -121,8 +121,8 @@ private:
 	bool requestSave = false;
 
 	const int targetFPS = 60;
-	const int frameDelay = 1000 / targetFPS;
-	float dt = frameDelay / 1000.0f;
+	const int frameDelay = 1000/targetFPS;
+	float dt = frameDelay/1000.0f;
 
 	long long frameStart;
 	int frameTime;

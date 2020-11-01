@@ -7,7 +7,7 @@
 
 struct Animation;
 struct Collider;
-struct SDL_Texture;	
+struct SDL_Texture;
 
 enum PlayerState {
 
@@ -24,7 +24,7 @@ enum PlayerState {
 class Player : public Module
 {
 private:
-	
+
 	SDL_Texture* texture = nullptr;
 	Animation* currentAnim = nullptr;
 
@@ -74,7 +74,7 @@ public:
 	float verticalVelocity = 0.0f;
 
 private:
-	unsigned int speed;	
+	unsigned int speed;
 	float maxVerticalVelocity = 30.0f;
 	float jumpForce;
 
