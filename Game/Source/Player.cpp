@@ -337,13 +337,21 @@ void Player::UpdateLogic(float dt)
 	case(PREPARE_TO_SPAWN):
 	{
 		currentAnim = &prepareToSpawnAnim;
-			break;
+		break;
 	}
 	case(SPAWNING):
 	{
 		currentAnim = &appearAnim;
 		break;
 	}
+	case(IDLE):
+	{
+
+
+		if (isGoingRight == true)
+			currentAnim = &idleRightAnim;
+		else
+			currentAnim = &idleLeftAnim;
 	case(RUNNING):
 	{
 		if (isGoingRight == true)
@@ -374,7 +382,7 @@ void Player::UpdateLogic(float dt)
 			currentAnim = &runRightAnim;
 			position.x += speed;
 		}
-			
+
 		break;
 	}
 	case(DYING):
@@ -392,6 +400,7 @@ void Player::UpdateLogic(float dt)
 	collider->SetPos(position.x, position.y);
 
 	currentAnim->Update();
+	}
 }
 
 void Player::ChangeState(PlayerState previousState, PlayerState newState)
