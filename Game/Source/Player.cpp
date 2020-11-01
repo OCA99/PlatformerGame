@@ -51,11 +51,6 @@ bool Player::Start()
 
 	collider = app->collisions->AddCollider(SDL_Rect({ position.x, position.y, 22, 26 }), Collider::Type::DYNAMIC, this);
 
-	//jumpFx = app->audio->LoadFx("Assets/audio/fx/jump.wav");
-	//doubleJumpFx = app->audio->LoadFx("Assets/audio/fx/double.wav");
-	//gameOverFx = app->audio->LoadFx("Assets/audio/fx/game over.wav");
-	//gameStartFx = app->audio->LoadFx("Assets/audio/fx/start.wav");
-
 	jumpFx = app->audio->LoadFx(jumpFxPath);
 	doubleJumpFx = app->audio->LoadFx(doubleJumpFxPath);
 	gameOverFx = app->audio->LoadFx(gameOverFxPath);

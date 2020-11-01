@@ -12,7 +12,7 @@
 
 Parallax::Parallax() : Module()
 {
-
+	name.Create("parallax");
 }
 
 Parallax::~Parallax()
@@ -20,17 +20,24 @@ Parallax::~Parallax()
 
 }
 
-bool Parallax::Awake()
+bool Parallax::Awake(pugi::xml_node& config)
 {
+	pugi::xml_node texture = config.child("texture");
+
+	bgTexturePath = texture.attribute("tex1").as_string();
+	bgTexturePath2 = texture.attribute("tex2").as_string();
+	bgTexturePath3 = texture.attribute("tex3").as_string();
+
+
 	return true;
 }
 
 bool Parallax::Start()
 {
 	
-	bgTexture = app->tex->Load("Assets/parallax background/background_0.png");
-	bgTexture2 = app->tex->Load("Assets/parallax background/background_1.png");
-	bgTexture3 = app->tex->Load("Assets/parallax background/background_2.png");
+	bgTexture = app->tex->Load(bgTexturePath);
+	bgTexture2 = app->tex->Load(bgTexturePath2);
+	bgTexture3 = app->tex->Load(bgTexturePath3);
 
 	return true;
 }

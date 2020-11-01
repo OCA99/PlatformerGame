@@ -28,4 +28,13 @@
   <map>
     <folder>Assets/maps/</folder>
   </map>
+
+  <scene>
+    <music path="Assets/audio/music/song.ogg"/>
+    <texture screen="Assets/title screen/reduced title screen.png"/>
+  </scene>
+
+  <parallax>
+    <texture tex1="Assets/parallax background/background_0.png" tex2="Assets/parallax background/background_1.png" tex3="Assets/parallax background/background_2.png"/>
+  </parallax>
 </config>

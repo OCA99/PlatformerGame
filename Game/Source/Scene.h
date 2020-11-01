@@ -25,7 +25,7 @@ public:
 	virtual ~Scene();
 
 	// Called before render is available
-	bool Awake();
+	bool Awake(pugi::xml_node& config);
 
 	// Called before the first frame
 	bool Start();
@@ -68,6 +68,9 @@ private:
 	bool fading = false;
 	GameplayState targetState = gameplayState;
 	SDL_Rect fullScreenRect;
+
+	const char* musicPath;
+	const char* screenTexturePath;
 };
 
 #endif // __SCENE_H__
