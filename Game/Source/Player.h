@@ -16,15 +16,13 @@ enum PlayerState {
 	JUMPING,
 	DOUBLE_JUMPING,
 	FALLING,
-	PREPARE_TO_SPAWN,
-	SPAWNING,
 	DYING
 };
 
 class Player : public Module
 {
 private:
-	PlayerState playerState = PlayerState::PREPARE_TO_SPAWN;
+	PlayerState playerState = PlayerState::IDLE;
 	SDL_Texture* texture = nullptr;
 	Animation* currentAnim = nullptr;
 
@@ -58,7 +56,6 @@ public:
 	Animation doubleJumpLeftAnim;
 	Animation fallRightAnim;
 	Animation fallLeftAnim;
-	Animation prepareToSpawnAnim;
 	Animation appearAnim;
 	Animation disappearRightAnim;
 	Animation disappearLeftAnim;
