@@ -111,6 +111,8 @@ bool Player::Start()
 
 	fallLeftAnim.PushBack({ 45,188,23,28 });
 
+	prepareToSpawnAnim.PushBack({ 0,0,0,0 });
+
 	appearAnim.loop = disappearLeftAnim.loop = disappearRightAnim.loop = false;
 
 	for (int i = 0; i < 390; i += 55)
@@ -211,6 +213,19 @@ void Player::UpdateState(float dt)
 
 	switch (playerState)
 	{
+	case(PREPARE_TO_SPAWN):
+	{
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			ChangeState(PREPARE_TO_SPAWN, SPAWNING);
+			break;
+	}
+	case(SPAWNING):
+	{
+		if (currentAnim->HasFinished() == true)
+			ChangeState(SPAWNING, IDLE);
+			break;
+	}
+
 	case IDLE:
 	{
 		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
@@ -318,15 +333,15 @@ void Player::UpdateLogic(float dt)
 
 	switch (playerState)
 	{
-	case(IDLE):
+
+	case(PREPARE_TO_SPAWN):
 	{
-		
-
-		if (isGoingRight == true)
-			currentAnim = &idleRightAnim;
-		else
-			currentAnim = &idleLeftAnim;
-
+		currentAnim = &prepareToSpawnAnim;
+			break;
+	}
+	case(SPAWNING):
+	{
+		currentAnim = &appearAnim;
 		break;
 	}
 	case(RUNNING):
