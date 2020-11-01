@@ -3,6 +3,7 @@
 #include "Debug.h"
 #include "Map.h"
 #include "App.h"
+#include "Player.h"
 #include "Input.h"
 #include "Collisions.h"
 #include "Log.h";
@@ -42,6 +43,11 @@ bool Debug::Update(float dt)
 		ToggleColliders();
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)
+	{
+		GodMode();
+	}
+
 	return ret;
 }
 
@@ -64,5 +70,19 @@ void Debug::ToggleColliders()
 	}
 	else if (app->collisions->showColliders == true) {
 		app->collisions->showColliders = false;
+	}
+}
+
+void Debug::GodMode()
+{
+	if (app->player->godMode == false)
+	{
+		app->player->godMode = true;
+		storeGravity = app->player->gravity;
+		app->player->gravity = 0;
+	}
+	else if (app->player->godMode == true) {
+		app->player->gravity = storeGravity;
+		app->player->godMode = false;
 	}
 }
