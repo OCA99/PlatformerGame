@@ -55,7 +55,7 @@ private:
 	Animation gameOverAnim;
 	Animation turnOffAnim;
 
-	GameplayState gameplayState;
+	GameplayState gameplayState = TITLE_SCREEN;
 
 
 };

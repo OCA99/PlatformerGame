@@ -54,6 +54,8 @@ bool Scene::Start()
 	titleScreenAnim.loop = gameOverAnim.loop = true;
 	titleScreenAnim.speed = gameOverAnim.speed = 0.5f;
 
+	
+
 	currentLevel.Create("level1.tmx");
 	app->map->Load("level1.tmx");
 
