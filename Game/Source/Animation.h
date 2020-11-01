@@ -62,14 +62,14 @@ public:
 
 	void GenerateAnimation(const SDL_Rect& rect, int rows, int columns) {
 
-		int frameWidth = rect.w / columns;
-		int frameHeight = rect.h / rows;
+		int frameWidth = rect.w/columns;
+		int frameHeight = rect.h/rows;
 
 		for (int i = 0; i < rows; i++) {
 			for (int j = 0; j < columns; j++) {
 				SDL_Rect frame;
-				frame.x = rect.x + (j * frameWidth);
-				frame.y = rect.y + (i * frameHeight);
+				frame.x = rect.x + (j*frameWidth);
+				frame.y = rect.y + (i*frameHeight);
 				frame.w = frameWidth;
 				frame.h = frameHeight;
 				PushBack(frame);

@@ -30,7 +30,7 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
-	// L02: TODO 6: Declare Load / Save methods
+	// L02: TODO 6: Declare Load/Save methods
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&);
 
@@ -38,7 +38,7 @@ public:
 	void ResetViewPort();
 
 	// Drawing
-	bool DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0, int pivotX = INT_MAX, int pivotY = INT_MAX) const;
+	bool DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* section = NULL, float speed = 1.0f, double angle = 0.0f, int pivotX = INT_MAX, int pivotY = INT_MAX) const;
 	bool DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool filled = true, bool useCamera = true) const;
 	bool DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool useCamera = true) const;
 	bool DrawCircle(int x1, int y1, int redius, Uint8 r, Uint8 g, Uint8 b, Uint8 a = 255, bool useCamera = true) const;

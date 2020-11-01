@@ -41,9 +41,9 @@ public:
 	int ystart = 144;
 	int parallaxw = 719;
 
-	float x0 = 0;
-	float x1 = 0;
-	float x2 = 0;
+	float x0 = 0.0f;
+	float x1 = 0.0f;
+	float x2 = 0.0f;
 
 	SDL_Texture* bgTexture = nullptr;
 	SDL_Texture* bgTexture2 = nullptr;
