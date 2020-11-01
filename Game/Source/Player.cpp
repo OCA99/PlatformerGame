@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Textures.h"
 #include "Render.h"
+#include "Audio.h"
 #include "Collisions.h"
 #include "SDL/include/SDL_scancode.h"
 #include "Scene.h"
@@ -43,6 +44,11 @@ bool Player::Start()
 
 	collider = app->collisions->AddCollider(SDL_Rect({ position.x, position.y, 22, 26 }), Collider::Type::DYNAMIC, this);
 
+	jumpFx = app->audio->LoadFx("Assets/audio/fx/jump.wav");
+	doubleJumpFx = app->audio->LoadFx("Assets/audio/fx/double.wav");
+	gameOverFx = app->audio->LoadFx("Assets/audio/fx/game over.wav");
+	gameStartFx = app->audio->LoadFx("Assets/audio/fx/start.wav");
+	
 	currentAnim = &idleRightAnim;
 
 	idleRightAnim.loop = idleLeftAnim.loop = runRightAnim.loop = runLeftAnim.loop = true;
@@ -132,11 +138,11 @@ bool Player::Start()
 
 bool Player::Update(float dt)
 {
-	if (godMode)GodMovement();
-
+	
 	UpdateState(dt);
 	UpdateLogic(dt);
-		
+	if (godMode)GodMovement();
+
 	return true;
 }
 
@@ -160,14 +166,17 @@ bool Player::Save(pugi::xml_node&) {
 
 void Player::OnCollision(Collider* a, Collider* b) {
 
+	if (godMode) return;
+
 	if (b->type == Collider::Type::ENDLEVEL)
 	{
 		SDL_Delay(1000);
 		app->scene->LoadLevel("level2.tmx");
 	}
 
-	if (b->type == Collider::Type::DEATH && !godMode)
+	if (b->type == Collider::Type::DEATH)
 	{
+		
 		ChangeState(playerState, DYING);
 	}
 
@@ -238,6 +247,7 @@ void Player::UpdateState(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !godMode)
 		{
+			app->audio->PlayFx(jumpFx, 0);
 			if (availableJumps > 0) {
 				availableJumps--;
 			}
@@ -289,12 +299,14 @@ void Player::UpdateState(float dt)
 
 	case JUMPING:
 	{
+		
 		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
+			
 			if (availableJumps > 0) {
 				availableJumps--;
 
-				
+				app->audio->PlayFx(doubleJumpFx, 0);
 
 				verticalVelocity = jumpForce;
 
@@ -431,8 +443,16 @@ void Player::UpdateLogic(float dt)
 		else
 			currentAnim = &disappearLeftAnim;
 
+		if (isDead == false)
+		{
+			app->audio->PlayFx(gameOverFx, 0);
+			isDead = true;
+		}
+		
+
 		if (currentAnim->HasFinished())
 		{
+			
 			app->scene->LoadLevel(app->scene->currentLevel);
 		}
 
@@ -459,6 +479,7 @@ void Player::ChangeState(PlayerState previousState, PlayerState newState)
 
 void Player::Reload()
 {
+	app->audio->PlayFx(gameStartFx, 0);
 	playerState = PlayerState::IDLE;
 	verticalVelocity = 0.0f;
 	collider = app->collisions->AddCollider(SDL_Rect({ position.x, position.y, 22, 26 }), Collider::Type::DYNAMIC, this);

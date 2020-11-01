@@ -24,12 +24,15 @@ enum PlayerState {
 class Player : public Module
 {
 private:
-	PlayerState playerState = PlayerState::PREPARE_TO_SPAWN;
+	
 	SDL_Texture* texture = nullptr;
 	Animation* currentAnim = nullptr;
 
 	bool isGoingRight = false;
 	unsigned int jumpsLeft = 2;
+
+public:
+	PlayerState playerState = PlayerState::PREPARE_TO_SPAWN;
 	bool isDead;
 public:
 	Player();
@@ -68,10 +71,10 @@ public:
 
 	bool godMode = false;
 	float gravity;
+	float verticalVelocity = 0.0f;
 
 private:
 	unsigned int speed;	
-	float verticalVelocity = 0.0f;
 	float maxVerticalVelocity = 30.0f;
 	float jumpForce;
 
@@ -86,6 +89,12 @@ private:
 	bool canMoveDown = true;
 
 	const char* texturePath;
+private:
+	uint jumpFx = 0;
+	uint doubleJumpFx = 0;
+	uint gameOverFx = 0;
+public:
+	uint gameStartFx = 0;
 
 };
 

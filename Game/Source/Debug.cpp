@@ -77,9 +77,11 @@ void Debug::GodMode()
 {
 	if (app->player->godMode == false)
 	{
+		app->player->ChangeState(app->player->playerState, IDLE);
 		app->player->godMode = true;
 		storeGravity = app->player->gravity;
 		app->player->gravity = 0;
+		app->player->verticalVelocity = 0.0f;
 	}
 	else if (app->player->godMode == true) {
 		app->player->gravity = storeGravity;
