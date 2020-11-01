@@ -41,9 +41,12 @@ public:
 	// Called before quitting
 	bool CleanUp();
 
+	void LoadLevel(SString name);
+
 public:
 	bool gameStarted = false;
 	bool gameOver = false;
+	SString currentLevel;
 private:
 	SDL_Texture* screenTexture = nullptr;
 
@@ -53,6 +56,7 @@ private:
 	Animation turnOffAnim;
 
 	GameplayState gameplayState;
+
 
 };
 

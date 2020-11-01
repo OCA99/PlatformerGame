@@ -5,6 +5,7 @@
 #include "Textures.h"
 #include "Render.h"
 #include "Input.h"
+#include "Player.h"
 
 #include <iostream>
 #include <math.h>
@@ -43,6 +44,7 @@ bool Parallax::Update(float dt)
 {
 	bool ret = true;
 
+	// THIS IS HARD CODED
 	ParallaxBackground0();
 	ParallaxBackground1();
 	ParallaxBackground2();
@@ -69,42 +71,21 @@ bool Parallax::CleanUp()
 
 void Parallax::ParallaxBackground0()
 {
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		x0 = x0 - 0.2f;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		if(x0 < 0)	x0 = x0 + 0.2f;
-	}
+	x0 = -app->player->position.x * 0.05f;
 
-	floor(x0);
+	x0 = std::floor(x0);
 }
 
 void Parallax::ParallaxBackground1()
 {
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		x1 = x1 - 0.7f;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		if (x1 < 0)	x1 = x1 + 0.7f;
-	}
+	x1 = -app->player->position.x * 0.15f;
 
-	floor(x1);
+	x1 = std::floor(x1);
 }
 
 void Parallax::ParallaxBackground2()
 {
-	if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		x2 = x2 - 1.5f;
-	}
-	if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		if (x2 < 0)	x2 = x2 + 1.5f;
-	}
+	x2 = -app->player->position.x * 0.35f;
 
-	floor(x2);
+	x2 = std::floor(x2);
 }
