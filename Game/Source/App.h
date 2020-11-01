@@ -50,7 +50,7 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
-    // L02: TODO 1: Create methods to request Load / Save
+	// L02: TODO 1: Create methods to request Load / Save
 
 private:
 

@@ -43,7 +43,7 @@ public:
 		currentFrame += speed;
 		if (currentFrame >= totalFrames)
 		{
-			currentFrame = (loop || pingpong) ? 0.0f : totalFrames - 1;
+			currentFrame = (loop || pingpong)? 0.0f : totalFrames - 1;
 			++loopCount;
 
 			if (pingpong)
