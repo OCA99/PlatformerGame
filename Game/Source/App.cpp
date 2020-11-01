@@ -348,11 +348,17 @@ bool App::Load() {
 			LOG("window not loading");
 		}
 
+		pugi::xml_node pl = saveGame.child("player");
+		if (pl == NULL) {
+			LOG("player not loading");
+		}
+
 		app->audio->Load(au);
 		app->input->Load(inp);
 		app->render->Load(rend);
 		app->scene->Load(sce);
 		app->win->Load(wi);
+		app->player->Load(pl);
 	}
 
 	requestLoad = false;
@@ -371,6 +377,12 @@ bool App::Save() {
 
 	pugi::xml_node audio = newSave.append_child("audio");
 	app->audio->Save(audio);
+
+	pugi::xml_node scene = newSave.append_child("scene");
+	app->scene->Save(scene);
+
+	pugi::xml_node player = newSave.append_child("player");
+	app->player->Save(player);
 
 	newSave.save_file(saveFileName);
 

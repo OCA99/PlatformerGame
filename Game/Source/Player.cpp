@@ -31,6 +31,13 @@ bool Player::Awake(pugi::xml_node& config) {
 	speed = movement.attribute("speed").as_int();
 	maxJumps = movement.attribute("maxJumps").as_int();
 
+	pugi::xml_node audio = config.child("audio");
+
+	jumpFxPath = audio.attribute("jump").as_string();
+	doubleJumpFxPath = audio.attribute("doubleJump").as_string();
+	gameOverFxPath = audio.attribute("gameOver").as_string();
+	gameStartFxPath = audio.attribute("gameStart").as_string();
+
 	return ret;
 }
 
@@ -44,10 +51,15 @@ bool Player::Start()
 
 	collider = app->collisions->AddCollider(SDL_Rect({ position.x, position.y, 22, 26 }), Collider::Type::DYNAMIC, this);
 
-	jumpFx = app->audio->LoadFx("Assets/audio/fx/jump.wav");
-	doubleJumpFx = app->audio->LoadFx("Assets/audio/fx/double.wav");
-	gameOverFx = app->audio->LoadFx("Assets/audio/fx/game over.wav");
-	gameStartFx = app->audio->LoadFx("Assets/audio/fx/start.wav");
+	//jumpFx = app->audio->LoadFx("Assets/audio/fx/jump.wav");
+	//doubleJumpFx = app->audio->LoadFx("Assets/audio/fx/double.wav");
+	//gameOverFx = app->audio->LoadFx("Assets/audio/fx/game over.wav");
+	//gameStartFx = app->audio->LoadFx("Assets/audio/fx/start.wav");
+
+	jumpFx = app->audio->LoadFx(jumpFxPath);
+	doubleJumpFx = app->audio->LoadFx(doubleJumpFxPath);
+	gameOverFx = app->audio->LoadFx(gameOverFxPath);
+	gameStartFx = app->audio->LoadFx(gameStartFxPath);
 	
 	currentAnim = &idleRightAnim;
 
@@ -156,11 +168,28 @@ bool Player::PostUpdate()
 	return true;
 }
 
-bool Player::Load(pugi::xml_node&) {
+bool Player::Load(pugi::xml_node& savedGame) {
+	verticalVelocity = savedGame.attribute("verticalVelocity").as_float(0.0f);
+	availableJumps = savedGame.attribute("availableJumps").as_int(2);
+	position.x = savedGame.attribute("x").as_int(176);
+	position.y = savedGame.attribute("y").as_int(976);
+
 	return true;
 }
 
-bool Player::Save(pugi::xml_node&) {
+bool Player::Save(pugi::xml_node& savedGame) {
+	pugi::xml_attribute vertical = savedGame.append_attribute("verticalVelocity");
+	vertical.set_value(verticalVelocity);
+
+	pugi::xml_attribute jumps = savedGame.append_attribute("availableJumps");
+	jumps.set_value(availableJumps);
+
+	pugi::xml_attribute x = savedGame.append_attribute("x");
+	x.set_value(position.x);
+
+	pugi::xml_attribute y = savedGame.append_attribute("y");
+	y.set_value(position.y);
+
 	return true;
 }
 
@@ -170,7 +199,6 @@ void Player::OnCollision(Collider* a, Collider* b) {
 
 	if (b->type == Collider::Type::ENDLEVEL)
 	{
-		SDL_Delay(1000);
 		app->scene->LoadLevel("level2.tmx");
 	}
 
