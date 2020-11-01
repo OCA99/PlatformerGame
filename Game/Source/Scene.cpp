@@ -59,12 +59,15 @@ bool Scene::Start()
 	gameOverAnim.PushBack({ 0,810,480,270 });
 
 	logoAnim.PushBack({ 480,0,480,270 });
+	logoAnim.PushBack({ 480,270,480,270 });
 
 	turnOffAnim.PushBack({ 0,0,0,0, });
 
 	app->audio->PlayMusic(musicPath);
 
-	titleScreenAnim.loop = gameOverAnim.loop = true;
+	titleScreenAnim.loop = gameOverAnim.loop = logoAnim.loop = true;
+
+	logoAnim.speed = 0.1f;
 	titleScreenAnim.speed = 0.1f;
 	gameOverAnim.speed = 0.03f;
 
