@@ -44,4 +44,7 @@ A platformer game prototype made by students from the CITM Barcelona using SDL. 
 
 This project is licensed under an unmodified MIT license, which is an OSI-certified license that allows static linking with closed source software. Check [LICENSE](LICENSE.md) for further details.
 
-{AdditionalLicenses}
+[SDL License](https://www.libsdl.org/license.php)
+
+[PUGI License](https://pugixml.org/license.html)
+
