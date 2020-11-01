@@ -65,7 +65,8 @@ bool Scene::Start()
 	app->audio->PlayMusic(musicPath);
 
 	titleScreenAnim.loop = gameOverAnim.loop = true;
-	titleScreenAnim.speed = gameOverAnim.speed = 0.02f;
+	titleScreenAnim.speed = 0.1f;
+	gameOverAnim.speed = 0.03f;
 
 	screenDisplayAnim = &logoAnim;
 
