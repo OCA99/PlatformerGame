@@ -188,7 +188,7 @@ void App::FinishUpdate()
 	if (requestSave == true) {
 		Save();
 	}
-	
+
 
 }
 
@@ -308,7 +308,7 @@ bool App::Load() {
 	bool ret = true;
 
 	pugi::xml_document saveGame;
-	
+
 	pugi::xml_parse_result result = saveGame.load_file(saveFileName);
 
 	if (result == NULL)

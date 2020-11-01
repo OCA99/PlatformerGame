@@ -58,7 +58,7 @@ private:
 	bool LoadConfig();
 
 	// Call modules before each loop iteration
-	void PrepareUpdate(); 
+	void PrepareUpdate();
 
 
 	// Call modules before each loop iteration
@@ -97,7 +97,7 @@ public:
 
 	void RequestLoad() {
 		requestLoad = true;
-		
+
 	}
 
 private:

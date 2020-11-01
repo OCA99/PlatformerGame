@@ -34,7 +34,7 @@ bool Parallax::Awake(pugi::xml_node& config)
 
 bool Parallax::Start()
 {
-	
+
 	bgTexture = app->tex->Load(bgTexturePath);
 	bgTexture2 = app->tex->Load(bgTexturePath2);
 	bgTexture3 = app->tex->Load(bgTexturePath3);
