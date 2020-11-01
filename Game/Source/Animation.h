@@ -29,7 +29,7 @@ public:
 
 	void Reset()
 	{
-		currentFrame = 0;
+		currentFrame = 0.0f;
 		loopCount = 0;
 	}
 
