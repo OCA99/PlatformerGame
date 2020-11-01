@@ -37,10 +37,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(win);
 	AddModule(tex);
 	AddModule(audio);
-	AddModule(scene);
 	AddModule(parallax);
 	AddModule(player);
 	AddModule(map);
+	AddModule(scene);
 	AddModule(collisions);
 	AddModule(debug);
 

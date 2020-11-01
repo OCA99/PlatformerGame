@@ -54,12 +54,14 @@ bool Parallax::Update(float dt)
 
 bool Parallax::PostUpdate()
 {
-		
-	for (int i = 0; i < 5; i++) app->render->DrawTexture(bgTexture, x0 + xstart + parallaxw * i, ystart, NULL);
+	if (enabled)
+	{
+		for (int i = 0; i < 5; i++) app->render->DrawTexture(bgTexture, x0 + xstart + parallaxw * i, ystart, NULL);
 
-	for (int i = 0; i < 5; i++) app->render->DrawTexture(bgTexture2, x1 + xstart + parallaxw * i, ystart, NULL);
+		for (int i = 0; i < 5; i++) app->render->DrawTexture(bgTexture2, x1 + xstart + parallaxw * i, ystart, NULL);
 
-	for (int i = 0; i < 6; i++) app->render->DrawTexture(bgTexture3, x2 + xstart + parallaxw * i, ystart, NULL);
+		for (int i = 0; i < 6; i++) app->render->DrawTexture(bgTexture3, x2 + xstart + parallaxw * i, ystart, NULL);
+	}
 
 	return true;
 }

@@ -7,16 +7,17 @@
 struct SDL_Texture;
 struct Animation;
 
-enum GameplayState
-{
-	TITLE_SCREEN,
-	PLAYING,
-	GAME_OVER_SCREEN
-};
-
 class Scene : public Module
 {
 public:
+
+	enum GameplayState
+	{
+		LOGO_SCREEN,
+		TITLE_SCREEN,
+		PLAYING,
+		GAME_OVER_SCREEN
+	};
 
 	Scene();
 
@@ -43,10 +44,14 @@ public:
 
 	void LoadLevel(SString name);
 
+	void ChangeGameplayState(GameplayState newState);
+	void FadeToNewState(GameplayState newState);
+
 public:
 	bool gameStarted = false;
 	bool gameOver = false;
 	SString currentLevel;
+	GameplayState gameplayState = LOGO_SCREEN;
 private:
 	SDL_Texture* screenTexture = nullptr;
 
@@ -54,10 +59,12 @@ private:
 	Animation titleScreenAnim;
 	Animation gameOverAnim;
 	Animation turnOffAnim;
+	Animation logoAnim;
 
-	GameplayState gameplayState = TITLE_SCREEN;
-
-
+	float currentFade = 0.0f;
+	bool fading = false;
+	GameplayState targetState = gameplayState;
+	SDL_Rect fullScreenRect;
 };
 
 #endif // __SCENE_H__

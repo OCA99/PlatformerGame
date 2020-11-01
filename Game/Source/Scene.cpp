@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "Audio.h"
+#include "Parallax.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -35,31 +36,31 @@ bool Scene::Awake()
 bool Scene::Start()
 {
 
+	fullScreenRect = SDL_Rect({ 0, 0, app->render->camera.w, app->render->camera.h });
 	app->audio->PlayMusic("Assets/audio/music/song.ogg");
 
 	//screenTexture = app->tex->Load("Assets/title screen/title and end screen.png");
 	screenTexture = app->tex->Load("Assets/title screen/reduced title screen.png");
 	if (screenTexture == nullptr)LOG("could'nt load title screen");
 
-	titleScreenAnim.PushBack({ 0,0,640,480});
-	titleScreenAnim.PushBack({ 0,480,640,480 });
+	titleScreenAnim.PushBack({ 0,0,480,270});
+	titleScreenAnim.PushBack({ 0,270, 480, 270 });
 
 	/*titleScreenAnim.PushBack({ 0,0,206,78 });
 	titleScreenAnim.PushBack({ 0,78,206,78 });*/
 
-	gameOverAnim.PushBack({ 0,960,640,480 });
-	gameOverAnim.PushBack({ 0,1040,640,480 });
+	gameOverAnim.PushBack({ 0,540,480,270 });
+	gameOverAnim.PushBack({ 0,810,480,270 });
+
+	logoAnim.PushBack({ 480,0,480,270 });
 
 	turnOffAnim.PushBack({ 0,0,0,0, });
 
 
 	titleScreenAnim.loop = gameOverAnim.loop = true;
-	titleScreenAnim.speed = gameOverAnim.speed = 0.5f;
+	titleScreenAnim.speed = gameOverAnim.speed = 0.02f;
 
-	
-
-	currentLevel.Create("level1.tmx");
-	app->map->Load("level1.tmx");
+	screenDisplayAnim = &logoAnim;
 
 	return true;
 }
@@ -73,21 +74,18 @@ bool Scene::PreUpdate()
 // Called each loop iteration
 bool Scene::Update(float dt)
 {
-	switch (gameplayState)
+	if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && gameplayState == LOGO_SCREEN)
 	{
-	case(TITLE_SCREEN):
-		screenDisplayAnim = &titleScreenAnim;
-		break;
-	case(PLAYING):
-		screenDisplayAnim = &turnOffAnim;
-		break;
-	case(GAME_OVER_SCREEN):
-		screenDisplayAnim = &gameOverAnim;
-		break;
+		FadeToNewState(TITLE_SCREEN);
 	}
-
-	if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_REPEAT && gameplayState == TITLE_SCREEN)
-		gameplayState = PLAYING;
+	else if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && gameplayState == TITLE_SCREEN)
+	{
+		FadeToNewState(PLAYING);
+	}
+	else if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && gameplayState == GAME_OVER_SCREEN)
+	{
+		FadeToNewState(PLAYING);
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
 		app->RequestLoad();
@@ -120,8 +118,65 @@ bool Scene::Update(float dt)
 		LOG("Volume up");
 	}
 
+	if (gameplayState != targetState) {
+		currentFade += 0.02f;
+		if (currentFade >= 1.0f) {
+			currentFade = 1.0f;
+			ChangeGameplayState(targetState);
+		}
+	}
+	else if (currentFade > 0.0f) {
+		currentFade -= 0.02f;
+	}
+	else if (currentFade <= 0.0f) {
+		currentFade = 0.0f;
+		fading = false;
+	}
+
+	screenDisplayAnim->Update();
+
 	return true;
 }
+
+void Scene::FadeToNewState(GameplayState newState) {
+	if (gameplayState == newState) return;
+	if (fading) return;
+	targetState = newState;
+	currentFade = 0.0f;
+	fading = true;
+}
+
+void Scene::ChangeGameplayState(GameplayState newState) {
+	if (gameplayState == newState) return;
+
+	switch (newState) {
+	case PLAYING:
+		screenDisplayAnim = &turnOffAnim;
+		app->parallax->enabled = true;
+		gameplayState = PLAYING;
+		currentLevel.Create("level1.tmx");
+		app->map->Load("level1.tmx");
+		app->player->Reload();
+		break;
+	case TITLE_SCREEN:
+		screenDisplayAnim = &titleScreenAnim;
+		gameplayState = TITLE_SCREEN;
+		app->parallax->enabled = false;
+		app->map->CleanUp();
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		break;
+	case GAME_OVER_SCREEN:
+		screenDisplayAnim = &gameOverAnim;
+		gameplayState = GAME_OVER_SCREEN;
+		app->parallax->enabled = false;
+		app->map->CleanUp();
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		break;
+	}
+}
+
 
 void Scene::LoadLevel(SString name)
 {
@@ -142,7 +197,15 @@ bool Scene::PostUpdate()
 
 	SDL_Rect rect = screenDisplayAnim->GetCurrentFrame();
 	
-	app->render->DrawTexture(screenTexture, 0, 800, &rect);
+	app->render->DrawTexture(screenTexture, 0, 0, &rect);
+
+	float adjustedFade = currentFade;
+	if (adjustedFade < 0.0f) adjustedFade = 0.0f;
+	if (adjustedFade > 1.0f) adjustedFade = 1.0f;
+
+	int alpha = adjustedFade * 255.0f;
+
+	app->render->DrawRectangle(fullScreenRect, 0, 0, 0, alpha, true, false);
 	
 	
 

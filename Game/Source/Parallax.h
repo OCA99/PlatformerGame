@@ -49,6 +49,8 @@ public:
 	SDL_Texture* bgTexture2 = nullptr;
 	SDL_Texture* bgTexture3 = nullptr;
 
+	bool enabled = false;
+
 };
 
 #endif //__PARALLAX_H__
