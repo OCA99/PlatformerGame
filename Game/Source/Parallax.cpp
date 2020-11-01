@@ -28,13 +28,11 @@ bool Parallax::Awake(pugi::xml_node& config)
 	bgTexturePath2 = texture.attribute("tex2").as_string();
 	bgTexturePath3 = texture.attribute("tex3").as_string();
 
-
 	return true;
 }
 
 bool Parallax::Start()
 {
-
 	bgTexture = app->tex->Load(bgTexturePath);
 	bgTexture2 = app->tex->Load(bgTexturePath2);
 	bgTexture3 = app->tex->Load(bgTexturePath3);
@@ -63,11 +61,14 @@ bool Parallax::PostUpdate()
 {
 	if (enabled)
 	{
-		for (int i = 0; i < 5; i++) app->render->DrawTexture(bgTexture, x0 + xstart + parallaxw*i, ystart, NULL);
+		for (int i = 0; i < 5; i++)
+			app->render->DrawTexture(bgTexture, x0 + xstart + parallaxw*i, ystart, NULL);
 
-		for (int i = 0; i < 5; i++) app->render->DrawTexture(bgTexture2, x1 + xstart + parallaxw*i, ystart, NULL);
+		for (int i = 0; i < 5; i++)
+			app->render->DrawTexture(bgTexture2, x1 + xstart + parallaxw*i, ystart, NULL);
 
-		for (int i = 0; i < 6; i++) app->render->DrawTexture(bgTexture3, x2 + xstart + parallaxw*i, ystart, NULL);
+		for (int i = 0; i < 6; i++)
+			app->render->DrawTexture(bgTexture3, x2 + xstart + parallaxw*i, ystart, NULL);
 	}
 
 	return true;

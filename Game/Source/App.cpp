@@ -81,6 +81,7 @@ bool App::Awake()
 	{
 		// L01: DONE 4: Read the title from the config file
 		title.Create(configApp.child("title").child_value());
+		saveFileName = configApp.child("savefile").attribute("path").as_string();
 		win->SetTitle(title.GetString());
 
 		ListItem<Module*>* item;
@@ -142,7 +143,8 @@ bool App::Update()
 
 	frameTime = SDL_GetTicks() - frameStart;
 
-	if (frameTime < frameDelay) {
+	if (frameTime < frameDelay)
+	{
 		SDL_Delay(frameDelay - frameTime);
 	}
 
@@ -181,15 +183,15 @@ void App::PrepareUpdate()
 void App::FinishUpdate()
 {
 	// L02: TODO 1: This is a good place to call Load/Save methods
-	if (requestLoad == true) {
+	if (requestLoad == true)
+	{
 		Load();
 	}
 
-	if (requestSave == true) {
+	if (requestSave == true)
+	{
 		Save();
 	}
-
-
 }
 
 // Call modules before each loop iteration
@@ -204,7 +206,8 @@ bool App::PreUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
+		if(pModule->active == false)
+		{
 			continue;
 		}
 
@@ -226,7 +229,8 @@ bool App::DoUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
+		if(pModule->active == false)
+		{
 			continue;
 		}
 
@@ -247,7 +251,8 @@ bool App::PostUpdate()
 	{
 		pModule = item->data;
 
-		if(pModule->active == false) {
+		if(pModule->active == false)
+		{
 			continue;
 		}
 
@@ -303,7 +308,8 @@ const char* App::GetOrganization() const
 // L02: TODO 5: Create a method to actually load an xml file
 // then call all the modules to load themselves
 
-bool App::Load() {
+bool App::Load()
+{
 
 	bool ret = true;
 
@@ -320,36 +326,42 @@ bool App::Load() {
 	{
 		//renderer
 		pugi::xml_node rend = saveGame.child("renderer");
-		if (rend == NULL) {
+		if (rend == NULL)
+		{
 			LOG("Renderer not loading");
 		}
 
 		//input
 		pugi::xml_node inp = saveGame.child("input");
-		if (inp == NULL) {
+		if (inp == NULL)
+		{
 			LOG("Input not loading");
 		}
 
 		//audio
 		pugi::xml_node au = saveGame.child("audio");
-		if (au == NULL) {
+		if (au == NULL)
+		{
 			LOG("Audio not loading");
 		}
 
 		//scene
 		pugi::xml_node sce = saveGame.child("scene");
-		if (sce == NULL) {
+		if (sce == NULL)
+		{
 			LOG("Scene not loading");
 		}
 
 		//window
 		pugi::xml_node wi = saveGame.child("window");
-		if (wi == NULL) {
+		if (wi == NULL)
+		{
 			LOG("window not loading");
 		}
 
 		pugi::xml_node pl = saveGame.child("player");
-		if (pl == NULL) {
+		if (pl == NULL)
+		{
 			LOG("player not loading");
 		}
 
@@ -366,7 +378,8 @@ bool App::Load() {
 	return ret;
 }
 
-bool App::Save() {
+bool App::Save()
+{
 	bool ret = true;
 	requestSave = false;
 
@@ -388,11 +401,3 @@ bool App::Save() {
 
 	return ret;
 }
-
-
-
-// L02: TODO 7: Implement the xml save method for current state
-
-
-
-

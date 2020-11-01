@@ -60,7 +60,8 @@ public:
 		return frames[actualFrame];
 	}
 
-	void GenerateAnimation(const SDL_Rect& rect, int rows, int columns) {
+	void GenerateAnimation(const SDL_Rect& rect, int rows, int columns)
+	{
 
 		int frameWidth = rect.w/columns;
 		int frameHeight = rect.h/rows;

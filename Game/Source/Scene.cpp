@@ -52,9 +52,6 @@ bool Scene::Start()
 	titleScreenAnim.PushBack({ 0,0,480,270});
 	titleScreenAnim.PushBack({ 0,270, 480, 270 });
 
-	/*titleScreenAnim.PushBack({ 0,0,206,78 });
-	titleScreenAnim.PushBack({ 0,78,206,78 });*/
-
 	gameOverAnim.PushBack({ 0,540,480,270 });
 	gameOverAnim.PushBack({ 0,810,480,270 });
 
@@ -98,48 +95,60 @@ bool Scene::Update(float dt)
 		FadeToNewState(PLAYING);
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	{
 		app->RequestLoad();
 		LOG("LOAD REQUESTED");
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN){
+	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+	{
 		app->RequestSave();
 		LOG("SAVE REQUESTED");
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+	{
 		LoadLevel("level1.tmx");
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+	{
 		LoadLevel("level2.tmx");
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN) {
+	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+	{
 		LoadLevel(currentLevel);
 	}
 
 	// 8 to volume down and 9 to volume up
-	if (app->input->GetKey(SDL_SCANCODE_8) == KEY_REPEAT) {
+	if (app->input->GetKey(SDL_SCANCODE_8) == KEY_REPEAT)
+	{
 		app->audio->VolumeDown();
 		LOG("Volume down");
-	}if (app->input->GetKey(SDL_SCANCODE_9) == KEY_REPEAT) {
+	}
+	if (app->input->GetKey(SDL_SCANCODE_9) == KEY_REPEAT)
+	{
 		app->audio->VolumeUp();
 		LOG("Volume up");
 	}
 
-	if (gameplayState != targetState) {
+	if (gameplayState != targetState)
+	{
 		currentFade += 0.02f;
-		if (currentFade >= 1.0f) {
+		if (currentFade >= 1.0f)
+		{
 			currentFade = 1.0f;
 			ChangeGameplayState(targetState);
 		}
 	}
-	else if (currentFade > 0.0f) {
+	else if (currentFade > 0.0f)
+	{
 		currentFade -= 0.02f;
 	}
-	else if (currentFade <= 0.0f) {
+	else if (currentFade <= 0.0f)
+	{
 		currentFade = 0.0f;
 		fading = false;
 	}
@@ -149,21 +158,24 @@ bool Scene::Update(float dt)
 	return true;
 }
 
-bool Scene::Load(pugi::xml_node& savedGame) {
+bool Scene::Load(pugi::xml_node& savedGame)
+{
 	FadeToNewState(PLAYING);
 	LoadLevel(savedGame.attribute("currentLevel").as_string("level1.tmx"));
 
 	return true;
 }
 
-bool Scene::Save(pugi::xml_node& savedGame) {
+bool Scene::Save(pugi::xml_node& savedGame)
+{
 	pugi::xml_attribute lvl = savedGame.append_attribute("currentLevel");
 	lvl.set_value(currentLevel.GetString());
 
 	return true;
 }
 
-void Scene::FadeToNewState(GameplayState newState) {
+void Scene::FadeToNewState(GameplayState newState)
+{
 	if (gameplayState == newState) return;
 	if (fading) return;
 	targetState = newState;
@@ -171,34 +183,36 @@ void Scene::FadeToNewState(GameplayState newState) {
 	fading = true;
 }
 
-void Scene::ChangeGameplayState(GameplayState newState) {
+void Scene::ChangeGameplayState(GameplayState newState)
+{
 	if (gameplayState == newState) return;
 
-	switch (newState) {
-	case PLAYING:
-		screenDisplayAnim = &turnOffAnim;
-		app->parallax->enabled = true;
-		gameplayState = PLAYING;
-		currentLevel.Create("level1.tmx");
-		app->map->Load("level1.tmx");
-		app->player->Reload();
-		break;
-	case TITLE_SCREEN:
-		screenDisplayAnim = &titleScreenAnim;
-		gameplayState = TITLE_SCREEN;
-		app->parallax->enabled = false;
-		app->map->CleanUp();
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
-		break;
-	case GAME_OVER_SCREEN:
-		screenDisplayAnim = &gameOverAnim;
-		gameplayState = GAME_OVER_SCREEN;
-		app->parallax->enabled = false;
-		app->map->CleanUp();
-		app->render->camera.x = 0;
-		app->render->camera.y = 0;
-		break;
+	switch (newState)
+	{
+		case PLAYING:
+			screenDisplayAnim = &turnOffAnim;
+			app->parallax->enabled = true;
+			gameplayState = PLAYING;
+			currentLevel.Create("level1.tmx");
+			app->map->Load("level1.tmx");
+			app->player->Reload();
+			break;
+		case TITLE_SCREEN:
+			screenDisplayAnim = &titleScreenAnim;
+			gameplayState = TITLE_SCREEN;
+			app->parallax->enabled = false;
+			app->map->CleanUp();
+			app->render->camera.x = 0;
+			app->render->camera.y = 0;
+			break;
+		case GAME_OVER_SCREEN:
+			screenDisplayAnim = &gameOverAnim;
+			gameplayState = GAME_OVER_SCREEN;
+			app->parallax->enabled = false;
+			app->map->CleanUp();
+			app->render->camera.x = 0;
+			app->render->camera.y = 0;
+			break;
 	}
 }
 

@@ -9,8 +9,8 @@ struct Animation;
 struct Collider;
 struct SDL_Texture;
 
-enum PlayerState {
-
+enum PlayerState
+{
 	IDLE,
 	RUNNING,
 	JUMPING,

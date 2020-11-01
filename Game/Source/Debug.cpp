@@ -68,7 +68,8 @@ void Debug::ToggleColliders()
 	{
 		app->collisions->showColliders = true;
 	}
-	else if (app->collisions->showColliders == true) {
+	else if (app->collisions->showColliders == true)
+	{
 		app->collisions->showColliders = false;
 	}
 }
@@ -83,7 +84,8 @@ void Debug::GodMode()
 		app->player->gravity = 0;
 		app->player->verticalVelocity = 0.0f;
 	}
-	else if (app->player->godMode == true) {
+	else if (app->player->godMode == true)
+	{
 		app->player->gravity = storeGravity;
 		app->player->godMode = false;
 	}

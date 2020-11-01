@@ -50,8 +50,6 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
-	// L02: TODO 1: Create methods to request Load/Save
-
 private:
 
 	// Load config file
@@ -91,13 +89,14 @@ public:
 	bool Load();
 	bool Save();
 
-	void RequestSave() {
+	void RequestSave()
+	{
 		requestSave = true;
 	}
 
-	void RequestLoad() {
+	void RequestLoad()
+	{
 		requestLoad = true;
-
 	}
 
 private:
@@ -115,7 +114,7 @@ private:
 
 	uint frames;
 
-	const char* saveFileName = "savegame.xml";
+	const char* saveFileName;
 
 	bool requestLoad = false;
 	bool requestSave = false;

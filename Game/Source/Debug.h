@@ -33,8 +33,6 @@ public:
 	bool CleanUp();
 
 	void ToggleColliders();
-	void LoadLvl1();
-	void LoadLvL2();
 	void GodMode();
 
 private:

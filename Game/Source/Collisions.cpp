@@ -9,41 +9,49 @@ Collisions::Collisions() : Module()
 
 }
 
-Collisions::~Collisions() {
+Collisions::~Collisions()
+{
 
 }
 
 // Called before render is available
-bool Collisions::Awake(pugi::xml_node&) {
+bool Collisions::Awake(pugi::xml_node&)
+{
 	bool ret = true;
 	return ret;
 }
 
 // Called before the first frame
-bool Collisions::Start() {
+bool Collisions::Start()
+{
 	bool ret = true;
 	return ret;
 }
 
 // Called each loop iteration
-bool Collisions::PreUpdate() {
+bool Collisions::PreUpdate()
+{
 	bool ret = true;
-
 	return ret;
 }
 
-bool Collisions::Update(float dt) {
-
+bool Collisions::Update(float dt)
+{
 	bool ret = true;
 
-	for (int i = 0; i < dynamicColliders.count(); i++) {
-		for (int j = 0; j < staticColliders.count(); j++) {
-			if (dynamicColliders[i]->Intersects(staticColliders[j]->rect)) {
-				for each (Module*m in dynamicColliders[i]->listeners) {
+	for (int i = 0; i < dynamicColliders.count(); i++)
+	{
+		for (int j = 0; j < staticColliders.count(); j++)
+		{
+			if (dynamicColliders[i]->Intersects(staticColliders[j]->rect))
+			{
+				for each (Module*m in dynamicColliders[i]->listeners)
+				{
 					if (m == nullptr) break;
 					m->OnCollision(dynamicColliders[i], staticColliders[j]);
 				}
-				for each (Module*m in staticColliders[j]->listeners) {
+				for each (Module*m in staticColliders[j]->listeners)
+				{
 					if (m == nullptr) break;
 					m->OnCollision(staticColliders[j], dynamicColliders[i]);
 				}
@@ -54,7 +62,8 @@ bool Collisions::Update(float dt) {
 	return ret;
 }
 
-bool Collisions::PostUpdate() {
+bool Collisions::PostUpdate()
+{
 	bool ret = true;
 
 	if (showColliders == true)
@@ -65,10 +74,12 @@ bool Collisions::PostUpdate() {
 			{
 				DrawCollider(&staticColliders[i]->rect, 255, 0, 0, 80);
 			}
-			else if (staticColliders[i]->type == Collider::Type::ENDLEVEL) {
+			else if (staticColliders[i]->type == Collider::Type::ENDLEVEL)
+			{
 				DrawCollider(&staticColliders[i]->rect, 0, 0, 255, 80);
 			}
-			else {
+			else
+			{
 				DrawCollider(&staticColliders[i]->rect, 0, 255, 0, 80);
 			}
 		}

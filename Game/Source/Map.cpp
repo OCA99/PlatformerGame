@@ -19,7 +19,8 @@ Map::Map() : Module(), mapLoaded(false)
 // Destructor
 Map::~Map()
 {
-	for (int i = 0; i < data.tilesets.count(); i++) {
+	for (int i = 0; i < data.tilesets.count(); i++)
+	{
 		delete data.tilesets[i]->texture;
 	}
 }
@@ -70,17 +71,22 @@ void Map::Draw()
 {
 	if (mapLoaded == false) return;
 
-	for (int i = 0; i < data.maplayers.count(); i++) {
-		if (data.maplayers[i]->properties.GetProperty("draw", 1) == 0) continue;
+	for (int i = 0; i < data.maplayers.count(); i++)
+	{
+		if (data.maplayers[i]->properties.GetProperty("draw", 1) == 0)
+			continue;
 		int layerSize = data.maplayers[i]->width*data.maplayers[i]->height;
-		for (int j = 0; j < layerSize; j++) {
+		for (int j = 0; j < layerSize; j++)
+		{
 			uint tileGid = data.maplayers[i]->data[j];
 			int layerWidth = data.maplayers[i]->width;
 
-			for (int k = 0; k < data.tilesets.count(); k++) {
+			for (int k = 0; k < data.tilesets.count(); k++)
+			{
 				TileSet* tileset = data.tilesets[k];
 
-				if (data.tilesets.count() > k + 1 && data.tilesets[k + 1]->firstgid <= tileGid) {
+				if (data.tilesets.count() > k + 1 && data.tilesets[k + 1]->firstgid <= tileGid)
+				{
 					continue;
 				}
 
@@ -191,7 +197,8 @@ bool Map::Load(const char* filename)
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tileWidth, data.tileHeight);
 
-		for (int i = 0; i < data.tilesets.count(); i++) {
+		for (int i = 0; i < data.tilesets.count(); i++)
+		{
 			TileSet* t = data.tilesets[i];
 			LOG("Tileset ----");
 			LOG("name: %s firstgid: %d", t->name.GetString(), t->firstgid);
@@ -357,17 +364,23 @@ bool Map::StoreID(pugi::xml_node& node, MapLayer* layer, int ID)
 bool Map::CreateColliders() {
 	bool ret = true;
 
-	for (int i = 0; i < data.maplayers.count(); i++) {
-		if (data.maplayers[i]->properties.GetProperty("navigation", 0) == 0) continue;
+	for (int i = 0; i < data.maplayers.count(); i++)
+	{
+		if (data.maplayers[i]->properties.GetProperty("navigation", 0) == 0)
+			continue;
 		int layerSize = data.maplayers[i]->width*data.maplayers[i]->height;
-		for (int j = 0; j < layerSize; j++) {
-			if (data.maplayers[i]->data[j] == 0) continue;
+		for (int j = 0; j < layerSize; j++)
+		{
+			if (data.maplayers[i]->data[j] == 0)
+				continue;
 			int layerWidth = data.maplayers[i]->width;
 			SDL_Rect section = { j % layerWidth*data.tileWidth, j/layerWidth*data.tileHeight, data.tileWidth, data.tileHeight };
-			if (data.maplayers[i]->properties.GetProperty("nextLevel", 0) == 1) {
+			if (data.maplayers[i]->properties.GetProperty("nextLevel", 0) == 1)
+			{
 				app->collisions->AddCollider(section, Collider::Type::ENDLEVEL, this);
 			}
-			else if (data.maplayers[i]->properties.GetProperty("death", 0) == 1) {
+			else if (data.maplayers[i]->properties.GetProperty("death", 0) == 1)
+			{
 				app->collisions->AddCollider(section, Collider::Type::DEATH, this);
 			}
 			else
