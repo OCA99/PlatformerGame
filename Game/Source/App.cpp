@@ -90,6 +90,10 @@ bool App::Awake()
 		saveFileName = configApp.child("savefile").attribute("path").as_string();
 		win->SetTitle(title.GetString());
 
+		int cap = configApp.attribute("framerate_cap").as_int(-1);
+
+		if (cap > 0) cappedMs = 1000 / cap;
+
 		ListItem<Module*>* item;
 		item = modules.start;
 
@@ -159,10 +163,8 @@ bool App::LoadConfig()
 {
 	bool ret = true;
 
-	// L01: DONE 3: Load config.xml file using load_file() method from the xml_document class
 	pugi::xml_parse_result result = configFile.load_file("config.xml");
 
-	// L01: DONE 3: Check result for loading errors
 	if(result == NULL)
 	{
 		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
@@ -183,7 +185,6 @@ void App::PrepareUpdate()
 	frameCount++;
 	lastSecFrameCount++;
 
-	// L08: DONE 4: Calculate the dt: differential time since last frame
 	dt = frameTime.ReadSec();
 	frameTime.Start();
 }
@@ -191,7 +192,6 @@ void App::PrepareUpdate()
 // ---------------------------------------------
 void App::FinishUpdate()
 {
-	// L02: TODO 1: This is a good place to call Load/Save methods
 	if (requestLoad == true)
 	{
 		Load();
@@ -219,6 +219,11 @@ void App::FinishUpdate()
 		averageFps, lastFrameMs, framesOnLastUpdate, dt, secondsSinceStartup, frameCount);
 
 	app->win->SetTitle(title);
+
+	if ((cappedMs > 0) && (lastFrameMs < cappedMs))
+	{
+		SDL_Delay(cappedMs - lastFrameMs);
+	}
 }
 
 // Call modules before each loop iteration

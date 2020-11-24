@@ -1,7 +1,7 @@
 <!-- Config file for the game -->
 <!-- L01: DONE 1: Create configuration file-->
 <config>
-  <app>
+  <app framerate_cap="60">
     <title>Game Development Testbed</title>
     <organization>UPC</organization>
     <savefile path="savegame.xml"/>
@@ -21,7 +21,7 @@
 
   <player>
   	<texture>Assets/textures/Main Characters/Virtual Guy/SpriteSheet.png</texture>
-  	<movement gravity="65" jumpForce="10" speed="6" maxJumps="2"/>
+  	<movement gravity="30" jumpForce="10" speed="6" maxJumps="2"/>
     <audio jump="Assets/audio/fx/jump.wav" doubleJump="Assets/audio/fx/double.wav" gameOver="Assets/audio/fx/game over.wav" gameStart="Assets/audio/fx/start.wav"/>
   </player>
 
