@@ -383,6 +383,14 @@ bool Map::CreateColliders() {
 			{
 				app->collisions->AddCollider(section, Collider::Type::DEATH, this);
 			}
+			else if (data.maplayers[i]->properties.GetProperty("itemType", 0) == 1)
+			{
+				app->collisions->AddCollider(section, Collider::Type::ITEMHEALTH, this);
+			}
+			else if (data.maplayers[i]->properties.GetProperty("itemType", 0) == 2)
+			{
+				app->collisions->AddCollider(section, Collider::Type::ITEMSCORE, this);
+			}
 			else
 			{
 				app->collisions->AddCollider(section, Collider::Type::STATIC, this);
