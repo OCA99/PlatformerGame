@@ -16,9 +16,7 @@ Parallax::Parallax() : Module()
 }
 
 Parallax::~Parallax()
-{
-
-}
+{}
 
 bool Parallax::Awake(pugi::xml_node& config)
 {

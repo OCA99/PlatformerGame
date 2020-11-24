@@ -97,6 +97,7 @@
     <ClCompile Include="Source\Audio.cpp" />
     <ClCompile Include="Source\Input.cpp" />
     <ClCompile Include="Source\Map.cpp" />
+    <ClCompile Include="Source\ModuleUI.cpp" />
     <ClCompile Include="Source\Parallax.cpp" />
     <ClCompile Include="Source\PerfTimer.cpp" />
     <ClCompile Include="Source\Player.cpp" />
@@ -110,6 +111,7 @@
     <ClInclude Include="Source\Collisions.h" />
     <ClInclude Include="Source\Debug.h" />
     <ClInclude Include="Source\Map.h" />
+    <ClInclude Include="Source\ModuleUI.h" />
     <ClInclude Include="Source\Parallax.h" />
     <ClInclude Include="Source\PerfTimer.h" />
     <ClInclude Include="Source\Player.h" />

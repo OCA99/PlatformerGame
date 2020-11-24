@@ -20,6 +20,7 @@ class Debug;
 class Collisions;
 class Player;
 class Parallax;
+class ModuleUI;
 
 class App
 {
@@ -87,6 +88,7 @@ public:
 	Collisions* collisions;
 	Player* player;
 	Parallax* parallax;
+	ModuleUI* ui;
 
 	bool Load();
 	bool Save();
