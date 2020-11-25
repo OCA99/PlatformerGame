@@ -48,10 +48,14 @@ bool ModuleUI::Start()
 // Update: draw background
 bool ModuleUI::Update(float dt)
 {
+	return true;
+}
 
+bool ModuleUI::PostUpdate()
+{
 	IntToDynamicString(scoreText, score);
-	BlitText(0, 0, font, scoreText);
-	BlitText(0, 0, font, "LAVAINA");
+	BlitText(10, 10, font, scoreText);
+	BlitText(10, 10, font, "LAVAINA");
 
 	return true;
 }
@@ -164,7 +168,7 @@ void ModuleUI::BlitText(int x, int y, int font_id, const char* text) const
 		spriteRect.x = spriteRect.w * (charIndex % font->columns);
 		spriteRect.y = spriteRect.h * (charIndex / font->columns);
 
-		app->render->DrawTexture(font->texture, x, y, &spriteRect);
+		app->render->DrawTexture(font->texture, x, y, &spriteRect, 1.0f, 0.0f, INT_MAX, INT_MAX, false);
 
 		// Advance the position where we blit the next character
 		x += spriteRect.w;

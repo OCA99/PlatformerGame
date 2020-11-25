@@ -35,6 +35,7 @@ public:
 	bool Awake(pugi::xml_node& config);
 	bool Start();
 	bool Update(float dt);
+	bool PostUpdate();
 	bool CleanUp();
 
 public:
