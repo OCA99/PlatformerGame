@@ -25,13 +25,22 @@ bool ModuleUI::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
 
-	pugi::xml_node fontPath = config.child("font");
+	pugi::xml_node fontPathN = config.child("font");
+
+	fontPath = fontPathN.attribute("fontPath").as_string();
+	
+	score = 100;
+
+	return ret;
+}
+
+bool ModuleUI::Start()
+{
+	bool ret = true;
 
 	char lookupTable[] = { "0123456789.,\"!'-�ABCDEFGHIJKLMNOPQRSTUVWXYZ.    " };
 
-	font = Load(fontPath.attribute("fontPath").as_string(), lookupTable, 1);
-
-	score = 100;
+	font = Load(fontPath, lookupTable, 3);
 
 	return ret;
 }
@@ -41,7 +50,8 @@ bool ModuleUI::Update(float dt)
 {
 
 	IntToDynamicString(scoreText, score);
-	BlitText(660, 192, font, scoreText);
+	BlitText(0, 0, font, scoreText);
+	BlitText(0, 0, font, "LAVAINA");
 
 	return true;
 }
@@ -154,7 +164,7 @@ void ModuleUI::BlitText(int x, int y, int font_id, const char* text) const
 		spriteRect.x = spriteRect.w * (charIndex % font->columns);
 		spriteRect.y = spriteRect.h * (charIndex / font->columns);
 
-		app->render->DrawTexture(font->texture, x, y, &spriteRect, 0.0f, false);
+		app->render->DrawTexture(font->texture, x, y, &spriteRect);
 
 		// Advance the position where we blit the next character
 		x += spriteRect.w;

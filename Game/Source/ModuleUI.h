@@ -33,6 +33,7 @@ public:
 	~ModuleUI();
 
 	bool Awake(pugi::xml_node& config);
+	bool Start();
 	bool Update(float dt);
 	bool CleanUp();
 
@@ -42,6 +43,7 @@ public:
 
 	int font = -1;
 
+	const char* fontPath;
 	char scoreText[DYNAMIC_TEXT_LEN + 1] = { "0000000000" };
 	char lifeText[2] = { "0" };
 
