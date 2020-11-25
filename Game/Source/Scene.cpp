@@ -245,8 +245,6 @@ bool Scene::PostUpdate()
 
 	app->render->DrawRectangle(fullScreenRect, 0, 0, 0, alpha, true, false);
 
-
-
 	return ret;
 }
 

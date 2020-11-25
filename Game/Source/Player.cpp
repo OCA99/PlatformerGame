@@ -6,6 +6,7 @@
 #include "Textures.h"
 #include "Render.h"
 #include "Audio.h"
+#include "ModuleUI.h"
 #include "Collisions.h"
 #include "SDL/include/SDL_scancode.h"
 #include "Scene.h"
@@ -46,6 +47,8 @@ bool Player::Awake(pugi::xml_node& config)
 bool Player::Start()
 {
 	bool ret = true;
+
+	health = 3;
 
 	LOG("Loading Player textures");
 
@@ -207,6 +210,12 @@ void Player::OnCollision(Collider* a, Collider* b)
 
 		ChangeState(playerState, DYING);
 	}
+
+	if (b->type == Collider::Type::ITEMSCORE)
+	{
+		app->ui->score += 100;
+	}
+
 	if (b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE)
 	{
 		int deltaX = a->rect.x - b->rect.x;

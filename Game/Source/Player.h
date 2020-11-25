@@ -73,6 +73,8 @@ public:
 	float gravity;
 	float verticalVelocity = 0.0f;
 
+	int health;
+
 private:
 	unsigned int speed;
 	float maxVerticalVelocity = 30.0f;

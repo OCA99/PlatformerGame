@@ -29,7 +29,9 @@ bool ModuleUI::Awake(pugi::xml_node& config)
 
 	fontPath = fontPathN.attribute("fontPath").as_string();
 	
-	score = 100;
+	score = 0;
+
+	currentLevel = 1;
 
 	return ret;
 }
@@ -42,6 +44,8 @@ bool ModuleUI::Start()
 
 	font = Load(fontPath, lookupTable, 3);
 
+	box = SDL_Rect({ 0, 0, app->render->camera.w, 30 });
+
 	return ret;
 }
 
@@ -53,9 +57,20 @@ bool ModuleUI::Update(float dt)
 
 bool ModuleUI::PostUpdate()
 {
+	app->render->DrawRectangle(box, 33, 31, 48, 255, true, false);
+
+	int uiposx = 10;
+	BlitText(uiposx, 5, font, "LEVEL");
+	IntToString(shortNumberText, currentLevel, 2);
+	BlitText(uiposx + 55, 5, font, shortNumberText);
+
+	BlitText(uiposx + 90, 5, font, "HEALTH");
+	IntToString(shortNumberText, app->player->health, 2);
+	BlitText(uiposx + 155, 5, font, shortNumberText);
+
+	BlitText(uiposx + 320, 5, font, "SCORE");
 	IntToDynamicString(scoreText, score);
-	BlitText(10, 10, font, scoreText);
-	BlitText(10, 10, font, "LAVAINA");
+	BlitText(uiposx + 375, 5, font, scoreText);
 
 	return true;
 }
@@ -184,6 +199,22 @@ void ModuleUI::IntToDynamicString(char* buffer, int k) {
 	buffer[DYNAMIC_TEXT_LEN] = 0;
 
 	int i = DYNAMIC_TEXT_LEN - 1;
+	while (k != 0) {
+		if (i < 0) break;
+		buffer[i--] += k % 10;
+		k /= 10;
+	}
+}
+
+void ModuleUI::IntToString(char* buffer, int k, int length) {
+
+	for (int i = 0; i < length; i++) {
+		buffer[i] = '0';
+	}
+
+	buffer[length] = 0;
+
+	int i = length - 1;
 	while (k != 0) {
 		if (i < 0) break;
 		buffer[i--] += k % 10;
