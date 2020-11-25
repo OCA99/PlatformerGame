@@ -75,6 +75,8 @@ public:
 
 	int health;
 
+	Point<int> initialPosition;
+
 private:
 	unsigned int speed;
 	float maxVerticalVelocity = 30.0f;

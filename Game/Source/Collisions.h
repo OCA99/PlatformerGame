@@ -36,10 +36,11 @@ public:
 	// Removes the collider memory and removes it from the colliders array
 	void RemoveCollider(Collider* collider);
 
-private:
 	// All existing colliders in the scene
 	List<Collider*> staticColliders;
 	List<Collider*> dynamicColliders;
+
+private:
 };
 
 #endif // __COLLISIONS_H__
