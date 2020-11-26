@@ -12097,8 +12097,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="795"/>
+   <tile gid="796"/>
    <tile/>
    <tile/>
    <tile/>
@@ -12303,8 +12303,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="799"/>
+   <tile gid="800"/>
    <tile/>
    <tile/>
    <tile/>
@@ -124625,6 +124625,8 @@
    <tile/>
    <tile/>
    <tile/>
+   <tile gid="275"/>
+   <tile gid="275"/>
    <tile/>
    <tile/>
    <tile/>
@@ -124829,10 +124831,8 @@
    <tile/>
    <tile/>
    <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
-   <tile/>
+   <tile gid="275"/>
+   <tile gid="275"/>
    <tile/>
    <tile/>
    <tile/>
