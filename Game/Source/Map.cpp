@@ -391,6 +391,10 @@ bool Map::CreateColliders() {
 			{
 				app->collisions->AddCollider(section, Collider::Type::ITEMSCORE, this);
 			}
+			else if (data.maplayers[i]->properties.GetProperty("checkpoint", 0) == 1)
+			{
+				app->collisions->AddCollider(section, Collider::Type::CHECKPOINT, this);
+			}
 			else
 			{
 				app->collisions->AddCollider(section, Collider::Type::STATIC, this);

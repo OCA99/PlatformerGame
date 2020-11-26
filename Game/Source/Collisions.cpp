@@ -90,23 +90,27 @@ bool Collisions::PostUpdate()
 		{
 			if (staticColliders[i]->type == Collider::Type::DEATH)
 			{
-				DrawCollider(&staticColliders[i]->rect, 255, 0, 0, 80);
+				DrawCollider(&staticColliders[i]->rect, 208, 48, 75, 80);
 			}
 			else if (staticColliders[i]->type == Collider::Type::ENDLEVEL)
 			{
-				DrawCollider(&staticColliders[i]->rect, 0, 0, 255, 80);
+				DrawCollider(&staticColliders[i]->rect, 80, 72, 79, 80);
 			}
 			else if (staticColliders[i]->type == Collider::Type::ITEMHEALTH)
 			{
-				DrawCollider(&staticColliders[i]->rect, 0, 255, 255, 80);
+				DrawCollider(&staticColliders[i]->rect, 48, 56, 171, 80);
 			}
 			else if (staticColliders[i]->type == Collider::Type::ITEMSCORE)
 			{
-				DrawCollider(&staticColliders[i]->rect, 37, 40, 80, 80);
+				DrawCollider(&staticColliders[i]->rect, 255, 145, 0, 80);
+			}
+			else if (staticColliders[i]->type == Collider::Type::CHECKPOINT)
+			{
+				DrawCollider(&staticColliders[i]->rect, 48, 171, 54, 80);
 			}
 			else
 			{
-				DrawCollider(&staticColliders[i]->rect, 0, 255, 0, 80);
+				DrawCollider(&staticColliders[i]->rect, 59, 198, 191, 80);
 			}
 		}
 

@@ -225,7 +225,12 @@ void Player::OnCollision(Collider* a, Collider* b)
 		b->pendingToDelete = true;
 	}
 
-	if (b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE)
+	if (b->type == Collider::Type::CHECKPOINT)
+	{
+		app->player->initialPosition = app->player->position;
+	}
+
+	if (b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::CHECKPOINT)
 	{
 		int deltaX = a->rect.x - b->rect.x;
 		int deltaY = a->rect.y - b->rect.y;
