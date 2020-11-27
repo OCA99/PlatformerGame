@@ -40,7 +40,7 @@
   </parallax>
 
   <ui>
-    <ui fontPath="Assets/ui/white.png" teleportMapPath="Assets/ui/teleport_checkpoint2.png"/>
+    <ui fontPath="Assets/ui/white.png" teleportMapPath="Assets/ui/teleport_checkpoint.png"/>
   </ui>
 
 </config>
