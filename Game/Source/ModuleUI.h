@@ -45,6 +45,7 @@ public:
 
 	bool drawTeleportText;
 	bool drawTeleportMap;
+	bool canDraw;
 
 	int font = -1;
 

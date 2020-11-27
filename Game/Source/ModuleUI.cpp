@@ -6,6 +6,7 @@
 #include "ModuleUI.h"
 #include "Player.h"
 #include "Scene.h"
+#include "Input.h"
 
 
 #include <string.h>
@@ -57,6 +58,21 @@ bool ModuleUI::Start()
 // Update: draw background
 bool ModuleUI::Update(float dt)
 {
+	if (canDraw)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+		{
+			if (drawTeleportMap)
+			{
+				drawTeleportMap = false;
+			}
+			else
+			{
+				drawTeleportMap = true;
+			}
+		}
+	}
+
 	return true;
 }
 
