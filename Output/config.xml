@@ -39,8 +39,8 @@
     <texture tex1="Assets/parallax background/background_0.png" tex2="Assets/parallax background/background_1.png" tex3="Assets/parallax background/background_2.png"/>
   </parallax>
 
-  <font>
-    <font fontPath="Assets/font/white.png"/>
-  </font>
+  <ui>
+    <ui fontPath="Assets/ui/white.png" teleportMapPath="Assets/ui/teleport_checkpoint2.png"/>
+  </ui>
 
 </config>

@@ -44,15 +44,21 @@ public:
 	int currentLevel;
 
 	bool drawTeleportText;
+	bool drawTeleportMap;
 
 	int font = -1;
 
 	const char* fontPath;
+	const char* teleportMapPath;
+
+
 	char scoreText[DYNAMIC_TEXT_LEN + 1] = { "0000000000" };
 	char shortNumberText[2] = { "0" };
 	char lifeText[2] = { "0" };
 
 	SDL_Rect box;
+
+	SDL_Texture* teleportMap = nullptr;
 
 	SDL_Texture* pointSpritesheetTex;
 	SDL_Rect pointsRect;

@@ -14,7 +14,7 @@
 
 ModuleUI::ModuleUI() : Module()
 {
-	name.Create("font");
+	name.Create("ui");
 }
 
 ModuleUI::~ModuleUI()
@@ -25,10 +25,11 @@ bool ModuleUI::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
 
-	pugi::xml_node fontPathN = config.child("font");
+	pugi::xml_node uiPathN = config.child("ui");
 
-	fontPath = fontPathN.attribute("fontPath").as_string();
-	
+	fontPath = uiPathN.attribute("fontPath").as_string();
+	teleportMapPath = uiPathN.attribute("teleportMapPath").as_string();
+
 	score = 0;
 
 	currentLevel = 1;
@@ -47,6 +48,8 @@ bool ModuleUI::Start()
 	box = SDL_Rect({ 0, 0, app->render->camera.w, 30 });
 
 	drawTeleportText = false;
+
+	teleportMap = app->tex->Load(teleportMapPath);
 
 	return ret;
 }
@@ -74,8 +77,11 @@ bool ModuleUI::PostUpdate()
 	IntToDynamicString(scoreText, score);
 	BlitText(uiposx + 375, 5, font, scoreText, false);
 
-	if (drawTeleportText)
+	if (drawTeleportText && !drawTeleportMap)
 	BlitText(app->player->position.x - 70, app->player->position.y + 30, font, "PRESS T TO TELEPORT", true);
+
+	if (drawTeleportMap)
+		app->render->DrawTexture(teleportMap, 0, 0, NULL, 0, 0, 0, 0, false);
 
 	return true;
 }

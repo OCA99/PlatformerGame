@@ -227,6 +227,11 @@ void Player::OnCollision(Collider* a, Collider* b)
 
 	if (b->type == Collider::Type::CHECKPOINT)
 	{
+		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+		{
+			app->ui->drawTeleportMap = true;
+		}
+
 		app->player->initialPosition = position;
 		app->ui->drawTeleportText = true;
 	}
@@ -400,6 +405,10 @@ void Player::UpdateState(float dt)
 
 void Player::UpdateLogic(float dt)
 {
+
+	if(!app->ui->drawTeleportText)
+	app->ui->drawTeleportMap = false;
+
 	app->ui->drawTeleportText = false;
 
 	if(!godMode) verticalVelocity -= gravity*dt;
