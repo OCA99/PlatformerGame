@@ -29,7 +29,9 @@ bool ModuleUI::Awake(pugi::xml_node& config)
 	pugi::xml_node uiPathN = config.child("ui");
 
 	fontPath = uiPathN.attribute("fontPath").as_string();
-	teleportMapPath = uiPathN.attribute("teleportMapPath").as_string();
+
+	teleportMapPath1 = uiPathN.attribute("teleportMapPath1").as_string();
+	teleportMapPath2 = uiPathN.attribute("teleportMapPath2").as_string();
 
 	score = 0;
 
@@ -50,7 +52,8 @@ bool ModuleUI::Start()
 
 	drawTeleportText = false;
 
-	teleportMap = app->tex->Load(teleportMapPath);
+	teleportMapLevel1 = app->tex->Load(teleportMapPath1);
+	teleportMapLevel2 = app->tex->Load(teleportMapPath2);
 
 	return ret;
 }
@@ -97,7 +100,21 @@ bool ModuleUI::PostUpdate()
 	BlitText(app->player->position.x - 70, app->player->position.y + 30, font, "PRESS T TO TELEPORT", true);
 
 	if (drawTeleportMap)
-		app->render->DrawTexture(teleportMap, 0, 0, NULL, 0, 0, 0, 0, false);
+	{
+		switch (currentLevel)
+		{
+		case 1:
+			app->render->DrawTexture(teleportMapLevel1, 0, 0, NULL, 0, 0, 0, 0, false);
+			break;
+
+		case 2:
+			app->render->DrawTexture(teleportMapLevel2, 0, 0, NULL, 0, 0, 0, 0, false);
+			break;
+
+		default:
+			break;
+		}
+	}
 
 	return true;
 }

@@ -50,7 +50,8 @@ public:
 	int font = -1;
 
 	const char* fontPath;
-	const char* teleportMapPath;
+	const char* teleportMapPath1;
+	const char* teleportMapPath2;
 
 
 	char scoreText[DYNAMIC_TEXT_LEN + 1] = { "0000000000" };
@@ -59,7 +60,9 @@ public:
 
 	SDL_Rect box;
 
-	SDL_Texture* teleportMap = nullptr;
+	SDL_Texture* teleportMapLevel1 = nullptr;
+	SDL_Texture* teleportMapLevel2 = nullptr;
+
 
 	SDL_Texture* pointSpritesheetTex;
 	SDL_Rect pointsRect;

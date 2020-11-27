@@ -202,6 +202,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 
 	if (b->type == Collider::Type::ENDLEVEL)
 	{
+		app->ui->currentLevel = 2;
 		app->scene->LoadLevel("level2.tmx");
 	}
 

@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Audio.h"
 #include "Parallax.h"
+#include "ModuleUI.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -109,11 +110,13 @@ bool Scene::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
 	{
+		app->ui->currentLevel = 1;
 		LoadLevel("level1.tmx");
 	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
 	{
+		app->ui->currentLevel = 2;
 		LoadLevel("level2.tmx");
 	}
 
