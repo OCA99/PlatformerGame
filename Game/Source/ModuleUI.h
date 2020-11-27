@@ -43,6 +43,8 @@ public:
 	int lifes;
 	int currentLevel;
 
+	bool drawTeleportText;
+
 	int font = -1;
 
 	const char* fontPath;
@@ -67,7 +69,7 @@ public:
 	void UnLoad(int fontIndex);
 
 	// Create a surface from text
-	void BlitText(int x, int y, int fontIndex, const char* text) const;
+	void BlitText(int x, int y, int fontIndex, const char* text, bool useCamera) const;
 	void IntToDynamicString(char* buffer, int k);
 	void IntToString(char* buffer, int k, int length);
 

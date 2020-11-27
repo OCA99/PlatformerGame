@@ -46,6 +46,8 @@ bool ModuleUI::Start()
 
 	box = SDL_Rect({ 0, 0, app->render->camera.w, 30 });
 
+	drawTeleportText = false;
+
 	return ret;
 }
 
@@ -60,17 +62,20 @@ bool ModuleUI::PostUpdate()
 	app->render->DrawRectangle(box, 33, 31, 48, 255, true, false);
 
 	int uiposx = 10;
-	BlitText(uiposx, 5, font, "LEVEL");
+	BlitText(uiposx, 5, font, "LEVEL", false);
 	IntToString(shortNumberText, currentLevel, 2);
-	BlitText(uiposx + 55, 5, font, shortNumberText);
+	BlitText(uiposx + 55, 5, font, shortNumberText, false);
 
-	BlitText(uiposx + 90, 5, font, "HEALTH");
+	BlitText(uiposx + 90, 5, font, "HEALTH", false);
 	IntToString(shortNumberText, app->player->health, 2);
-	BlitText(uiposx + 155, 5, font, shortNumberText);
+	BlitText(uiposx + 155, 5, font, shortNumberText, false);
 
-	BlitText(uiposx + 320, 5, font, "SCORE");
+	BlitText(uiposx + 320, 5, font, "SCORE", false);
 	IntToDynamicString(scoreText, score);
-	BlitText(uiposx + 375, 5, font, scoreText);
+	BlitText(uiposx + 375, 5, font, scoreText, false);
+
+	if (drawTeleportText)
+	BlitText(app->player->position.x - 70, app->player->position.y + 30, font, "PRESS T TO TELEPORT", true);
 
 	return true;
 }
@@ -151,7 +156,7 @@ void ModuleUI::UnLoad(int font_id)
 	k--;
 }
 
-void ModuleUI::BlitText(int x, int y, int font_id, const char* text) const
+void ModuleUI::BlitText(int x, int y, int font_id, const char* text, bool useCamera) const
 {
 	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || fonts[font_id].texture == nullptr)
 	{
@@ -183,7 +188,7 @@ void ModuleUI::BlitText(int x, int y, int font_id, const char* text) const
 		spriteRect.x = spriteRect.w * (charIndex % font->columns);
 		spriteRect.y = spriteRect.h * (charIndex / font->columns);
 
-		app->render->DrawTexture(font->texture, x, y, &spriteRect, 1.0f, 0.0f, INT_MAX, INT_MAX, false);
+		app->render->DrawTexture(font->texture, x, y, &spriteRect, 1.0f, 0.0f, INT_MAX, INT_MAX, useCamera);
 
 		// Advance the position where we blit the next character
 		x += spriteRect.w;

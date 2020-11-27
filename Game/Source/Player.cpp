@@ -227,7 +227,8 @@ void Player::OnCollision(Collider* a, Collider* b)
 
 	if (b->type == Collider::Type::CHECKPOINT)
 	{
-		app->player->initialPosition = app->player->position;
+		app->player->initialPosition = position;
+		app->ui->drawTeleportText = true;
 	}
 
 	if (b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::CHECKPOINT)
@@ -399,6 +400,8 @@ void Player::UpdateState(float dt)
 
 void Player::UpdateLogic(float dt)
 {
+	app->ui->drawTeleportText = false;
+
 	if(!godMode) verticalVelocity -= gravity*dt;
 
 	if (verticalVelocity > maxVerticalVelocity)
