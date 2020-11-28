@@ -11,6 +11,8 @@
 #include "Parallax.h"
 #include "ModuleUI.h"
 
+#include "Optick/include/optick.h"
+
 #include "Defs.h"
 #include "Log.h"
 
@@ -65,9 +67,9 @@ bool Scene::Start()
 
 	titleScreenAnim.loop = gameOverAnim.loop = logoAnim.loop = true;
 
-	logoAnim.speed = 0.1f;
-	titleScreenAnim.speed = 0.1f;
-	gameOverAnim.speed = 0.03f;
+	logoAnim.speed = 6.0f;
+	titleScreenAnim.speed = 6.0f;
+	gameOverAnim.speed = 1.8f;
 
 	screenDisplayAnim = &logoAnim;
 
@@ -156,7 +158,7 @@ bool Scene::Update(float dt)
 		fading = false;
 	}
 
-	screenDisplayAnim->Update();
+	screenDisplayAnim->Update(dt);
 
 	return true;
 }
@@ -231,6 +233,8 @@ void Scene::LoadLevel(SString name)
 // Called each loop iteration
 bool Scene::PostUpdate()
 {
+	OPTICK_EVENT("ScenePostUpdate", Optick::Category::Rendering);
+
 	bool ret = true;
 
 	if(app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)

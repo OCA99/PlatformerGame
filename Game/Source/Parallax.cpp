@@ -7,8 +7,9 @@
 #include "Input.h"
 #include "Player.h"
 
-#include <iostream>
-#include <math.h>
+#include "Optick/include/optick.h"
+
+#include <cmath>
 
 Parallax::Parallax() : Module()
 {
@@ -57,6 +58,8 @@ bool Parallax::Update(float dt)
 
 bool Parallax::PostUpdate()
 {
+	OPTICK_EVENT("ParallaxPostUpdate", Optick::Category::Rendering);
+
 	if (enabled)
 	{
 		for (int i = 0; i < 5; i++)

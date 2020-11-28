@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "App.h"
 #include "Window.h"
 #include "Input.h"
@@ -13,6 +11,8 @@
 #include "ModuleUI.h"
 #include "Collisions.h"
 #include "Player.h"
+
+#include "Optick/include/optick.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -197,6 +197,7 @@ void App::PrepareUpdate()
 // ---------------------------------------------
 void App::FinishUpdate()
 {
+	OPTICK_EVENT("FinishUpdate", Optick::Category::GameLogic);
 	if (requestLoad == true)
 	{
 		Load();
@@ -234,6 +235,7 @@ void App::FinishUpdate()
 // Call modules before each loop iteration
 bool App::PreUpdate()
 {
+	OPTICK_EVENT("PreUpdate", Optick::Category::GameLogic);
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.start;
@@ -257,6 +259,7 @@ bool App::PreUpdate()
 // Call modules on each loop iteration
 bool App::DoUpdate()
 {
+	OPTICK_EVENT("DoUpdate", Optick::Category::GameLogic);
 	bool ret = true;
 	ListItem<Module*>* item;
 	item = modules.start;
@@ -280,6 +283,7 @@ bool App::DoUpdate()
 // Call modules after each loop iteration
 bool App::PostUpdate()
 {
+	OPTICK_EVENT("PostUpdate", Optick::Category::GameLogic);
 	bool ret = true;
 	ListItem<Module*>* item;
 	Module* pModule = NULL;
