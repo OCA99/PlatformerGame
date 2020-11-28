@@ -76,6 +76,12 @@ public:
 	int health;
 
 	Point<float> initialPosition;
+	Point<float> respawnPosition;
+
+	Point<float> checkpoint1Position;
+	Point<float> checkpoint2Position;
+	bool unlockedChekpoint1 = false;
+	bool unlockedChekpoint2 = false;
 
 private:
 	unsigned int speed;

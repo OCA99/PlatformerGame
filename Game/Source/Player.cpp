@@ -224,20 +224,40 @@ void Player::OnCollision(Collider* a, Collider* b)
 	if (b->type == Collider::Type::ITEMHEALTH)
 	{
 		if(health < 3)
-		app->player->health++;
+		health++;
 
 		b->pendingToDelete = true;
 	}
 
-	if (b->type == Collider::Type::CHECKPOINT)
+	if (b->type == Collider::Type::CHECKPOINT1)
 	{
 		app->ui->canDraw = true;
 
-		app->player->initialPosition = position;
+		respawnPosition = position;
+		checkpoint1Position = position;
+		unlockedChekpoint1 = true;
+
+		if (!app->ui->drawTeleportMap)
+			app->ui->destinationCheckpoint = 1;
+
 		app->ui->drawTeleportText = true;
 	}
 
-	if (b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::CHECKPOINT)
+	if (b->type == Collider::Type::CHECKPOINT2)
+	{
+		app->ui->canDraw = true;
+
+		respawnPosition = position;
+		checkpoint2Position = position;
+		unlockedChekpoint2 = true;
+
+		if (!app->ui->drawTeleportMap)
+			app->ui->destinationCheckpoint = 2;
+
+		app->ui->drawTeleportText = true;
+	}
+
+	if (b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::CHECKPOINT1 && b->type != Collider::Type::CHECKPOINT2)
 	{
 		int deltaX = a->rect.x - b->rect.x;
 		int deltaY = a->rect.y - b->rect.y;
@@ -413,12 +433,6 @@ void Player::UpdateState(float dt)
 void Player::UpdateLogic(float dt)
 {
 
-	if(!app->ui->drawTeleportText)
-	app->ui->drawTeleportMap = false;
-
-	app->ui->canDraw = true;
-	app->ui->drawTeleportText = false;
-
 	if(!godMode) verticalVelocity -= gravity*dt;
 
 	if (verticalVelocity > maxVerticalVelocity)
@@ -552,7 +566,7 @@ void Player::UpdateLogic(float dt)
 					app->audio->PlayFx(gameStartFx, 0);
 					playerState = PlayerState::IDLE;
 					verticalVelocity = 0.0f;
-					position = initialPosition;
+					position = respawnPosition;
 				}
 			}
 

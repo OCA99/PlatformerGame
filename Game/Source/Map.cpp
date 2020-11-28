@@ -398,7 +398,11 @@ bool Map::CreateColliders() {
 			}
 			else if (data.maplayers[i]->properties.GetProperty("checkpoint", 0) == 1)
 			{
-				app->collisions->AddCollider(section, Collider::Type::CHECKPOINT, this);
+				app->collisions->AddCollider(section, Collider::Type::CHECKPOINT1, this);
+			}
+			else if (data.maplayers[i]->properties.GetProperty("checkpoint", 0) == 2)
+			{
+				app->collisions->AddCollider(section, Collider::Type::CHECKPOINT2, this);
 			}
 			else
 			{

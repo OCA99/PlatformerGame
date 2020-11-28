@@ -42,6 +42,7 @@ public:
 	int score;
 	int lifes;
 	int currentLevel;
+	int destinationCheckpoint;
 
 	bool drawTeleportText;
 	bool drawTeleportMap;

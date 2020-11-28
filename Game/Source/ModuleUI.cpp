@@ -53,6 +53,8 @@ bool ModuleUI::Start()
 	teleportMapLevel1 = app->tex->Load(teleportMapPath1);
 	teleportMapLevel2 = app->tex->Load(teleportMapPath2);
 
+	destinationCheckpoint = 0;
+
 	return ret;
 }
 
@@ -72,7 +74,58 @@ bool ModuleUI::Update(float dt)
 				drawTeleportMap = true;
 			}
 		}
+		if (drawTeleportMap)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+			{
+				destinationCheckpoint++;
+				if (destinationCheckpoint > 2)
+				{
+					destinationCheckpoint = 2;
+				}
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
+			{
+				destinationCheckpoint--;
+				if (destinationCheckpoint < 0)
+				{
+					destinationCheckpoint = 0;
+				}
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			{
+				switch (destinationCheckpoint)
+				{
+				case 0:
+					app->player->position = app->player->initialPosition;
+					break;
+
+				case 1:
+					if (!app->player->unlockedChekpoint1)
+						break;
+					app->player->position = app->player->checkpoint1Position;
+					break;
+
+				case 2:
+					if (!app->player->unlockedChekpoint2)
+						break;
+					app->player->position = app->player->checkpoint2Position;
+					break;
+
+				default:
+					break;
+				}
+			}
+		}
 	}
+
+	if (!drawTeleportText)
+		drawTeleportMap = false;
+
+	canDraw = false;
+	drawTeleportText = false;
 
 	return true;
 }
