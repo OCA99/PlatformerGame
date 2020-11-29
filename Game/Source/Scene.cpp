@@ -50,7 +50,8 @@ bool Scene::Start()
 	fullScreenRect = SDL_Rect({ 0, 0, app->render->camera.w, app->render->camera.h });
 
 	screenTexture = app->tex->Load(screenTexturePath);
-	if (screenTexture == nullptr)LOG("could'nt load title screen");
+	if (screenTexture == nullptr)
+		LOG("Couldn't load title screen");
 
 	titleScreenAnim.PushBack({ 0,0,480,270});
 	titleScreenAnim.PushBack({ 0,270, 480, 270 });
@@ -115,33 +116,36 @@ bool Scene::Update(float dt)
 		FadeToNewState(PLAYING);
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+	if (gameplayState == PLAYING)
 	{
-		app->RequestLoad();
-		LOG("LOAD REQUESTED");
-	}
+		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
+		{
+			app->RequestLoad();
+			LOG("LOAD REQUESTED");
+		}
 
-	if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
-	{
-		app->RequestSave();
-		LOG("SAVE REQUESTED");
-	}
+		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
+		{
+			app->RequestSave();
+			LOG("SAVE REQUESTED");
+		}
 
-	if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
-	{
-		app->ui->currentLevel = 1;
-		LoadLevel("level1.tmx");
-	}
+		if (app->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)
+		{
+			app->ui->currentLevel = 1;
+			LoadLevel("level1.tmx");
+		}
 
-	if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
-	{
-		app->ui->currentLevel = 2;
-		LoadLevel("level2.tmx");
-	}
+		if (app->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)
+		{
+			app->ui->currentLevel = 2;
+			LoadLevel("level2.tmx");
+		}
 
-	if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
-	{
-		LoadLevel(currentLevel);
+		if (app->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)
+		{
+			LoadLevel(currentLevel);
+		}
 	}
 
 	// 8 to volume down and 9 to volume up
@@ -231,7 +235,6 @@ void Scene::ChangeGameplayState(GameplayState newState)
 			app->map->CleanUp();
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
-			app->player->playing = false;
 			break;
 		case GAME_OVER_SCREEN:
 			screenDisplayAnim = &gameOverAnim;
@@ -240,7 +243,6 @@ void Scene::ChangeGameplayState(GameplayState newState)
 			app->map->CleanUp();
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
-			app->player->playing = false;
 			break;
 	}
 }

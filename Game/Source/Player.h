@@ -83,9 +83,12 @@ public:
 	bool unlockedChekpoint1 = false;
 	bool unlockedChekpoint2 = false;
 
-	bool playing = false;
+	bool gravityOn = false;
 
 private:
+	float initialWaitCount = 0.0f;
+	float initialWait = 0.3f;
+
 	unsigned int speed;
 	float maxVerticalVelocity = 800.0f;
 	float jumpForce;
