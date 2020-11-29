@@ -225,7 +225,6 @@ void Player::OnCollision(Collider* a, Collider* b)
 
 	if (b->type == Collider::Type::ITEMHEALTH)
 	{
-		if(health < 3)
 		health++;
 
 		b->pendingToDelete = true;

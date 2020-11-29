@@ -74,10 +74,9 @@ public:
 
 
 	SDL_Texture* livesTexture = nullptr;
-	SDL_Rect *oneLifeLeft;
-	SDL_Rect* twoLivesLeft;
-	SDL_Rect* threeLivesLeft;
-	SDL_Rect* fourLivesLeft;
+	SDL_Rect livesRect;
+	SDL_Rect extraLivesRect;
+
 
 	// Loads a font file from a texture
 	// Returns a font index from the fonts array

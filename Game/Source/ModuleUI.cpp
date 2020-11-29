@@ -9,8 +9,6 @@
 #include "Input.h"
 
 #include "Optick/include/optick.h"
-#include "../Log.h"
-
 
 ModuleUI::ModuleUI() : Module()
 {
@@ -55,15 +53,13 @@ bool ModuleUI::Start()
 
 	teleportMapLevel1 = app->tex->Load(teleportMapPath1);
 	teleportMapLevel2 = app->tex->Load(teleportMapPath2);
+	
+	livesTexture = app->tex->Load(livesTexturePath);
+	livesRect = SDL_Rect({ 0,0,12,10 });
+	extraLivesRect = SDL_Rect({ 12,0,12,10 });
 
-	destinationCheckpoint = 0;
 
-	//livesTexture = app->tex->Load(livesTexturePath);
-	livesTexture = app->tex->Load("../Output/Assets/ui/lives 10px H.png");
-	oneLifeLeft = &SDL_Rect({ 0, 0, 8,7 });
-	threeLivesLeft = &SDL_Rect({ 0, 0, 20,7 });
-	threeLivesLeft = &SDL_Rect({ 0, 0, 28,7 });
-	fourLivesLeft = &SDL_Rect({ 0, 0, 38,7 });
+	destinationCheckpoint = 0;	
 
 	return ret;
 }
@@ -157,36 +153,49 @@ bool ModuleUI::PostUpdate()
 	IntToString(shortNumberText, currentLevel, 2);
 	BlitText(uiposx + 55, 5, font, shortNumberText, false);
 
-	//BlitText(uiposx + 90, 5, font, "HEALTH", false);
-	//IntToString(shortNumberText, app->player->health, 2);
-	//BlitText(uiposx + 155, 5, font, shortNumberText, false);
-
+	BlitText(uiposx + 90, 5, font, "HEALTH", false);
+	/*IntToString(shortNumberText, app->player->health, 2);
+	BlitText(uiposx + 155, 5, font, shortNumberText, false);
+	*/
 	
-	
-	switch (app->player->health)
+	for (int i = 0; i < app->player->health; i++)
 	{
-	case(1):
-		oneLifeLeft = &SDL_Rect({ 0, 0, 12,10 });
-		app->render->DrawTexture(livesTexture, uiposx + 90, 3, oneLifeLeft, 0, 0, 0, 0, false);
-		break;
-	case(2):
-		twoLivesLeft = &SDL_Rect({ 0, 0, 26,10 });
-		app->render->DrawTexture(livesTexture, uiposx + 90,3, twoLivesLeft, 0, 0, 0, 0, false);
-		break;
-	case(3):
-		threeLivesLeft= &SDL_Rect({ 0, 0, 40,10});
-		app->render->DrawTexture(livesTexture, uiposx + 90, 3, threeLivesLeft, 0, 0, 0, 0, false);
-		break;
-	case(4):
-		fourLivesLeft = &SDL_Rect({ 0, 0, 56,10 });
-		app->render->DrawTexture(livesTexture, uiposx + 90, 3, fourLivesLeft, 0, 0, 0, 0, false);
-		break;
-	default:
+		if (i < 3)
+		{
+			app->render->DrawTexture(livesTexture, uiposx + 150 + (i * 15), 3, &livesRect, 0, 0, 0, 0, false);
+		}
+		else
+		{
+			app->render->DrawTexture(livesTexture, uiposx + 150 + (i * 15), 3, &extraLivesRect, 0, 0, 0, 0, false);
 
-		break;
+		}
 	}
-	
 
+
+
+	//switch (app->player->health)
+	//{
+	//case(1):
+	//	app->render->DrawTexture(livesTexture, uiposx + 150, 3, &livesRect, 0, 0, 0, 0, false);
+	//	break;
+	//case(2):
+	//	app->render->DrawTexture(livesTexture, uiposx + 150, 3, &livesRect, 0, 0, 0, 0, false);
+	//	app->render->DrawTexture(livesTexture, uiposx + 165,3, &livesRect, 0, 0, 0, 0, false);
+	//	break;
+	//case(3):
+	//	app->render->DrawTexture(livesTexture, uiposx + 150, 3, &livesRect, 0, 0, 0, 0, false);
+	//	app->render->DrawTexture(livesTexture, uiposx + 165, 3, &livesRect, 0, 0, 0, 0, false);
+	//	app->render->DrawTexture(livesTexture, uiposx + 180, 3, &livesRect, 0, 0, 0, 0, false);
+	//	break;
+	//case(4):
+	//	app->render->DrawTexture(livesTexture, uiposx + 150, 3, &livesRect, 0, 0, 0, 0, false);
+	//	app->render->DrawTexture(livesTexture, uiposx + 165, 3, &livesRect, 0, 0, 0, 0, false);
+	//	app->render->DrawTexture(livesTexture, uiposx + 180, 3, &livesRect, 0, 0, 0, 0, false);
+	//	app->render->DrawTexture(livesTexture, uiposx + 195, 3, &livesRect, 0, 0, 0, 0, false);
+	//	break;
+	//default:
+	//	break;
+	//}
 
 	BlitText(uiposx + 320, 5, font, "SCORE", false);
 	IntToDynamicString(scoreText, score);
