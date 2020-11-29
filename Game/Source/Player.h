@@ -83,6 +83,8 @@ public:
 	bool unlockedChekpoint1 = false;
 	bool unlockedChekpoint2 = false;
 
+	bool playing = false;
+
 private:
 	unsigned int speed;
 	float maxVerticalVelocity = 800.0f;
