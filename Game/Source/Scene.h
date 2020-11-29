@@ -64,6 +64,7 @@ private:
 	Animation turnOffAnim;
 	Animation logoAnim;
 
+	
 	float currentFade = 0.0f;
 	bool fading = false;
 	GameplayState targetState = gameplayState;
@@ -71,6 +72,13 @@ private:
 
 	const char* musicPath;
 	const char* screenTexturePath;
+public:
+	//items animations
+	SDL_Texture* itemsTexture = nullptr;
+	Animation* item1;
+	Animation appleItemAnim;
+	Animation strawberryItemAnim;
+	Animation kiwiItemAnim;
 };
 
 #endif // __SCENE_H__

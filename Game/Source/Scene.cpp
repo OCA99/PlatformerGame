@@ -73,6 +73,23 @@ bool Scene::Start()
 
 	screenDisplayAnim = &logoAnim;
 
+	//item animations
+	itemsTexture = app->tex->Load("../Output/Assets/items/item_spritesheet.png");
+
+	for(int i=2;i<255;i+=16)
+	{
+		appleItemAnim.PushBack({ i,0,14,14 });	
+	}
+	for (int i = 2; i < 255; i += 16)
+	{
+		strawberryItemAnim.PushBack({ i,32,14,20 });
+	}
+	for (int i = 2; i < 255; i += 16)
+	{
+		kiwiItemAnim.PushBack({ i,16,14,14 });
+	}
+	appleItemAnim.speed =strawberryItemAnim.speed=kiwiItemAnim.speed= 17.0f;
+
 	return true;
 }
 
@@ -157,6 +174,11 @@ bool Scene::Update(float dt)
 		currentFade = 0.0f;
 		fading = false;
 	}
+
+	//items update logic
+	
+	item1 = &kiwiItemAnim;
+	item1->Update(dt);
 
 	screenDisplayAnim->Update(dt);
 
@@ -253,6 +275,15 @@ bool Scene::PostUpdate()
 	int alpha = adjustedFade*255.0f;
 
 	app->render->DrawRectangle(fullScreenRect, 0, 0, 0, alpha, true, false);
+
+	//items drawing
+	SDL_Rect itemRect = item1->GetCurrentFrame();
+
+	int x,y;
+	app->input->GetMousePosition(x, y);
+	LOG(" x %d y %d", x, y);
+
+	app->render->DrawTexture(itemsTexture, 346, 156, &itemRect);
 
 	return ret;
 }

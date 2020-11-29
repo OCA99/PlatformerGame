@@ -138,6 +138,11 @@ bool ModuleUI::Update(float dt)
 	canDrawSecret = false;
 	drawTeleportText = false;
 
+	//draw items
+
+	app->scene->item1 = &app->scene->kiwiItemAnim;
+	app->scene->item1->Update(dt);
+
 	return true;
 }
 
@@ -156,7 +161,6 @@ bool ModuleUI::PostUpdate()
 	//IntToString(shortNumberText, app->player->health, 2);
 	//BlitText(uiposx + 155, 5, font, shortNumberText, false);
 
-	LOG("lives : %d", app->player->health);
 	
 	
 	switch (app->player->health)
