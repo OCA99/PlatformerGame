@@ -61,7 +61,7 @@ bool ModuleUI::Start()
 // Update: draw background
 bool ModuleUI::Update(float dt)
 {
-	if (canDraw)
+	if (canDrawMap)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 		{
@@ -124,7 +124,8 @@ bool ModuleUI::Update(float dt)
 	if (!drawTeleportText)
 		drawTeleportMap = false;
 
-	canDraw = false;
+	canDrawMap = false;
+	canDrawSecret = false;
 	drawTeleportText = false;
 
 	return true;
@@ -150,7 +151,14 @@ bool ModuleUI::PostUpdate()
 	BlitText(uiposx + 375, 5, font, scoreText, false);
 
 	if (drawTeleportText && !drawTeleportMap)
-	BlitText(app->player->position.x - 70, app->player->position.y + 30, font, "PRESS T TO TELEPORT", true);
+		BlitText(app->player->position.x - 70, app->player->position.y + 30, font, "PRESS T TO TELEPORT", true);
+
+	if (canDrawSecret)
+	{
+		BlitText(app->player->position.x - 70, app->player->position.y + 30, font, "ONLY A GOD CAN REACH", true);
+		BlitText(app->player->position.x - 70, app->player->position.y + 40, font, "MIDA'S HALL", true);
+	}
+
 
 	if (drawTeleportMap)
 	{

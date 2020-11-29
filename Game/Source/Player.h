@@ -107,6 +107,11 @@ private:
 	const char* jumpFxPath;
 	const char* doubleJumpFxPath;
 	const char* gameOverFxPath;
+
+	uint nutsFx = 0;
+	const char* nutsFxPath;
+	bool nutOnce = false;
+
 public:
 	uint gameStartFx = 0;
 	const char* gameStartFxPath;
