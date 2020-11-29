@@ -2,6 +2,7 @@
 #define __ModuleUI_H__
 
 #include "Module.h"
+#include "Animation.h"
 #include "SDL\include\SDL_pixels.h"
 
 #define MAX_FONTS 100
@@ -9,6 +10,7 @@
 #define DYNAMIC_TEXT_LEN 10
 
 struct SDL_Texture;
+struct Animation;
 
 struct Font
 {
@@ -54,7 +56,8 @@ public:
 	const char* fontPath;
 	const char* teleportMapPath1;
 	const char* teleportMapPath2;
-
+	
+	const char* livesTexturePath;
 
 	char scoreText[DYNAMIC_TEXT_LEN + 1] = { "0000000000" };
 	char shortNumberText[2] = { "0" };
@@ -68,6 +71,13 @@ public:
 
 	SDL_Texture* pointSpritesheetTex;
 	SDL_Rect pointsRect;
+
+
+	SDL_Texture* livesTexture = nullptr;
+	SDL_Rect *oneLifeLeft;
+	SDL_Rect* twoLivesLeft;
+	SDL_Rect* threeLivesLeft;
+	SDL_Rect* fourLivesLeft;
 
 	// Loads a font file from a texture
 	// Returns a font index from the fonts array

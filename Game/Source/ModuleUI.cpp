@@ -9,6 +9,7 @@
 #include "Input.h"
 
 #include "Optick/include/optick.h"
+#include "../Log.h"
 
 
 ModuleUI::ModuleUI() : Module()
@@ -30,6 +31,8 @@ bool ModuleUI::Awake(pugi::xml_node& config)
 
 	teleportMapPath1 = uiPathN.attribute("teleportMapPath1").as_string();
 	teleportMapPath2 = uiPathN.attribute("teleportMapPath2").as_string();
+
+	livesTexturePath= uiPathN.attribute("livesTexturePath").as_string();
 
 	score = 0;
 
@@ -54,6 +57,13 @@ bool ModuleUI::Start()
 	teleportMapLevel2 = app->tex->Load(teleportMapPath2);
 
 	destinationCheckpoint = 0;
+
+	//livesTexture = app->tex->Load(livesTexturePath);
+	livesTexture = app->tex->Load("../Output/Assets/ui/lives.png");
+	oneLifeLeft = &SDL_Rect({ 0, 0, 8,7 });
+	threeLivesLeft = &SDL_Rect({ 0, 0, 20,7 });
+	threeLivesLeft = &SDL_Rect({ 0, 0, 28,7 });
+	fourLivesLeft = &SDL_Rect({ 0, 0, 38,7 });
 
 	return ret;
 }
@@ -142,9 +152,37 @@ bool ModuleUI::PostUpdate()
 	IntToString(shortNumberText, currentLevel, 2);
 	BlitText(uiposx + 55, 5, font, shortNumberText, false);
 
-	BlitText(uiposx + 90, 5, font, "HEALTH", false);
-	IntToString(shortNumberText, app->player->health, 2);
-	BlitText(uiposx + 155, 5, font, shortNumberText, false);
+	//BlitText(uiposx + 90, 5, font, "HEALTH", false);
+	//IntToString(shortNumberText, app->player->health, 2);
+	//BlitText(uiposx + 155, 5, font, shortNumberText, false);
+
+	LOG("lives : %d", app->player->health);
+	
+	
+	switch (app->player->health)
+	{
+	case(1):
+		oneLifeLeft = &SDL_Rect({ 0, 0, 8,7 });
+		app->render->DrawTexture(livesTexture, uiposx + 155, 5, oneLifeLeft, 0, 0, 0, 0, false);
+		break;
+	case(2):
+		twoLivesLeft = &SDL_Rect({ 0, 0, 20,7 });
+		app->render->DrawTexture(livesTexture, 0, 0, twoLivesLeft, 0, 0, 0, 0, false);
+		break;
+	case(3):
+		threeLivesLeft= &SDL_Rect({ 0, 0, 28,7});
+		app->render->DrawTexture(livesTexture, uiposx + 155, 5, threeLivesLeft, 0, 0, 0, 0, false);
+		break;
+	case(4):
+		fourLivesLeft = &SDL_Rect({ 0, 0, 38,7 });
+		app->render->DrawTexture(livesTexture, 0, 0, fourLivesLeft, 0, 0, 0, 0, false);
+		break;
+	default:
+
+		break;
+	}
+	
+
 
 	BlitText(uiposx + 320, 5, font, "SCORE", false);
 	IntToDynamicString(scoreText, score);
