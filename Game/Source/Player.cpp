@@ -42,6 +42,7 @@ bool Player::Awake(pugi::xml_node& config)
 	doubleJumpFxPath = audio.attribute("doubleJump").as_string();
 	gameOverFxPath = audio.attribute("gameOver").as_string();
 	gameStartFxPath = audio.attribute("gameStart").as_string();
+	nutsFxPath = audio.attribute("nuts").as_string();
 
 	return ret;
 }
@@ -62,6 +63,7 @@ bool Player::Start()
 	doubleJumpFx = app->audio->LoadFx(doubleJumpFxPath);
 	gameOverFx = app->audio->LoadFx(gameOverFxPath);
 	gameStartFx = app->audio->LoadFx(gameStartFxPath);
+	nutsFx = app->audio->LoadFx(nutsFxPath);
 
 	currentAnim = &idleRightAnim;
 
@@ -229,9 +231,18 @@ void Player::OnCollision(Collider* a, Collider* b)
 		b->pendingToDelete = true;
 	}
 
+	if (b->type == Collider::Type::ITEMNUT)
+	{
+		if (!nutOnce)
+			app->audio->PlayFx(nutsFx, 0);
+
+		nutOnce = true;
+		app->ui->score += 100;
+	}
+
 	if (b->type == Collider::Type::CHECKPOINT1)
 	{
-		app->ui->canDraw = true;
+		app->ui->canDrawMap = true;
 
 		respawnPosition = position;
 		checkpoint1Position = position;
@@ -245,7 +256,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 
 	if (b->type == Collider::Type::CHECKPOINT2)
 	{
-		app->ui->canDraw = true;
+		app->ui->canDrawMap = true;
 
 		respawnPosition = position;
 		checkpoint2Position = position;
@@ -257,7 +268,12 @@ void Player::OnCollision(Collider* a, Collider* b)
 		app->ui->drawTeleportText = true;
 	}
 
-	if (b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::CHECKPOINT1 && b->type != Collider::Type::CHECKPOINT2)
+	if (b->type == Collider::Type::SECRETTEXT)
+	{
+		app->ui->canDrawSecret = true;
+	}
+
+	if (b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::SECRETTEXT && b->type != Collider::Type::CHECKPOINT1 && b->type != Collider::Type::CHECKPOINT2)
 	{
 		int deltaX = a->rect.x - b->rect.x;
 		int deltaY = a->rect.y - b->rect.y;
@@ -566,6 +582,7 @@ void Player::UpdateLogic(float dt)
 					playerState = PlayerState::IDLE;
 					verticalVelocity = 0.0f;
 					position = respawnPosition;
+					isDead = false;
 				}
 			}
 
@@ -602,6 +619,7 @@ void Player::Reload()
 	}
 	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 22, 26 }), Collider::Type::DYNAMIC, this);
 	initialPosition = position;
+	respawnPosition = initialPosition;
 }
 
 void Player::GodMovement(float dt)

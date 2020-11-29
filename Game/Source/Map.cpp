@@ -404,6 +404,10 @@ bool Map::CreateColliders() {
 			{
 				app->collisions->AddCollider(section, Collider::Type::ITEMSCORE, this);
 			}
+			else if (data.maplayers[i]->properties.GetProperty("itemType", 0) == 3)
+			{
+				app->collisions->AddCollider(section, Collider::Type::ITEMNUT, this);
+			}
 			else if (data.maplayers[i]->properties.GetProperty("checkpoint", 0) == 1)
 			{
 				app->collisions->AddCollider(section, Collider::Type::CHECKPOINT1, this);
@@ -411,6 +415,10 @@ bool Map::CreateColliders() {
 			else if (data.maplayers[i]->properties.GetProperty("checkpoint", 0) == 2)
 			{
 				app->collisions->AddCollider(section, Collider::Type::CHECKPOINT2, this);
+			}
+			else if (data.maplayers[i]->properties.GetProperty("text", 0) == 1)
+			{
+				app->collisions->AddCollider(section, Collider::Type::SECRETTEXT, this);
 			}
 			else
 			{

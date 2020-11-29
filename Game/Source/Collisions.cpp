@@ -108,6 +108,10 @@ bool Collisions::PostUpdate()
 			{
 				DrawCollider(&staticColliders[i]->rect, 255, 145, 0, 80);
 			}
+			else if (staticColliders[i]->type == Collider::Type::ITEMNUT || staticColliders[i]->type == Collider::Type::SECRETTEXT)
+			{
+				DrawCollider(&staticColliders[i]->rect, 244, 244, 16, 80);
+			}
 			else if (staticColliders[i]->type == Collider::Type::CHECKPOINT1 || staticColliders[i]->type == Collider::Type::CHECKPOINT2)
 			{
 				DrawCollider(&staticColliders[i]->rect, 48, 171, 54, 80);

@@ -22,7 +22,7 @@
   <player>
   	<texture>Assets/textures/Main Characters/Virtual Guy/SpriteSheet.png</texture>
   	<movement gravity="1800" jumpForce="500" speed="220" maxJumps="2"/>
-    <audio jump="Assets/audio/fx/jump.wav" doubleJump="Assets/audio/fx/double.wav" gameOver="Assets/audio/fx/game over.wav" gameStart="Assets/audio/fx/start.wav"/>
+    <audio jump="Assets/audio/fx/jump.wav" doubleJump="Assets/audio/fx/double.wav" gameOver="Assets/audio/fx/game over.wav" gameStart="Assets/audio/fx/game start.wav" nuts="Assets/audio/fx/deez_nuts.wav" />
   </player>
 
   <!-- L03: Added maps folder as config option -->
