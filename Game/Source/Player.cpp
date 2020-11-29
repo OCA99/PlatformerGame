@@ -449,7 +449,7 @@ void Player::UpdateState(float dt)
 void Player::UpdateLogic(float dt)
 {
 
-	if(!godMode) verticalVelocity -= gravity*dt;
+	if(!godMode && playing) verticalVelocity -= gravity*dt;
 
 	if (verticalVelocity > maxVerticalVelocity)
 	{
@@ -620,6 +620,7 @@ void Player::Reload()
 	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 22, 26 }), Collider::Type::DYNAMIC, this);
 	initialPosition = position;
 	respawnPosition = initialPosition;
+	playing = true;
 }
 
 void Player::GodMovement(float dt)

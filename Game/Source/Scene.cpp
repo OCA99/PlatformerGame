@@ -209,6 +209,7 @@ void Scene::ChangeGameplayState(GameplayState newState)
 			app->map->CleanUp();
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
+			app->player->playing = false;
 			break;
 		case GAME_OVER_SCREEN:
 			screenDisplayAnim = &gameOverAnim;
@@ -217,6 +218,7 @@ void Scene::ChangeGameplayState(GameplayState newState)
 			app->map->CleanUp();
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
+			app->player->playing = false;
 			break;
 	}
 }
