@@ -59,7 +59,7 @@ bool ModuleUI::Start()
 	destinationCheckpoint = 0;
 
 	//livesTexture = app->tex->Load(livesTexturePath);
-	livesTexture = app->tex->Load("../Output/Assets/ui/lives.png");
+	livesTexture = app->tex->Load("../Output/Assets/ui/lives 10px H.png");
 	oneLifeLeft = &SDL_Rect({ 0, 0, 8,7 });
 	threeLivesLeft = &SDL_Rect({ 0, 0, 20,7 });
 	threeLivesLeft = &SDL_Rect({ 0, 0, 28,7 });
@@ -162,20 +162,20 @@ bool ModuleUI::PostUpdate()
 	switch (app->player->health)
 	{
 	case(1):
-		oneLifeLeft = &SDL_Rect({ 0, 0, 8,7 });
-		app->render->DrawTexture(livesTexture, uiposx + 90, 5, oneLifeLeft, 0, 0, 0, 0, false);
+		oneLifeLeft = &SDL_Rect({ 0, 0, 12,10 });
+		app->render->DrawTexture(livesTexture, uiposx + 90, 3, oneLifeLeft, 0, 0, 0, 0, false);
 		break;
 	case(2):
-		twoLivesLeft = &SDL_Rect({ 0, 0, 20,7 });
-		app->render->DrawTexture(livesTexture, uiposx + 90,5, twoLivesLeft, 0, 0, 0, 0, false);
+		twoLivesLeft = &SDL_Rect({ 0, 0, 26,10 });
+		app->render->DrawTexture(livesTexture, uiposx + 90,3, twoLivesLeft, 0, 0, 0, 0, false);
 		break;
 	case(3):
-		threeLivesLeft= &SDL_Rect({ 0, 0, 28,7});
-		app->render->DrawTexture(livesTexture, uiposx + 90, 5, threeLivesLeft, 0, 0, 0, 0, false);
+		threeLivesLeft= &SDL_Rect({ 0, 0, 40,10});
+		app->render->DrawTexture(livesTexture, uiposx + 90, 3, threeLivesLeft, 0, 0, 0, 0, false);
 		break;
 	case(4):
-		fourLivesLeft = &SDL_Rect({ 0, 0, 38,7 });
-		app->render->DrawTexture(livesTexture, uiposx + 90, 5, fourLivesLeft, 0, 0, 0, 0, false);
+		fourLivesLeft = &SDL_Rect({ 0, 0, 56,10 });
+		app->render->DrawTexture(livesTexture, uiposx + 90, 3, fourLivesLeft, 0, 0, 0, 0, false);
 		break;
 	default:
 
