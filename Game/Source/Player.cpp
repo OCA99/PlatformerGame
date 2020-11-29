@@ -445,7 +445,6 @@ void Player::UpdateLogic(float dt)
 		verticalVelocity = -maxVerticalVelocity;
 	}
 
-	LOG("%f\n", verticalVelocity);
 	position.y -= verticalVelocity*dt;
 
 	switch (playerState)

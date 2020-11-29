@@ -135,6 +135,7 @@ public:
 	// L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;
 
+	uchar* GetWalkabilityMap();
 private:
 
 	// L03: Methods to load all required map data
@@ -146,6 +147,7 @@ private:
 	bool StoreID(pugi::xml_node& node, MapLayer* layer, int ID);
 
 	bool CreateColliders();
+	void CreateWalkabilityMap();
 
 public:
 
@@ -157,6 +159,7 @@ private:
     pugi::xml_document mapFile;
     SString folder;
     bool mapLoaded;
+	uchar* walkabilityMap;
 };
 
 #endif // __MAP_H__
