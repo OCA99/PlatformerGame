@@ -134,11 +134,6 @@ bool ModuleUI::Update(float dt)
 	canDrawSecret = false;
 	drawTeleportText = false;
 
-	//draw items
-
-	app->scene->item1 = &app->scene->kiwiItemAnim;
-	app->scene->item1->Update(dt);
-
 	return true;
 }
 
