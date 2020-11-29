@@ -21,6 +21,7 @@ class Collisions;
 class Player;
 class Parallax;
 class ModuleUI;
+class PathFinding;
 
 class App
 {
@@ -89,6 +90,7 @@ public:
 	Player* player;
 	Parallax* parallax;
 	ModuleUI* ui;
+	PathFinding* pathfinding;
 
 	bool Load();
 	bool Save();

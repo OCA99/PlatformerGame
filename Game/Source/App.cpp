@@ -11,6 +11,7 @@
 #include "ModuleUI.h"
 #include "Collisions.h"
 #include "Player.h"
+#include "Pathfinding.h"
 
 #include "Optick/include/optick.h"
 
@@ -36,6 +37,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	player = new Player();
 	parallax = new Parallax();
 	ui = new ModuleUI();
+	pathfinding = new PathFinding();
 
 	// Ordered for awake/Start/Update
 	// Reverse order of CleanUp
@@ -49,6 +51,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(ui);
 	AddModule(scene);
 	AddModule(collisions);
+	AddModule(pathfinding);
 	AddModule(debug);
 
 	// Render last to swap buffer
