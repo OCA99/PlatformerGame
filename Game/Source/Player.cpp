@@ -200,7 +200,7 @@ bool Player::Save(pugi::xml_node& savedGame)
 	return true;
 }
 
-void Player::OnCollision(Collider* a, Collider* b)
+void Player::OnCollision(Collider* a, Collider* b, float dt)
 {
 
 	if (godMode) return;
@@ -274,7 +274,7 @@ void Player::OnCollision(Collider* a, Collider* b)
 
 	if (b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::SECRETTEXT && b->type != Collider::Type::CHECKPOINT1 && b->type != Collider::Type::CHECKPOINT2)
 	{
-		int deltaX = a->rect.x - b->rect.x;
+		/*int deltaX = a->rect.x - b->rect.x;
 		int deltaY = a->rect.y - b->rect.y;
 
 		if (std::abs(deltaX) > std::abs(deltaY))
@@ -308,9 +308,30 @@ void Player::OnCollision(Collider* a, Collider* b)
 					availableJumps = maxJumps;
 				}
 			}
+		}*/
+
+		while (xCausesCollision(*b, dt))
+		{
+			position.x -= (float)xDirection * (float)speed * dt;
+			collider->SetPos((int)position.x, (int)position.y);
 		}
 
-		collider->SetPos((int)position.x, (int)position.y);
+		while (yCausesCollision(*b, dt))
+		{
+			position.y += yDirection * verticalVelocity * dt;
+			collider->SetPos((int)position.x, (int)position.y);
+			verticalVelocity = 0.0f;
+			if (yDirection == 1)
+			{
+				if (playerState != PlayerState::DYING)
+				{
+					ChangeState(playerState, IDLE);
+				}
+				availableJumps = maxJumps;
+			}
+		}
+
+		//collider->SetPos((int)position.x, (int)position.y);
 	}
 }
 
@@ -465,6 +486,13 @@ void Player::UpdateLogic(float dt)
 		verticalVelocity = -maxVerticalVelocity;
 	}
 
+	if (verticalVelocity > 0.0f)
+		yDirection = -1;
+	else if (verticalVelocity < 0.0f)
+		yDirection = 1;
+	else
+		yDirection = 0;
+
 	position.y -= verticalVelocity*dt;
 
 	switch (playerState)
@@ -472,23 +500,24 @@ void Player::UpdateLogic(float dt)
 		case PREPARE_TO_SPAWN:
 		{
 			currentAnim = &prepareToSpawnAnim;
+			xDirection = 0;
 			break;
 		}
 		case SPAWNING:
 		{
 			currentAnim = &appearAnim;
+			xDirection = 0;
 			break;
 		}
 
 		case(IDLE):
 		{
-
-
 			if (isGoingRight == true)
 				currentAnim = &idleRightAnim;
 			else
 				currentAnim = &idleLeftAnim;
 
+			xDirection = 0;
 			break;
 		}
 		case(RUNNING):
@@ -497,11 +526,13 @@ void Player::UpdateLogic(float dt)
 			{
 				currentAnim = &runRightAnim;
 				position.x += speed*dt;
+				xDirection = 1;
 			}
 			else
 			{
 				currentAnim = &runLeftAnim;
 				position.x -= speed*dt;
+				xDirection = -1;
 			}
 
 
@@ -517,13 +548,17 @@ void Player::UpdateLogic(float dt)
 					if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 					{
 						currentAnim = &jumpLeftAnim;
-						position.x -= speed*dt;
+						position.x -= speed * dt;
+						xDirection = -1;
 					}
 					else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 					{
 						currentAnim = &jumpRightAnim;
-						position.x += speed*dt;
+						position.x += speed * dt;
+						xDirection = 1;
 					}
+					else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
+						xDirection = 0;
 				}
 				if (availableJumps == 0)
 				{
@@ -531,12 +566,16 @@ void Player::UpdateLogic(float dt)
 					{
 						currentAnim = &doubleJumpLeftAnim;
 						position.x -= speed*dt;
+						xDirection = -1;
 					}
 					else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 					{
 						currentAnim = &doubleJumpRightAnim;
 						position.x += speed*dt;
+						xDirection = 1;
 					}
+					else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
+						xDirection = 0;
 				}
 			}
 			else
@@ -545,12 +584,16 @@ void Player::UpdateLogic(float dt)
 				{
 					currentAnim = &fallLeftAnim;
 					position.x -= speed*dt;
+					xDirection = -1;
 				}
 				else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 				{
 					currentAnim = &fallRightAnim;
 					position.x += speed*dt;
+					xDirection = 1;
 				}
+				else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
+					xDirection = 0;
 			}
 
 
@@ -562,6 +605,8 @@ void Player::UpdateLogic(float dt)
 				currentAnim = &disappearRightAnim;
 			else
 				currentAnim = &disappearLeftAnim;
+
+			xDirection = 0;
 
 			if (isDead == false)
 			{
@@ -634,4 +679,26 @@ void Player::GodMovement(float dt)
 		position.y -= speed*dt;
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		position.y += speed*dt;
+}
+
+bool Player::xCausesCollision(Collider& other, float dt)
+{
+	if (!xDirection) return false;
+	float movement = (float)xDirection * (float)speed * dt;
+	bool hasCollision = collider->Intersects(other.rect);
+	collider->SetPos(collider->rect.x - movement, collider->rect.y);
+	bool hadCollision = collider->Intersects(other.rect);
+	collider->SetPos(collider->rect.x + movement, collider->rect.y);
+	return hasCollision && !hadCollision;
+}
+
+bool Player::yCausesCollision(Collider& other, float dt)
+{
+	if (!yDirection) return false;
+	float movement = verticalVelocity * dt;
+	bool hasCollision = collider->Intersects(other.rect);
+	collider->SetPos(collider->rect.x, collider->rect.y + movement);
+	bool hadCollision = collider->Intersects(other.rect);
+	collider->SetPos(collider->rect.x, collider->rect.y - movement);
+	return hasCollision && !hadCollision;
 }

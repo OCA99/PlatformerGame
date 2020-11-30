@@ -40,7 +40,7 @@ public:
 	bool Start();
 	bool Update(float dt);
 	bool PostUpdate();
-	void OnCollision(Collider* a, Collider* b);
+	void OnCollision(Collider* a, Collider* b, float dt);
 
 	void UpdateState(float dt);
 	void UpdateLogic(float dt);
@@ -51,6 +51,9 @@ public:
 	bool Save(pugi::xml_node&);
 
 	void Reload();
+
+	bool xCausesCollision(Collider& other, float dt);
+	bool yCausesCollision(Collider& other, float dt);
 
 	Animation idleRightAnim;
 	Animation idleLeftAnim;
@@ -87,7 +90,7 @@ public:
 
 private:
 	float initialWaitCount = 0.0f;
-	float initialWait = 0.3f;
+	float initialWait = 0.6f;
 
 	unsigned int speed;
 	float maxVerticalVelocity = 800.0f;
@@ -102,6 +105,9 @@ private:
 	bool canMoveLeft = true;
 	bool canMoveUp = true;
 	bool canMoveDown = true;
+
+	int xDirection = 0;
+	int yDirection = 0;
 
 	const char* texturePath;
 private:
