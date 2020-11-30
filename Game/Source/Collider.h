@@ -40,5 +40,4 @@ struct Collider
 	bool pendingToDelete = false;
 };
 
-
 #endif // !__COLLIDER_H__
