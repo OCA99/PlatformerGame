@@ -57,7 +57,7 @@ bool Player::Start()
 
 	texture = app->tex->Load(texturePath);
 
-	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 22, 26 }), Collider::Type::DYNAMIC, this);
+	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x + 3, (int)position.y + 10, 16, 16 }), Collider::Type::DYNAMIC, this);
 
 	jumpFx = app->audio->LoadFx(jumpFxPath);
 	doubleJumpFx = app->audio->LoadFx(doubleJumpFxPath);
@@ -274,7 +274,7 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 
 	if (b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::SECRETTEXT && b->type != Collider::Type::CHECKPOINT1 && b->type != Collider::Type::CHECKPOINT2)
 	{
-		/*int deltaX = a->rect.x - b->rect.x;
+		int deltaX = a->rect.x - b->rect.x;
 		int deltaY = a->rect.y - b->rect.y;
 
 		if (std::abs(deltaX) > std::abs(deltaY))
@@ -308,9 +308,10 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 					availableJumps = maxJumps;
 				}
 			}
-		}*/
+		}
+		collider->SetPos((int)position.x + 3, (int)position.y + 10);
 
-		while (xCausesCollision(*b, dt))
+		/*while (xCausesCollision(*b, dt))
 		{
 			position.x -= (float)xDirection * (float)speed * dt;
 			collider->SetPos((int)position.x, (int)position.y);
@@ -320,7 +321,7 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		{
 			position.y += yDirection * verticalVelocity * dt;
 			collider->SetPos((int)position.x, (int)position.y);
-			verticalVelocity = 0.0f;
+			//verticalVelocity = 0.0f;
 			if (yDirection == 1)
 			{
 				if (playerState != PlayerState::DYING)
@@ -329,9 +330,8 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 				}
 				availableJumps = maxJumps;
 			}
-		}
+		}*/
 
-		//collider->SetPos((int)position.x, (int)position.y);
 	}
 }
 
@@ -640,7 +640,7 @@ void Player::UpdateLogic(float dt)
 		}
 	}
 
-	collider->SetPos(position.x, position.y);
+	collider->SetPos(position.x + 3, position.y + 10);
 
 	currentAnim->Update(dt);
 }
@@ -666,7 +666,7 @@ void Player::Reload()
 		health = 3;
 		app->ui->score = 0;
 	}
-	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 22, 26 }), Collider::Type::DYNAMIC, this);
+	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x + 3, (int)position.y + 10, 16, 16 }), Collider::Type::DYNAMIC, this);
 	initialPosition = position;
 	respawnPosition = initialPosition;
 	gravityOn = false;
