@@ -142,6 +142,7 @@ bool Map::CleanUp()
 	data.properties.propertyList.clear();
 
 	app->collisions->CleanUp();
+	app->entities->CleanUp();
 
 	// Clean up the pugui tree
 	mapFile.reset();
