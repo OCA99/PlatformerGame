@@ -56,6 +56,10 @@ public:
 	const char* fontPath;
 	const char* teleportMapPath1;
 	const char* teleportMapPath2;
+
+	const char* teleportArrowPath;
+
+	const char* teleportCrossPath;
 	
 	const char* livesTexturePath;
 
@@ -67,7 +71,17 @@ public:
 
 	SDL_Texture* teleportMapLevel1 = nullptr;
 	SDL_Texture* teleportMapLevel2 = nullptr;
+	SDL_Texture* renderedMap = nullptr;
 
+	SDL_Texture* teleportArrowTex = nullptr;
+	iPoint arrow1;
+	iPoint arrow2;
+	iPoint arrow3;
+	iPoint renderedArrowPos;
+
+	SDL_Texture* teleportCrossTex = nullptr;
+	iPoint crossPos1;
+	iPoint crossPos2;
 
 	SDL_Texture* pointSpritesheetTex;
 	SDL_Rect pointsRect;

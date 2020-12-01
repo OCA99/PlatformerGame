@@ -30,6 +30,10 @@ bool ModuleUI::Awake(pugi::xml_node& config)
 	teleportMapPath1 = uiPathN.attribute("teleportMapPath1").as_string();
 	teleportMapPath2 = uiPathN.attribute("teleportMapPath2").as_string();
 
+	teleportArrowPath = uiPathN.attribute("teleportArrow").as_string();
+
+	teleportCrossPath = uiPathN.attribute("teleportCross").as_string();
+
 	livesTexturePath= uiPathN.attribute("livesTexturePath").as_string();
 
 	score = 0;
@@ -53,7 +57,11 @@ bool ModuleUI::Start()
 
 	teleportMapLevel1 = app->tex->Load(teleportMapPath1);
 	teleportMapLevel2 = app->tex->Load(teleportMapPath2);
+
+	teleportArrowTex = app->tex->Load(teleportArrowPath);
 	
+	teleportCrossTex = app->tex->Load(teleportCrossPath);
+
 	livesTexture = app->tex->Load(livesTexturePath);
 	livesRect = SDL_Rect({ 0,0,12,10 });
 	extraLivesRect = SDL_Rect({ 12,0,12,10 });
@@ -67,6 +75,53 @@ bool ModuleUI::Start()
 // Update: draw background
 bool ModuleUI::Update(float dt)
 {
+
+	switch (currentLevel)
+	{
+	case 1:
+		arrow1.x = 92;
+		arrow1.y = 190;
+
+		arrow2.x = 211;
+		arrow2.y = 106;
+
+		arrow3.x = 325;
+		arrow3.y = 106;
+
+		crossPos1.x = 203;
+		crossPos1.y = 116;
+
+		crossPos2.x = 317;
+		crossPos2.y = 116;
+
+		renderedMap = teleportMapLevel1;
+
+		break;
+
+	case 2:
+		arrow1.x = 92;
+		arrow1.y = 165;
+
+		arrow2.x = 224;
+		arrow2.y = 114;
+
+		arrow3.x = 252;
+		arrow3.y = 188;
+
+		crossPos1.x = 216;
+		crossPos1.y = 124;
+
+		crossPos2.x = 245;
+		crossPos2.y = 197;
+
+		renderedMap = teleportMapLevel2;
+
+		break;
+
+	default:
+		break;
+	}
+
 	if (canDrawMap)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
@@ -100,6 +155,24 @@ bool ModuleUI::Update(float dt)
 				}
 			}
 
+			switch (destinationCheckpoint)
+			{
+			case 0:
+				renderedArrowPos = arrow1;
+				break;
+
+			case 1:
+				renderedArrowPos = arrow2;
+				break;
+
+			case 2:
+				renderedArrowPos = arrow3;
+				break;
+
+			default:
+				break;
+			}
+
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			{
 				switch (destinationCheckpoint)
@@ -111,12 +184,17 @@ bool ModuleUI::Update(float dt)
 				case 1:
 					if (!app->player->unlockedChekpoint1)
 						break;
+
+					drawTeleportMap = false;
+					printf("x: %f y: %f", app->player->checkpoint1Position.x, app->player->checkpoint1Position.y);
 					app->player->position = app->player->checkpoint1Position;
 					break;
 
 				case 2:
 					if (!app->player->unlockedChekpoint2)
 						break;
+
+					drawTeleportMap = false;
 					app->player->position = app->player->checkpoint2Position;
 					break;
 
@@ -126,7 +204,7 @@ bool ModuleUI::Update(float dt)
 			}
 		}
 	}
-
+	
 	if (!drawTeleportText)
 		drawTeleportMap = false;
 
@@ -149,9 +227,6 @@ bool ModuleUI::PostUpdate()
 	BlitText(uiposx + 55, 5, font, shortNumberText, false);
 
 	BlitText(uiposx + 90, 5, font, "HEALTH", false);
-	/*IntToString(shortNumberText, app->player->health, 2);
-	BlitText(uiposx + 155, 5, font, shortNumberText, false);
-	*/
 	
 	for (int i = 0; i < app->player->health; i++)
 	{
@@ -166,32 +241,6 @@ bool ModuleUI::PostUpdate()
 		}
 	}
 
-
-
-	//switch (app->player->health)
-	//{
-	//case(1):
-	//	app->render->DrawTexture(livesTexture, uiposx + 150, 3, &livesRect, 0, 0, 0, 0, false);
-	//	break;
-	//case(2):
-	//	app->render->DrawTexture(livesTexture, uiposx + 150, 3, &livesRect, 0, 0, 0, 0, false);
-	//	app->render->DrawTexture(livesTexture, uiposx + 165,3, &livesRect, 0, 0, 0, 0, false);
-	//	break;
-	//case(3):
-	//	app->render->DrawTexture(livesTexture, uiposx + 150, 3, &livesRect, 0, 0, 0, 0, false);
-	//	app->render->DrawTexture(livesTexture, uiposx + 165, 3, &livesRect, 0, 0, 0, 0, false);
-	//	app->render->DrawTexture(livesTexture, uiposx + 180, 3, &livesRect, 0, 0, 0, 0, false);
-	//	break;
-	//case(4):
-	//	app->render->DrawTexture(livesTexture, uiposx + 150, 3, &livesRect, 0, 0, 0, 0, false);
-	//	app->render->DrawTexture(livesTexture, uiposx + 165, 3, &livesRect, 0, 0, 0, 0, false);
-	//	app->render->DrawTexture(livesTexture, uiposx + 180, 3, &livesRect, 0, 0, 0, 0, false);
-	//	app->render->DrawTexture(livesTexture, uiposx + 195, 3, &livesRect, 0, 0, 0, 0, false);
-	//	break;
-	//default:
-	//	break;
-	//}
-
 	BlitText(uiposx + 320, 5, font, "SCORE", false);
 	IntToDynamicString(scoreText, score);
 	BlitText(uiposx + 375, 5, font, scoreText, false);
@@ -202,25 +251,20 @@ bool ModuleUI::PostUpdate()
 	if (canDrawSecret)
 	{
 		BlitText(app->player->position.x - 70, app->player->position.y + 30, font, "ONLY A GOD CAN REACH", true);
-		BlitText(app->player->position.x - 70, app->player->position.y + 40, font, "MIDA'S HALL", true);
+		BlitText(app->player->position.x - 70, app->player->position.y + 40, font, "MIDAS' HALL", true);
 	}
 
 
 	if (drawTeleportMap)
 	{
-		switch (currentLevel)
-		{
-		case 1:
-			app->render->DrawTexture(teleportMapLevel1, 0, 0, NULL, 0, 0, 0, 0, false);
-			break;
+		app->render->DrawTexture(renderedMap, 0, 0, NULL, 0, 0, 0, 0, false);
+		app->render->DrawTexture(teleportArrowTex, renderedArrowPos.x, renderedArrowPos.y, NULL, 0, 0, 0, 0, false);
 
-		case 2:
-			app->render->DrawTexture(teleportMapLevel2, 0, 0, NULL, 0, 0, 0, 0, false);
-			break;
-
-		default:
-			break;
-		}
+		if (!app->player->unlockedChekpoint1)
+			app->render->DrawTexture(teleportCrossTex, crossPos1.x, crossPos1.y, NULL, 0, 0, 0, 0, false);
+		
+		if(!app->player->unlockedChekpoint2)
+			app->render->DrawTexture(teleportCrossTex, crossPos2.x, crossPos2.y, NULL, 0, 0, 0, 0, false);
 	}
 
 	return true;
