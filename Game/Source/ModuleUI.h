@@ -93,7 +93,6 @@ public:
 	SDL_Rect livesRect;
 	SDL_Rect extraLivesRect;
 
-
 	// Loads a font file from a texture
 	// Returns a font index from the fonts array
 	// Param texturePath	- The path to the texture file

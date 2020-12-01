@@ -135,6 +135,7 @@ bool ModuleUI::Update(float dt)
 			}
 			else
 			{
+				app->player->teleporting = true;
 				drawTeleportMap = true;
 			}
 		}
@@ -183,23 +184,25 @@ bool ModuleUI::Update(float dt)
 				{
 				case 0:
 					app->player->position = app->player->initialPosition;
+					app->player->collider->SetPos(app->player->position.x, app->player->position.y);
 					break;
 
 				case 1:
 					if (!app->player->unlockedChekpoint1)
 						break;
 
-					drawTeleportMap = false;
-					//printf("x: %f y: %f\n", app->player->checkpoint1Position.x, app->player->checkpoint1Position.y);
 					app->player->position = app->player->checkpoint1Position;
+					app->player->collider->SetPos(app->player->position.x, app->player->position.y);
+					drawTeleportMap = false;
 					break;
 
 				case 2:
 					if (!app->player->unlockedChekpoint2)
 						break;
 
-					drawTeleportMap = false;
 					app->player->position = app->player->checkpoint2Position;
+					app->player->collider->SetPos(app->player->position.x, app->player->position.y);
+					drawTeleportMap = false;
 					break;
 
 				default:

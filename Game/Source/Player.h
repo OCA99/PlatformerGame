@@ -89,6 +89,11 @@ public:
 
 	bool gravityOn = false;
 
+	uint gameStartFx = 0;
+	const char* gameStartFxPath;
+
+	Collider* collider;
+
 private:
 	float initialWaitCount = 0.0f;
 	float initialWait = 0.6f;
@@ -107,7 +112,6 @@ private:
 	int maxJumps = 2;
 	int availableJumps = 2;
 
-	Collider* collider;
 
 	bool canMoveRight = true;
 	bool canMoveLeft = true;
@@ -118,7 +122,7 @@ private:
 	int yDirection = 0;
 
 	const char* texturePath;
-private:
+
 	uint jumpFx = 0;
 	uint doubleJumpFx = 0;
 	uint gameOverFx = 0;
@@ -130,11 +134,6 @@ private:
 	uint nutsFx = 0;
 	const char* nutsFxPath;
 	bool nutOnce = false;
-
-public:
-	uint gameStartFx = 0;
-	const char* gameStartFxPath;
-
 };
 
 
