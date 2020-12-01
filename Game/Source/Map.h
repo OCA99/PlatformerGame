@@ -148,6 +148,7 @@ private:
 
 
 	bool CreateColliders();
+	bool CreateEntities();
 	void CreateWalkabilityMap();
 
 public:
