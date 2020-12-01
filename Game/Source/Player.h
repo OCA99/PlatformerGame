@@ -18,6 +18,7 @@ enum PlayerState
 	FALLING,
 	PREPARE_TO_SPAWN,
 	SPAWNING,
+	DASHING,
 	DYING
 };
 
@@ -95,6 +96,13 @@ private:
 	unsigned int speed;
 	float maxVerticalVelocity = 450.0f;
 	float jumpForce;
+
+	float initialImpulse = 0.0f;
+	float dashLength = 1.0f;
+	float impulse = 0.0f;
+	float impulseAcceleration = 0.0f;
+	int frameCounter = 0;
+	bool dashing;
 
 	int maxJumps = 2;
 	int availableJumps = 2;

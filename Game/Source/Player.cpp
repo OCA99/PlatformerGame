@@ -44,6 +44,8 @@ bool Player::Awake(pugi::xml_node& config)
 	gameStartFxPath = audio.attribute("gameStart").as_string();
 	nutsFxPath = audio.attribute("nuts").as_string();
 
+	initialImpulse = movement.attribute("initialImpulse").as_float();
+
 	return ret;
 }
 
@@ -265,7 +267,7 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 				if (verticalVelocity < 0.0f)
 				{
 					verticalVelocity = 0.0f;
-					if (playerState != PlayerState::DYING)
+					if (playerState != PlayerState::DYING && !dashing)
 					{
 						ChangeState(playerState, IDLE);
 					}
@@ -352,6 +354,14 @@ void Player::UpdateState(float dt)
 
 				ChangeState(playerState, JUMPING);
 			}
+			
+			if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
+			{
+				frameCounter = 0;
+				impulse = initialImpulse;
+				position.y -= 1;
+				ChangeState(playerState, DASHING);
+			}
 
 			break;
 		}
@@ -389,6 +399,14 @@ void Player::UpdateState(float dt)
 				ChangeState(playerState, JUMPING);
 			}
 
+			if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
+			{
+				frameCounter = 0;
+				impulse = initialImpulse;
+				position.y -= 1;
+				ChangeState(playerState, DASHING);
+			}
+
 			break;
 		}
 
@@ -418,10 +436,23 @@ void Player::UpdateState(float dt)
 				}
 			}
 
-
+			if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
+			{
+				frameCounter = 0;
+				impulse = initialImpulse;
+				position.y -= 1;
+				ChangeState(playerState, DASHING);
+			}
 
 			break;
 		}
+
+		case DASHING:
+		{
+			dashing = true;
+			break;
+		}
+
 		case DYING:
 		{
 			break;
@@ -439,7 +470,7 @@ void Player::UpdateLogic(float dt)
 	if (initialWaitCount > initialWait)
 		gravityOn = true;
 
-	if(!godMode && gravityOn) verticalVelocity -= gravity*dt;
+	if(!godMode && gravityOn && !dashing) verticalVelocity -= gravity*dt;
 
 	if (verticalVelocity > maxVerticalVelocity)
 	{
@@ -490,17 +521,15 @@ void Player::UpdateLogic(float dt)
 			if (isGoingRight == true)
 			{
 				currentAnim = &runRightAnim;
-				position.x += speed*dt;
+				position.x += speed * dt;
 				xDirection = 1;
 			}
 			else
 			{
 				currentAnim = &runLeftAnim;
-				position.x -= speed*dt;
+				position.x -= speed * dt;
 				xDirection = -1;
 			}
-
-
 
 			break;
 		}
@@ -602,6 +631,34 @@ void Player::UpdateLogic(float dt)
 
 			break;
 
+		case DASHING:
+			verticalVelocity = 0.0f;
+
+			if (frameCounter <= 1)
+			{
+				if (isGoingRight)
+					position.x += impulse * dt;
+				else
+					position.x -= impulse * dt;
+			}
+			else
+			{
+				impulseAcceleration = 200;
+				impulse -= impulseAcceleration;
+				if (impulse < 0)
+				{
+					ChangeState(playerState, IDLE);
+					dashing = false;
+					break;
+				}
+				if (isGoingRight)
+					position.x += impulse * dt;
+				else
+					position.x -= impulse * dt;
+			}
+
+			frameCounter++;
+			break;
 		}
 	}
 
