@@ -126,8 +126,6 @@ SDL_Rect TileSet::GetTileRect(int id) const
 	return rect;
 }
 
-#include <iostream>
-
 // Called before quitting
 bool Map::CleanUp()
 {

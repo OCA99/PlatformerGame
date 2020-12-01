@@ -12,6 +12,7 @@
 #include "Collisions.h"
 #include "Player.h"
 #include "Pathfinding.h"
+#include "Entities.h"
 
 #include "Optick/include/optick.h"
 
@@ -38,6 +39,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	parallax = new Parallax();
 	ui = new ModuleUI();
 	pathfinding = new PathFinding();
+	entities = new Entities();
 
 	// Ordered for awake/Start/Update
 	// Reverse order of CleanUp
@@ -50,6 +52,7 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(ui);
 	AddModule(scene);
+	AddModule(entities);
 	AddModule(collisions);
 	AddModule(pathfinding);
 	AddModule(debug);

@@ -8,7 +8,7 @@
 
 Collisions::Collisions() : Module()
 {
-
+	name.Create("collisions");
 }
 
 Collisions::~Collisions()

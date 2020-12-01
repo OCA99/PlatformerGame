@@ -22,6 +22,7 @@ class Player;
 class Parallax;
 class ModuleUI;
 class PathFinding;
+class Entities;
 
 class App
 {
@@ -91,6 +92,7 @@ public:
 	Parallax* parallax;
 	ModuleUI* ui;
 	PathFinding* pathfinding;
+	Entities* entities;
 
 	bool Load();
 	bool Save();
