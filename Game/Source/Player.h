@@ -89,6 +89,7 @@ public:
 	float maxCooldown = 3.0f;
 
 	Collider* collider;
+	float jumpForce;
 
 private:
 	SDL_Texture* texture = nullptr;
@@ -102,7 +103,6 @@ private:
 
 	unsigned int speed;
 	float maxVerticalVelocity = 350.0f;
-	float jumpForce;
 
 	float initialImpulse = 0.0f;
 	float dashLength = 1.0f;

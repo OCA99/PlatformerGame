@@ -517,7 +517,7 @@ void Player::UpdateLogic(float dt)
 	if (initialWaitCount > initialWait)
 		gravityOn = true;
 
-	if(!godMode && gravityOn && !dashing) verticalVelocity -= gravity*dt;
+	if(!godMode && gravityOn && !dashing && playerState != DYING) verticalVelocity -= gravity*dt;
 
 	if (verticalVelocity > maxVerticalVelocity)
 	{
@@ -642,6 +642,9 @@ void Player::UpdateLogic(float dt)
 		}
 		case(DYING):
 		{
+			gravityOn = false;
+			verticalVelocity = 0.0f;
+
 			if (isGoingRight == true)
 				currentAnim = &disappearRightAnim;
 			else
@@ -716,6 +719,7 @@ void Player::UpdateLogic(float dt)
 
 void Player::ChangeState(PlayerState previousState, PlayerState newState)
 {
+
 	if (playerState != PlayerState::DYING && newState == PlayerState::DYING)
 	{
 		disappearLeftAnim.Reset();

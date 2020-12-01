@@ -51,11 +51,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(player);
 	AddModule(map);
 	AddModule(ui);
-	AddModule(scene);
 	AddModule(entities);
 	AddModule(collisions);
 	AddModule(pathfinding);
 	AddModule(debug);
+	AddModule(scene);
 
 	// Render last to swap buffer
 	AddModule(render);
