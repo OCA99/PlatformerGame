@@ -68,6 +68,8 @@ public:
 	char lifeText[2] = { "0" };
 
 	SDL_Rect box;
+	SDL_Rect boxGodMode;
+	SDL_Rect boxShowColl;
 
 	SDL_Texture* teleportMapLevel1 = nullptr;
 	SDL_Texture* teleportMapLevel2 = nullptr;
@@ -82,7 +84,7 @@ public:
 	SDL_Texture* teleportCrossTex = nullptr;
 	iPoint crossPos1;
 	iPoint crossPos2;
-
+	
 	SDL_Texture* pointSpritesheetTex;
 	SDL_Rect pointsRect;
 

@@ -50,10 +50,10 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(parallax);
 	AddModule(player);
 	AddModule(map);
+	AddModule(collisions);
 	AddModule(ui);
 	AddModule(scene);
 	AddModule(entities);
-	AddModule(collisions);
 	AddModule(pathfinding);
 	AddModule(debug);
 

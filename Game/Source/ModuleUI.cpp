@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Scene.h"
 #include "Input.h"
+#include "Collisions.h"
 
 #include "Optick/include/optick.h"
 
@@ -52,6 +53,8 @@ bool ModuleUI::Start()
 	font = Load(fontPath, lookupTable, 3);
 
 	box = SDL_Rect({ 0, 0, app->render->camera.w, 30 });
+	boxGodMode = SDL_Rect({ 0, 510, 38, 30 });
+	boxShowColl = SDL_Rect({ 38, 510, 38, 30 });
 
 	drawTeleportText = false;
 
@@ -135,6 +138,7 @@ bool ModuleUI::Update(float dt)
 				drawTeleportMap = true;
 			}
 		}
+
 		if (drawTeleportMap)
 		{
 			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
@@ -186,7 +190,7 @@ bool ModuleUI::Update(float dt)
 						break;
 
 					drawTeleportMap = false;
-					printf("x: %f y: %f", app->player->checkpoint1Position.x, app->player->checkpoint1Position.y);
+					//printf("x: %f y: %f\n", app->player->checkpoint1Position.x, app->player->checkpoint1Position.y);
 					app->player->position = app->player->checkpoint1Position;
 					break;
 
@@ -234,11 +238,22 @@ bool ModuleUI::PostUpdate()
 		{
 			app->render->DrawTexture(livesTexture, uiposx + 150 + (i * 15), 3, &livesRect, 0, 0, 0, 0, false);
 		}
-		else
+		else if (i < 6)
 		{
 			app->render->DrawTexture(livesTexture, uiposx + 150 + (i * 15), 3, &extraLivesRect, 0, 0, 0, 0, false);
-
 		}
+	}
+
+	if (app->player->godMode)
+	{
+		app->render->DrawRectangle(boxGodMode, 33, 31, 48, 255, true, false);
+		BlitText(5, 259, font, "G", false);
+	}
+
+	if (app->collisions->showColliders)
+	{
+		app->render->DrawRectangle(boxShowColl, 33, 31, 48, 255, true, false);
+		BlitText(24, 259, font, "C", false);
 	}
 
 	BlitText(uiposx + 320, 5, font, "SCORE", false);
@@ -263,7 +278,7 @@ bool ModuleUI::PostUpdate()
 		if (!app->player->unlockedChekpoint1)
 			app->render->DrawTexture(teleportCrossTex, crossPos1.x, crossPos1.y, NULL, 0, 0, 0, 0, false);
 		
-		if(!app->player->unlockedChekpoint2)
+		if (!app->player->unlockedChekpoint2)
 			app->render->DrawTexture(teleportCrossTex, crossPos2.x, crossPos2.y, NULL, 0, 0, 0, 0, false);
 	}
 
