@@ -135,7 +135,6 @@ bool ModuleUI::Update(float dt)
 			}
 			else
 			{
-				app->player->teleporting = true;
 				drawTeleportMap = true;
 			}
 		}
