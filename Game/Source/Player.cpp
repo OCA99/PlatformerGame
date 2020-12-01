@@ -205,10 +205,7 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		break;
 
 	case(Collider::Type::ITEMNUT):
-		if (!nutOnce)
-			app->audio->PlayFx(nutsFx, 0);
-
-		nutOnce = true;
+		app->audio->PlayFx(nutsFx, 0);
 		app->ui->score += 100;
 		break;
 
@@ -362,12 +359,16 @@ void Player::UpdateState(float dt)
 				ChangeState(playerState, JUMPING);
 			}
 			
-			if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
+			if (cooldown == maxCooldown)
 			{
-				frameCounter = 0;
-				impulse = initialImpulse;
-				position.y -= 1;
-				ChangeState(playerState, DASHING);
+				if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
+				{
+					cooldown = 0;
+					frameCounter = 0;
+					impulse = initialImpulse;
+					position.y -= 1;
+					ChangeState(playerState, DASHING);
+				}
 			}
 
 			break;
@@ -406,12 +407,16 @@ void Player::UpdateState(float dt)
 				ChangeState(playerState, JUMPING);
 			}
 
-			if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
+			if (cooldown == maxCooldown)
 			{
-				frameCounter = 0;
-				impulse = initialImpulse;
-				position.y -= 1;
-				ChangeState(playerState, DASHING);
+				if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
+				{
+					cooldown = 0;
+					frameCounter = 0;
+					impulse = initialImpulse;
+					position.y -= 1;
+					ChangeState(playerState, DASHING);
+				}
 			}
 
 			break;
@@ -443,12 +448,16 @@ void Player::UpdateState(float dt)
 				}
 			}
 
-			if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
+			if (cooldown == maxCooldown)
 			{
-				frameCounter = 0;
-				impulse = initialImpulse;
-				position.y -= 1;
-				ChangeState(playerState, DASHING);
+				if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
+				{
+					cooldown = 0;
+					frameCounter = 0;
+					impulse = initialImpulse;
+					position.y -= 1;
+					ChangeState(playerState, DASHING);
+				}
 			}
 
 			break;
@@ -471,6 +480,11 @@ void Player::UpdateState(float dt)
 
 void Player::UpdateLogic(float dt)
 {
+	cooldown += dt;
+
+	if (cooldown > maxCooldown)
+		cooldown = maxCooldown;
+
 	if (gravityOn == false)
 		initialWaitCount += dt;
 

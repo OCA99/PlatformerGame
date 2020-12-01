@@ -71,6 +71,10 @@ public:
 	SDL_Rect boxGodMode;
 	SDL_Rect boxShowColl;
 
+	SDL_Rect boxCooldown;
+	SDL_Rect boxOuterCooldown;
+	int toLoadBar;
+
 	SDL_Texture* teleportMapLevel1 = nullptr;
 	SDL_Texture* teleportMapLevel2 = nullptr;
 	SDL_Texture* renderedMap = nullptr;

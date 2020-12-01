@@ -24,18 +24,11 @@ enum PlayerState
 
 class Player : public Module
 {
-private:
-
-	SDL_Texture* texture = nullptr;
-	Animation* currentAnim = nullptr;
-
-	bool isGoingRight = false;
-	unsigned int jumpsLeft = 2;
 
 public:
 	PlayerState playerState = PlayerState::PREPARE_TO_SPAWN;
 	bool isDead;
-public:
+
 	Player();
 	bool Awake(pugi::xml_node&);
 	bool Start();
@@ -92,9 +85,18 @@ public:
 	uint gameStartFx = 0;
 	const char* gameStartFxPath;
 
+	float cooldown = 3.0f;
+	float maxCooldown = 3.0f;
+
 	Collider* collider;
 
 private:
+	SDL_Texture* texture = nullptr;
+	Animation* currentAnim = nullptr;
+
+	bool isGoingRight = false;
+	unsigned int jumpsLeft = 2;
+
 	float initialWaitCount = 0.0f;
 	float initialWait = 0.6f;
 
@@ -133,7 +135,6 @@ private:
 
 	uint nutsFx = 0;
 	const char* nutsFxPath;
-	bool nutOnce = false;
 };
 
 

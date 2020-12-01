@@ -78,7 +78,6 @@ bool ModuleUI::Start()
 // Update: draw background
 bool ModuleUI::Update(float dt)
 {
-
 	switch (currentLevel)
 	{
 	case 1:
@@ -218,6 +217,11 @@ bool ModuleUI::Update(float dt)
 	canDrawSecret = false;
 	drawTeleportText = false;
 
+	toLoadBar = 24 * app->player->cooldown / app->player->maxCooldown;
+
+	boxCooldown = SDL_Rect({ (int)app->player->position.x, (int)app->player->position.y - 10, toLoadBar, 1 });
+	boxOuterCooldown = SDL_Rect({ (int)app->player->position.x - 1, (int)app->player->position.y - 11, 26, 3 });
+
 	return true;
 }
 
@@ -226,6 +230,12 @@ bool ModuleUI::PostUpdate()
 	OPTICK_EVENT("UIPostUpdate", Optick::Category::UI);
 
 	app->render->DrawRectangle(box, 33, 31, 48, 255, true, false);
+
+	if (app->player->cooldown < app->player->maxCooldown)
+	{
+		app->render->DrawRectangle(boxOuterCooldown, 33, 31, 48, 255, true, true);
+		app->render->DrawRectangle(boxCooldown, 71, 174, 72, 255, false, true);
+	}
 
 	int uiposx = 10;
 	BlitText(uiposx, 5, font, "LEVEL", false);
