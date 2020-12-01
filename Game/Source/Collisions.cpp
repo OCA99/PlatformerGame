@@ -41,6 +41,7 @@ bool Collisions::PreUpdate()
 		{
 			ListItem<Collider*>* c = app->collisions->dynamicColliders.At(i);
 			app->collisions->dynamicColliders.del(c);
+			delete c->data;
 		}
 	}
 
@@ -50,6 +51,7 @@ bool Collisions::PreUpdate()
 		{
 			ListItem<Collider*>* c = app->collisions->staticColliders.At(i);
 			app->collisions->staticColliders.del(c);
+			delete c->data;
 		}
 	}
 	return ret;
@@ -75,6 +77,25 @@ bool Collisions::Update(float dt)
 				{
 					if (m == nullptr) break;
 					m->OnCollision(staticColliders[j], dynamicColliders[i], dt);
+				}
+			}
+		}
+
+		for (int j = 0; j < dynamicColliders.count(); j++)
+		{
+			if (i == j)
+				continue;
+			if (dynamicColliders[i]->Intersects(dynamicColliders[j]->rect))
+			{
+				for each (Module * m in dynamicColliders[i]->listeners)
+				{
+					if (m == nullptr) break;
+					m->OnCollision(dynamicColliders[i], dynamicColliders[j], dt);
+				}
+				for each (Module * m in dynamicColliders[j]->listeners)
+				{
+					if (m == nullptr) break;
+					m->OnCollision(dynamicColliders[j], dynamicColliders[i], dt);
 				}
 			}
 		}
@@ -165,5 +186,25 @@ void Collisions::DrawCollider(const SDL_Rect* section, Uint8 r, Uint8 g, Uint8 b
 
 void Collisions::RemoveCollider(Collider* collider)
 {
+	for (int i = 0; i < staticColliders.count(); i++)
+	{
+		Collider* c = staticColliders[i];
+		if (c == collider)
+		{
+			ListItem<Collider*>* item = staticColliders.At(i);
+			staticColliders.del(item);
+		}
+	}
+
+	for (int i = 0; i < dynamicColliders.count(); i++)
+	{
+		Collider* c = dynamicColliders[i];
+		if (c == collider)
+		{
+			ListItem<Collider*>* item = dynamicColliders.At(i);
+			dynamicColliders.del(item);
+		}
+	}
+
 	delete collider;
 }

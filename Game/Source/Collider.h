@@ -20,11 +20,14 @@ struct Collider
 		SECRETTEXT,
 		CHECKPOINT1,
 		CHECKPOINT2,
-		DEATH
+		DEATH,
+		BAT
 	};
 
 	//Methods
 	Collider(SDL_Rect rectangle, Type type, Module* listener = nullptr);
+
+	~Collider();
 
 	void SetPos(int x, int y);
 

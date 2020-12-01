@@ -140,7 +140,12 @@ bool Player::PostUpdate()
 
 	SDL_Rect rect = currentAnim->GetCurrentFrame();
 
-	app->render->DrawTexture(texture, position.x, position.y, &rect);
+	if (currentAnim == &disappearLeftAnim || currentAnim == &disappearRightAnim)
+	{
+		app->render->DrawTexture(texture, position.x - 16, position.y - 15, &rect);
+	}
+	else
+		app->render->DrawTexture(texture, position.x, position.y, &rect);
 
 	return true;
 }
@@ -182,6 +187,12 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		a = b;
 		b = c;
 	}
+
+	iPoint center;
+	iPoint batCenter;
+
+	int xDiff;
+	int yDiff;
 
 	switch (b->type)
 	{
@@ -239,11 +250,25 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		app->ui->canDrawSecret = true;
 		break;
 
+	case(Collider::Type::BAT):
+		center = iPoint(collider->rect.x + (collider->rect.w / 2), collider->rect.y + (collider->rect.h / 2));
+		batCenter = iPoint(b->rect.x + (b->rect.w / 2), b->rect.y + (b->rect.h / 2));
+
+		xDiff = batCenter.x - center.x;
+		yDiff = batCenter.y - center.y;
+
+		if (abs(yDiff) <= abs(xDiff) || yDiff < 0 || app->player->verticalVelocity > 0.0f)
+		{
+			ChangeState(playerState, DYING);
+		}
+
+		break;
+
 	default:
 		break;
 	}
 
-	if (b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::SECRETTEXT && b->type != Collider::Type::CHECKPOINT1 && b->type != Collider::Type::CHECKPOINT2)
+	if (b->type != Collider::Type::BAT && b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::SECRETTEXT && b->type != Collider::Type::CHECKPOINT1 && b->type != Collider::Type::CHECKPOINT2)
 	{
 		int deltaX = a->rect.x - b->rect.x;
 		int deltaY = a->rect.y - b->rect.y;
@@ -338,10 +363,11 @@ void Player::UpdateState(float dt)
 				app->audio->PlayFx(jumpFx, 0);
 				if (availableJumps > 0)
 				{
-					if (verticalVelocity < 0.0f)
-						availableJumps -= 2;
-					else
-						availableJumps--;
+					//LOG("%f\n", verticalVelocity * dt);
+					//if (verticalVelocity*dt < -0.0f)
+					//	availableJumps -= 2;
+					//else
+					availableJumps--;
 				}
 
 				verticalVelocity = jumpForce;
@@ -386,10 +412,10 @@ void Player::UpdateState(float dt)
 				app->audio->PlayFx(jumpFx, 0);
 				if (availableJumps > 0)
 				{
-					if (verticalVelocity < 0.0f)
-						availableJumps -= 2;
-					else
-						availableJumps--;
+					//if (verticalVelocity < 0.0f)
+					//	availableJumps -= 2;
+					//else
+					availableJumps--;
 				}
 
 				verticalVelocity = jumpForce;
