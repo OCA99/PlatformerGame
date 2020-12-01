@@ -94,7 +94,7 @@ private:
 	float initialWait = 0.6f;
 
 	unsigned int speed;
-	float maxVerticalVelocity = 450.0f;
+	float maxVerticalVelocity = 350.0f;
 	float jumpForce;
 
 	float initialImpulse = 0.0f;

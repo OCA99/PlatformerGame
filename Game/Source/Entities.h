@@ -2,7 +2,7 @@
 #define __ENTITIES_H__
 
 #include "Module.h"
-#include "DynArray.h"
+#include "List.h"
 #include "Point.h"
 #include "Entity.h"
 
@@ -33,7 +33,7 @@ public:
 	void AddEntity(fPoint position, Entity::Type type);
 
 private:
-	DynArray<Entity*> entityList;
+	List<Entity*> entityList;
 
 	// Textures
 	SDL_Texture* batTexture;
