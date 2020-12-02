@@ -325,6 +325,9 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 			}
 		}
 		collider->SetPos((int)position.x + 3, (int)position.y + 10);
+
+		app->ui->boxCooldown = SDL_Rect({ (int)app->player->position.x, (int)app->player->position.y - 10, app->ui->toLoadBar, 1 });
+		app->ui->boxOuterCooldown = SDL_Rect({ (int)app->player->position.x - 1, (int)app->player->position.y - 11, 26, 3 });
 	}
 }
 
