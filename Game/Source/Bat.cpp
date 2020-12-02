@@ -57,7 +57,7 @@ bool Bat::Update(float dt)
 	gridPos.x = position.x / app->map->data.tileWidth;
 	gridPos.y = position.y / app->map->data.tileHeight;
 
-	if (playerPos != lastPlayerPosition && playerPos.DistanceTo(gridPos) <= 12 && state != State::DYING)
+	if (playerPos != lastPlayerPosition && playerPos.DistanceTo(gridPos) <= 12 && state != State::DYING && !app->player->godMode)
 	{
 		lastPlayerPosition = playerPos;
 
@@ -100,7 +100,8 @@ bool Bat::Update(float dt)
 		break;
 	case State::FLYING:
 
-		//currentAnimation = &flyingLeftAnimation;
+		if (app->player->godMode)
+			break;
 
 		if (pathIndex >= path.Count())
 			break;

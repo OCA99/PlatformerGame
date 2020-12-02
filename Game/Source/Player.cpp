@@ -276,6 +276,10 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		{
 			ChangeState(playerState, DYING);
 		}
+		else
+		{
+			app->ui->score += 5000;
+		}
 
 		break;
 
@@ -321,28 +325,6 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 			}
 		}
 		collider->SetPos((int)position.x + 3, (int)position.y + 10);
-
-		/*while (xCausesCollision(*b, dt))
-		{
-			position.x -= (float)xDirection * (float)speed * dt;
-			collider->SetPos((int)position.x, (int)position.y);
-		}
-
-		while (yCausesCollision(*b, dt))
-		{
-			position.y += yDirection * verticalVelocity * dt;
-			collider->SetPos((int)position.x, (int)position.y);
-			//verticalVelocity = 0.0f;
-			if (yDirection == 1)
-			{
-				if (playerState != PlayerState::DYING)
-				{
-					ChangeState(playerState, IDLE);
-				}
-				availableJumps = maxJumps;
-			}
-		}*/
-
 	}
 }
 
@@ -791,32 +773,17 @@ void Player::GodMovement(float dt)
 		position.y -= speed*dt;
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
 		position.y += speed*dt;
-}
-
-bool Player::xCausesCollision(Collider& other, float dt)
-{
-	if (!xDirection) return false;
-	float movement = (float)xDirection * (float)speed * dt;
-	bool hasCollision = collider->Intersects(other.rect);
-	collider->SetPos(collider->rect.x - movement, collider->rect.y);
-	bool hadCollision = collider->Intersects(other.rect);
-	collider->SetPos(collider->rect.x + movement, collider->rect.y);
-	return hasCollision && !hadCollision;
-}
-
-bool Player::yCausesCollision(Collider& other, float dt)
-{
-	if (!yDirection) return false;
-	float movement = verticalVelocity * dt;
-	bool hasCollision = collider->Intersects(other.rect);
-	collider->SetPos(collider->rect.x, collider->rect.y + movement);
-	bool hadCollision = collider->Intersects(other.rect);
-	collider->SetPos(collider->rect.x, collider->rect.y - movement);
-	return hasCollision && !hadCollision;
+	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+		position.x -= speed*dt;
+	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+		position.x += speed * dt;
 }
 
 void Player::SafeMovementX(float deltaX)
 {
+	if (godMode)
+		return;
+
 	int initialX = position.x;
 
 	int xDir = 0;
