@@ -201,8 +201,6 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 	int xDiff;
 	int yDiff;
 
-	bool g = app->map->IntersectsWithMap(a);
-
 	switch (b->type)
 	{
 	case(Collider::Type::ENDLEVEL):
@@ -556,7 +554,8 @@ void Player::UpdateLogic(float dt)
 	else
 		yDirection = 0;
 
-	position.y -= verticalVelocity*dt;
+	SafeMovementY(-verticalVelocity * dt);
+	//position.y -= verticalVelocity*dt;
 
 	switch (playerState)
 	{
@@ -588,13 +587,15 @@ void Player::UpdateLogic(float dt)
 			if (isGoingRight == true)
 			{
 				currentAnim = &runRightAnim;
-				position.x += speed * dt;
+				SafeMovementX(speed * dt);
+				//position.x += speed * dt;
 				xDirection = 1;
 			}
 			else
 			{
 				currentAnim = &runLeftAnim;
-				position.x -= speed * dt;
+				SafeMovementX(-speed * dt);
+				//position.x -= speed * dt;
 				xDirection = -1;
 			}
 
@@ -609,13 +610,15 @@ void Player::UpdateLogic(float dt)
 					if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 					{
 						currentAnim = &jumpLeftAnim;
-						position.x -= speed * dt;
+						SafeMovementX(-speed * dt);
+						//position.x -= speed * dt;
 						xDirection = -1;
 					}
 					else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 					{
 						currentAnim = &jumpRightAnim;
-						position.x += speed * dt;
+						SafeMovementX(speed * dt);
+						//position.x += speed * dt;
 						xDirection = 1;
 					}
 					else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
@@ -626,13 +629,15 @@ void Player::UpdateLogic(float dt)
 					if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 					{
 						currentAnim = &doubleJumpLeftAnim;
-						position.x -= speed*dt;
+						SafeMovementX(-speed * dt);
+						//position.x -= speed*dt;
 						xDirection = -1;
 					}
 					else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 					{
 						currentAnim = &doubleJumpRightAnim;
-						position.x += speed*dt;
+						SafeMovementX(speed * dt);
+						//position.x += speed*dt;
 						xDirection = 1;
 					}
 					else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
@@ -644,13 +649,15 @@ void Player::UpdateLogic(float dt)
 				if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 				{
 					currentAnim = &fallLeftAnim;
-					position.x -= speed*dt;
+					SafeMovementX(-speed * dt);
+					//position.x -= speed*dt;
 					xDirection = -1;
 				}
 				else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 				{
 					currentAnim = &fallRightAnim;
-					position.x += speed*dt;
+					SafeMovementX(speed * dt);
+					//position.x += speed*dt;
 					xDirection = 1;
 				}
 				else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
@@ -707,9 +714,15 @@ void Player::UpdateLogic(float dt)
 			if (frameCounter <= 1)
 			{
 				if (isGoingRight)
-					position.x += impulse * dt;
+				{
+					SafeMovementX(impulse * dt);
+					//position.x += impulse * dt;
+				}
 				else
-					position.x -= impulse * dt;
+				{
+					SafeMovementX(-impulse * dt);
+					//position.x -= impulse * dt;
+				}
 			}
 			else
 			{
@@ -722,9 +735,15 @@ void Player::UpdateLogic(float dt)
 					break;
 				}
 				if (isGoingRight)
-					position.x += impulse * dt;
+				{
+					SafeMovementX(impulse * dt);
+					//position.x += impulse * dt;
+				}
 				else
-					position.x -= impulse * dt;
+				{
+					SafeMovementX(-impulse * dt);
+					//position.x -= impulse * dt;
+				}
 			}
 
 			frameCounter++;
@@ -794,4 +813,54 @@ bool Player::yCausesCollision(Collider& other, float dt)
 	bool hadCollision = collider->Intersects(other.rect);
 	collider->SetPos(collider->rect.x, collider->rect.y - movement);
 	return hasCollision && !hadCollision;
+}
+
+void Player::SafeMovementX(float deltaX)
+{
+	int initialX = position.x;
+
+	int xDir = 0;
+	if (deltaX > 0.0f)
+		xDir = 1;
+	else if (deltaX < 0.0f)
+		xDir = -1;
+
+	for (int x = 1; x <= abs((int)deltaX); x++)
+	{
+		position.x = initialX + (x * xDir);
+		collider->SetPos(position.x + 3, position.y + 10);
+		if (app->map->IntersectsWithMap(collider, 1))
+		{
+			//position.x -= xDir;
+			break;
+		}
+	}
+
+	float remainder = deltaX - (float)((int)deltaX);
+	position.x += remainder;
+}
+
+void Player::SafeMovementY(float deltaY)
+{
+	int initialY = position.y;
+
+	int yDir = 0;
+	if (deltaY > 0.0f)
+		yDir = 1;
+	else if (deltaY < 0.0f)
+		yDir = -1;
+
+	for (int y = 1; y <= abs((int)deltaY); y++)
+	{
+		position.y = initialY + (y * yDir);
+		collider->SetPos(position.x + 3, position.y + 10);
+		if (app->map->IntersectsWithMap(collider, 2))
+		{
+			//position.y -= yDir;
+			break;
+		}
+	}
+
+	float remainder = deltaY - (float)((int)deltaY);
+	position.y += remainder;
 }

@@ -49,6 +49,9 @@ public:
 	bool xCausesCollision(Collider& other, float dt);
 	bool yCausesCollision(Collider& other, float dt);
 
+	void SafeMovementX(float deltaX);
+	void SafeMovementY(float deltaY);
+
 	Animation idleRightAnim;
 	Animation idleLeftAnim;
 	Animation runRightAnim;
@@ -101,10 +104,10 @@ private:
 	unsigned int jumpsLeft = 2;
 
 	float initialWaitCount = 0.0f;
-	float initialWait = 0.6f;
+	float initialWait = 0.1f;
 
-	unsigned int speed;
-	float maxVerticalVelocity = 350.0f;
+	int speed;
+	float maxVerticalVelocity = 850.0f;
 
 	float initialImpulse = 0.0f;
 	float dashLength = 1.0f;
