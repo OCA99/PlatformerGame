@@ -206,6 +206,7 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 	case(Collider::Type::ENDLEVEL):
 		app->ui->currentLevel = 2;
 		app->scene->LoadLevel("level2.tmx");
+		return;
 		break;
 
 	case(Collider::Type::DEATH):
@@ -289,7 +290,7 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		break;
 	}
 
-	if (b->type != Collider::Type::PIG && b->type != Collider::Type::BAT && b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::SECRETTEXT && b->type != Collider::Type::CHECKPOINT1 && b->type != Collider::Type::CHECKPOINT2)
+	if (b->type != Collider::Type::ENDLEVEL && b->type != Collider::Type::PIG && b->type != Collider::Type::BAT && b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::SECRETTEXT && b->type != Collider::Type::CHECKPOINT1 && b->type != Collider::Type::CHECKPOINT2)
 	{
 		int deltaX = a->rect.x - b->rect.x;
 		int deltaY = a->rect.y - b->rect.y;
@@ -766,7 +767,7 @@ void Player::Reload()
 		app->ui->score = 0;
 	}
 	delete collider;
-	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x + 3, (int)position.y + 10, 16, 16 }), Collider::Type::DYNAMIC, this);
+	collider = app->collisions->AddCollider(SDL_Rect({ (int)(position.x + 3.0), (int)(position.y + 10.0), 16, 16 }), Collider::Type::DYNAMIC, this);
 	initialPosition = position;
 	respawnPosition = initialPosition;
 	gravityOn = false;
