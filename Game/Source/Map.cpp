@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Pathfinding.h"
 #include "Entities.h"
+#include "ModuleUI.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -104,8 +105,11 @@ void Map::Draw()
 
 	if (mapLoaded == false) return;
 
-	SDL_Rect rect = flagAnimation.GetCurrentFrame();
-	app->render->DrawTexture(flagTex, 3028, 1026, &rect);
+	if (app->ui->currentLevel == 1)
+	{
+		SDL_Rect rect = flagAnimation.GetCurrentFrame();
+		app->render->DrawTexture(flagTex, 3028, 1026, &rect);
+	}
 
 	for (int i = 0; i < data.maplayers.count(); i++)
 	{

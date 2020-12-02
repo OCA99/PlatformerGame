@@ -4,7 +4,6 @@
 
 Fruit::Fruit(Module* parent, fPoint position, SDL_Texture* texture, Type type, int r) : Entity(parent, position, texture, type)
 {
-
 	idleAnimation.GenerateAnimation(SDL_Rect({ 0, r * 16, 272, 16 }), 1, 17);
 	idleAnimation.speed = 30.0f;
 
