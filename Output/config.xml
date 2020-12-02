@@ -28,6 +28,7 @@
   <!-- L03: Added maps folder as config option -->
   <map>
     <folder>Assets/maps/</folder>
+    <mapcomponent endFlag="Assets/maps/flag.png"/>
   </map>
 
   <scene>

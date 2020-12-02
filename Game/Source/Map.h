@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "List.h"
 #include "Point.h"
+#include "Animation.h"
 
 #include "PugiXml\src\pugixml.hpp"
 #include "SDL/include/SDL.h"
@@ -121,6 +122,10 @@ public:
     // Called before render is available
     bool Awake(pugi::xml_node& conf);
 
+	bool Start();
+
+	bool Update(float dt);
+
 	bool PostUpdate();
 
     // Called each loop iteration
@@ -157,6 +162,11 @@ public:
 	MapData data;
 
 private:
+
+	const char* flagPath;
+	SDL_Texture* flagTex = nullptr;
+
+	Animation flagAnimation;
 
     pugi::xml_document mapFile;
     SString folder;

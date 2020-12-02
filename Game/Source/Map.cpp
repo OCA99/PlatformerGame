@@ -59,7 +59,34 @@ bool Map::Awake(pugi::xml_node& config)
 
     folder.Create(config.child("folder").child_value());
 
+	pugi::xml_node mapPathN = config.child("mapcomponent");
+
+	flagPath = mapPathN.attribute("endFlag").as_string();
+
     return ret;
+}
+
+bool Map::Start()
+{
+
+	flagAnimation.loop = true;
+	flagAnimation.speed = 25.0f;
+
+	for (int i = 0; i < 10; i++)
+	{
+		flagAnimation.PushBack({ i * 30,0,30,46 });
+	}
+
+	flagTex = app->tex->Load(flagPath);
+
+	return true;
+}
+
+bool Map::Update(float dt)
+{
+	flagAnimation.Update(dt);
+
+	return true;
 }
 
 bool Map::PostUpdate()
@@ -67,13 +94,18 @@ bool Map::PostUpdate()
 	OPTICK_EVENT("MapPostUpdate", Optick::Category::Rendering);
 
 	Draw();
+
 	return true;
 }
 
 // Draw the map (all requried layers)
 void Map::Draw()
 {
+
 	if (mapLoaded == false) return;
+
+	SDL_Rect rect = flagAnimation.GetCurrentFrame();
+	app->render->DrawTexture(flagTex, 3028, 1026, &rect);
 
 	for (int i = 0; i < data.maplayers.count(); i++)
 	{
