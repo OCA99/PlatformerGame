@@ -38,7 +38,8 @@ public:
 	bool showPaths = false;
 private:
 	int storeGravity;
-
+	int storeFrameRateCap;
+	bool capFrameRate = true;
 };
 
 #endif //__DEBUG_H__

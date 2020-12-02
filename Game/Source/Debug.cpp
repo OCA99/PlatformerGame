@@ -50,6 +50,21 @@ bool Debug::Update(float dt)
 		GodMode();
 	}
 
+	if (app->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)
+	{
+		if (capFrameRate)
+		{
+			storeFrameRateCap = app->cappedMs;
+			app->cappedMs = 1000 / 30;
+			capFrameRate = false;
+		}
+		else
+		{
+			app->cappedMs = storeFrameRateCap;
+			capFrameRate = true;
+		}
+	}
+
 	if (app->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
 	{
 		fPoint pos;

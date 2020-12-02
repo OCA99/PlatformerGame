@@ -107,6 +107,8 @@ public:
 		requestLoad = true;
 	}
 
+	float cappedMs = -1;
+
 private:
 
 	int argc;
@@ -136,8 +138,6 @@ private:
 	uint32 lastSecFrameCount = 0;
 	uint32 prevLastSecFrameCount = 0;
 	float dt = 0.0f;
-
-	float cappedMs = -1;
 };
 
 extern App* app;
