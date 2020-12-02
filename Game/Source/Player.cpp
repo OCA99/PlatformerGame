@@ -45,6 +45,7 @@ bool Player::Awake(pugi::xml_node& config)
 	pickUpFruitFxPath = audio.attribute("fruit").as_string();
 	checkpointFxPath = audio.attribute("checkpoint").as_string();
 	nutsFxPath = audio.attribute("nuts").as_string();
+	dashFxPath = audio.attribute("dash").as_string();
 
 	initialImpulse = movement.attribute("initialImpulse").as_float();
 
@@ -70,6 +71,7 @@ bool Player::Start()
 	nutsFx = app->audio->LoadFx(nutsFxPath);
 	pickUpFruitFx = app->audio->LoadFx(pickUpFruitFxPath);
 	checkpointFx = app->audio->LoadFx(checkpointFxPath);
+	dashFx = app->audio->LoadFx(dashFxPath);
 
 	currentAnim = &idleRightAnim;
 
@@ -401,6 +403,7 @@ void Player::UpdateState(float dt)
 			{
 				if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
 				{
+					app->audio->PlayFx(dashFx, 0);
 					cooldown = 0;
 					frameCounter = 0;
 					impulse = initialImpulse;
@@ -449,6 +452,7 @@ void Player::UpdateState(float dt)
 			{
 				if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
 				{
+					app->audio->PlayFx(dashFx, 0);
 					cooldown = 0;
 					frameCounter = 0;
 					impulse = initialImpulse;
@@ -490,6 +494,7 @@ void Player::UpdateState(float dt)
 			{
 				if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
 				{
+					app->audio->PlayFx(dashFx, 0);
 					cooldown = 0;
 					frameCounter = 0;
 					impulse = initialImpulse;

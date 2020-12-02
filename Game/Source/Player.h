@@ -131,12 +131,14 @@ private:
 	uint gameOverFx = 0;
 	uint pickUpFruitFx = 0;
 	uint checkpointFx = 0;
+	uint dashFx = 0;
 
 	const char* jumpFxPath;
 	const char* doubleJumpFxPath;
 	const char* gameOverFxPath;
 	const char* pickUpFruitFxPath;
 	const char* checkpointFxPath;
+	const char* dashFxPath;
 
 	uint nutsFx = 0;
 	const char* nutsFxPath;
