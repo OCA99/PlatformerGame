@@ -161,7 +161,7 @@ private:
     pugi::xml_document mapFile;
     SString folder;
     bool mapLoaded;
-	uchar* walkabilityMap;
+	uchar* walkabilityMap = nullptr;
 };
 
 #endif // __MAP_H__

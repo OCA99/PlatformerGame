@@ -784,7 +784,7 @@ void Player::SafeMovementX(float deltaX)
 	if (godMode)
 		return;
 
-	int initialX = position.x;
+	float initialX = position.x;
 
 	int xDir = 0;
 	if (deltaX > 0.0f)
@@ -794,11 +794,10 @@ void Player::SafeMovementX(float deltaX)
 
 	for (int x = 1; x <= abs((int)deltaX); x++)
 	{
-		position.x = initialX + (x * xDir);
+		position.x = initialX + (float)(x * xDir);
 		collider->SetPos(position.x + 3, position.y + 10);
 		if (app->map->IntersectsWithMap(collider, 1))
 		{
-			//position.x -= xDir;
 			break;
 		}
 	}
@@ -809,7 +808,7 @@ void Player::SafeMovementX(float deltaX)
 
 void Player::SafeMovementY(float deltaY)
 {
-	int initialY = position.y;
+	float initialY = position.y;
 
 	int yDir = 0;
 	if (deltaY > 0.0f)
@@ -819,11 +818,10 @@ void Player::SafeMovementY(float deltaY)
 
 	for (int y = 1; y <= abs((int)deltaY); y++)
 	{
-		position.y = initialY + (y * yDir);
+		position.y = initialY + (float)(y * yDir);
 		collider->SetPos(position.x + 3, position.y + 10);
 		if (app->map->IntersectsWithMap(collider, 2))
 		{
-			//position.y -= yDir;
 			break;
 		}
 	}

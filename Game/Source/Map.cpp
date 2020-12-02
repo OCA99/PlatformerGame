@@ -485,6 +485,9 @@ void Map::CreateWalkabilityMap()
 
 bool Map::IntersectsWithMap(Collider* c, int direction)
 {
+	if (walkabilityMap == nullptr)
+		return true;
+
 	for (int i = 0; i < data.width * data.height; i++)
 	{
 		if (walkabilityMap[i] != 0)
