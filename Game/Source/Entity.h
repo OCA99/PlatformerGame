@@ -19,7 +19,8 @@ public:
 		FRUIT,
 		HEART,
 		KNIFE,
-		BAT
+		BAT,
+		PIG
 	};
 
 	Entity(Module* parent, fPoint position, SDL_Texture* texture, Type type) : parent(parent), position(position), texture(texture), type(type)
@@ -52,7 +53,7 @@ public:
 
 	virtual void CleanUp()
 	{
-		collider->pendingToDelete = true;
+
 	}
 
 	Module* parent;

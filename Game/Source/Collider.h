@@ -21,13 +21,12 @@ struct Collider
 		CHECKPOINT1,
 		CHECKPOINT2,
 		DEATH,
-		BAT
+		BAT,
+		PIG
 	};
 
 	//Methods
 	Collider(SDL_Rect rectangle, Type type, Module* listener = nullptr);
-
-	~Collider();
 
 	void SetPos(int x, int y);
 

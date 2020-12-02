@@ -41,6 +41,7 @@ private:
 	SDL_Texture* batTexture;
 	SDL_Texture* fruitTexture;
 	SDL_Texture* heartTexture;
+	SDL_Texture* pigTexture;
 };
 
 #endif // __ENTITIES_H__
