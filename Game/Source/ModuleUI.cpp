@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "Input.h"
 #include "Collisions.h"
+#include "Audio.h"
 
 #include "Optick/include/optick.h"
 
@@ -178,6 +179,8 @@ bool ModuleUI::Update(float dt)
 
 			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			{
+				app->audio->PlayFx(app->player->gameStartFx, 0);
+
 				switch (destinationCheckpoint)
 				{
 				case 0:

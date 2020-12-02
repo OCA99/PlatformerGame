@@ -42,6 +42,8 @@ bool Player::Awake(pugi::xml_node& config)
 	doubleJumpFxPath = audio.attribute("doubleJump").as_string();
 	gameOverFxPath = audio.attribute("gameOver").as_string();
 	gameStartFxPath = audio.attribute("gameStart").as_string();
+	pickUpFruitFxPath = audio.attribute("fruit").as_string();
+	checkpointFxPath = audio.attribute("checkpoint").as_string();
 	nutsFxPath = audio.attribute("nuts").as_string();
 
 	initialImpulse = movement.attribute("initialImpulse").as_float();
@@ -66,6 +68,8 @@ bool Player::Start()
 	gameOverFx = app->audio->LoadFx(gameOverFxPath);
 	gameStartFx = app->audio->LoadFx(gameStartFxPath);
 	nutsFx = app->audio->LoadFx(nutsFxPath);
+	pickUpFruitFx = app->audio->LoadFx(pickUpFruitFxPath);
+	checkpointFx = app->audio->LoadFx(checkpointFxPath);
 
 	currentAnim = &idleRightAnim;
 
@@ -207,6 +211,7 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 
 	case(Collider::Type::ITEMSCORE):
 		app->ui->score += 1000;
+		app->audio->PlayFx(pickUpFruitFx, 0);
 		b->pendingToDelete = true;
 		break;
 
@@ -223,9 +228,13 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 	case(Collider::Type::CHECKPOINT1):
 		app->ui->canDrawMap = true;
 
+		if (!unlockedChekpoint1)
+			app->audio->PlayFx(checkpointFx, 0);
+
 		respawnPosition = position;
 		checkpoint1Position = position;
 		unlockedChekpoint1 = true;
+
 
 		if (!app->ui->drawTeleportMap)
 			app->ui->destinationCheckpoint = 1;
@@ -235,6 +244,9 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 
 	case(Collider::Type::CHECKPOINT2):
 		app->ui->canDrawMap = true;
+
+		if (!unlockedChekpoint2)
+			app->audio->PlayFx(checkpointFx, 0);
 
 		respawnPosition = position;
 		checkpoint2Position = position;

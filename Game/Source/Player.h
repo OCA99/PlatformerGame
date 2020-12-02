@@ -91,6 +91,8 @@ public:
 	Collider* collider;
 	float jumpForce;
 
+	uint doubleJumpFx = 0;
+
 private:
 	SDL_Texture* texture = nullptr;
 	Animation* currentAnim = nullptr;
@@ -126,12 +128,15 @@ private:
 	const char* texturePath;
 
 	uint jumpFx = 0;
-	uint doubleJumpFx = 0;
 	uint gameOverFx = 0;
+	uint pickUpFruitFx = 0;
+	uint checkpointFx = 0;
 
 	const char* jumpFxPath;
 	const char* doubleJumpFxPath;
 	const char* gameOverFxPath;
+	const char* pickUpFruitFxPath;
+	const char* checkpointFxPath;
 
 	uint nutsFx = 0;
 	const char* nutsFxPath;
