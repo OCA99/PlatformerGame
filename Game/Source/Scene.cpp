@@ -205,6 +205,8 @@ void Scene::ChangeGameplayState(GameplayState newState)
 			currentLevel.Create("level1.tmx");
 			app->map->Load("level1.tmx");
 			app->player->Reload();
+			app->player->unlockedChekpoint1 = false;
+			app->player->unlockedChekpoint2 = false;
 			break;
 		case TITLE_SCREEN:
 			screenDisplayAnim = &titleScreenAnim;
