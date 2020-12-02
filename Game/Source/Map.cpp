@@ -482,3 +482,17 @@ void Map::CreateWalkabilityMap()
 		}
 	}
 }
+
+bool Map::IntersectsWithMap(Collider* c)
+{
+	for (int i = 0; i < data.width * data.height; i++)
+	{
+		if (walkabilityMap[i] != 0)
+			continue;
+		iPoint p = MapToWorld(i % data.width, i / data.width);
+		SDL_Rect r = SDL_Rect({ p.x, p.y, data.tileWidth, data.tileHeight });
+		if (c->Intersects(r))
+			return true;
+	}
+	return false;
+}

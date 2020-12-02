@@ -10,6 +10,7 @@
 #include "Collisions.h"
 #include "SDL/include/SDL_scancode.h"
 #include "Scene.h"
+#include "Map.h"
 
 #include "Optick/include/optick.h"
 
@@ -199,6 +200,8 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 
 	int xDiff;
 	int yDiff;
+
+	bool g = app->map->IntersectsWithMap(a);
 
 	switch (b->type)
 	{

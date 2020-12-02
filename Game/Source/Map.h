@@ -135,7 +135,7 @@ public:
 	// L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;
 
-	uchar* GetWalkabilityMap();
+	bool IntersectsWithMap(Collider* c);
 private:
 
 	// L03: Methods to load all required map data
