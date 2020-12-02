@@ -76,10 +76,8 @@ bool Entities::CleanUp()
 	for (int i = 0; i < entityList.count(); i++)
 	{
 		ListItem<Entity*>* e = entityList.At(i);
-		delete e->data;
+		e->data->pendingToDelete = true;
 	}
-
-	entityList.clear();
 
 	return true;
 }

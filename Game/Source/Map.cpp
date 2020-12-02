@@ -164,12 +164,17 @@ bool Map::CleanUp()
     // Remove all tilesets
 	for (int i = 0; i < data.tilesets.count(); i++)
 	{
-		app->tex->UnLoad(data.tilesets[i]->texture);
+		TileSet* t = data.tilesets[i];
+		delete t;
 	}
 	data.tilesets.clear();
 
 	// L04: TODO 2: clean up all layer data
 	// Remove all layers
+	for (int i = 0; i < data.maplayers.count(); i++)
+	{
+		delete[] data.maplayers[i]->data;
+	}
 	data.maplayers.clear();
 	data.properties.propertyList.clear();
 
@@ -500,6 +505,7 @@ bool Map::CreateEntities()
 
 void Map::CreateWalkabilityMap()
 {
+	delete[] walkabilityMap;
 	walkabilityMap = new uchar[data.width * data.height];
 	std::fill_n(walkabilityMap, data.width * data.height, 1);
 	List<Collider*>* colliders = &app->collisions->staticColliders;

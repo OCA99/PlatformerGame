@@ -5,6 +5,10 @@
 #include "List.h"
 #include "Point.h"
 #include "Animation.h"
+#include "Textures.h"
+#include "App.h"
+
+#include "Log.h"
 
 #include "PugiXml\src\pugixml.hpp"
 #include "SDL/include/SDL.h"
@@ -13,6 +17,11 @@
 // Ignore Terrain Types and Tile Types for now, but we want the image!
 struct TileSet
 {
+	~TileSet()
+	{
+		app->tex->UnLoad(texture);
+	}
+
 	SString	name;
 	int	firstgid;
 	int margin;

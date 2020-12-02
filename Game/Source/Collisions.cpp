@@ -35,25 +35,36 @@ bool Collisions::PreUpdate()
 {
 	bool ret = true;
 
-	for (int i = 0; i < dynamicColliders.count(); i++)
+	ListItem<Collider*>* start = dynamicColliders.start;
+
+	while (start != nullptr)
 	{
-		if (dynamicColliders[i]->pendingToDelete)
+		if (start->data->pendingToDelete)
 		{
-			ListItem<Collider*>* c = app->collisions->dynamicColliders.At(i);
-			app->collisions->dynamicColliders.del(c);
-			delete c->data;
+			delete start->data;
+			dynamicColliders.del(start);
+			start = start->next;
+			continue;
 		}
+
+		start = start->next;
 	}
 
-	for (int i = 0; i < staticColliders.count(); i++)
+	start = staticColliders.start;
+
+	while (start != nullptr)
 	{
-		if (staticColliders[i]->pendingToDelete)
+		if (start->data->pendingToDelete)
 		{
-			ListItem<Collider*>* c = app->collisions->staticColliders.At(i);
-			app->collisions->staticColliders.del(c);
-			delete c->data;
+			delete start->data;
+			staticColliders.del(start);
+			start = start->next;
+			continue;
 		}
+
+		start = start->next;
 	}
+
 	return ret;
 }
 
@@ -155,8 +166,15 @@ bool Collisions::PostUpdate()
 // Called before quitting
 bool Collisions::CleanUp()
 {
-	staticColliders.clear();
-	dynamicColliders.clear();
+	for (int i = 0; i < staticColliders.count(); i++)
+	{
+		staticColliders[i]->pendingToDelete = true;
+	}
+
+	for (int i = 0; i < dynamicColliders.count(); i++)
+	{
+		dynamicColliders[i]->pendingToDelete = true;
+	}
 
 	return true;
 }

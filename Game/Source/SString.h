@@ -8,6 +8,8 @@
 #include <string.h>
 #include <assert.h>
 
+#include "Log.h"
+
 #define TMP_STRING_SIZE	4096
 
 class SString
