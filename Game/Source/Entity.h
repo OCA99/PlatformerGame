@@ -18,6 +18,7 @@ public:
 	{
 		FRUIT,
 		HEART,
+		KNIFE,
 		BAT
 	};
 
