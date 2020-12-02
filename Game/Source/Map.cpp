@@ -178,6 +178,7 @@ bool Map::CleanUp()
 	for (int i = 0; i < data.maplayers.count(); i++)
 	{
 		delete[] data.maplayers[i]->data;
+		data.maplayers[i]->properties.propertyList.clear();
 	}
 	data.maplayers.clear();
 	data.properties.propertyList.clear();
@@ -187,6 +188,8 @@ bool Map::CleanUp()
 
 	// Clean up the pugui tree
 	mapFile.reset();
+
+	delete[] walkabilityMap;
 
     return true;
 }
@@ -509,7 +512,6 @@ bool Map::CreateEntities()
 
 void Map::CreateWalkabilityMap()
 {
-	delete[] walkabilityMap;
 	walkabilityMap = new uchar[data.width * data.height];
 	std::fill_n(walkabilityMap, data.width * data.height, 1);
 	List<Collider*>* colliders = &app->collisions->staticColliders;
