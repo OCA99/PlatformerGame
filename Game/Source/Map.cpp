@@ -265,8 +265,9 @@ bool Map::Load(const char* filename)
 	CreateEntities();
 
 	CreateWalkabilityMap();
+	CreatePathfindingWalkabilityMap();
 
-	app->pathfinding->SetMap(data.width, data.height, walkabilityMap);
+	app->pathfinding->SetMap(data.width, data.height, pathfindingWalkabilityMap);
 
     mapLoaded = ret;
 
@@ -526,6 +527,24 @@ void Map::CreateWalkabilityMap()
 			p.x = (*colliders)[i]->rect.x / data.tileWidth;
 			p.y = (*colliders)[i]->rect.y / data.tileHeight;
 			walkabilityMap[p.x + data.width * p.y] = 0;
+		}
+	}
+}
+
+void Map::CreatePathfindingWalkabilityMap()
+{
+	delete[] pathfindingWalkabilityMap;
+	pathfindingWalkabilityMap = new uchar[data.width * data.height];
+	std::fill_n(pathfindingWalkabilityMap, data.width * data.height, 1);
+	List<Collider*>* colliders = &app->collisions->staticColliders;
+	for (int i = 0; i < colliders->count(); i++)
+	{
+		if ((*colliders)[i]->type == Collider::Type::STATIC)
+		{
+			Point<int> p;
+			p.x = (*colliders)[i]->rect.x / data.tileWidth;
+			p.y = (*colliders)[i]->rect.y / data.tileHeight;
+			pathfindingWalkabilityMap[p.x + data.width * p.y] = 0;
 		}
 	}
 }

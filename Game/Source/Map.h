@@ -164,6 +164,7 @@ private:
 	bool CreateColliders();
 	bool CreateEntities();
 	void CreateWalkabilityMap();
+	void CreatePathfindingWalkabilityMap();
 
 public:
 
@@ -181,6 +182,7 @@ private:
     SString folder;
     bool mapLoaded;
 	uchar* walkabilityMap = nullptr;
+	uchar* pathfindingWalkabilityMap = nullptr;
 };
 
 #endif // __MAP_H__

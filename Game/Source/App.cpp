@@ -49,8 +49,8 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(audio);
 	AddModule(parallax);
 	AddModule(player);
-	AddModule(map);
 	AddModule(entities);
+	AddModule(map);
 	AddModule(ui);
 	AddModule(collisions);
 	AddModule(pathfinding);
