@@ -34,6 +34,8 @@ public:
 
 	void OnCollision(Collider* a, Collider* b, float dt);
 
+	void ResetEntities();
+
 private:
 	List<Entity*> entityList;
 

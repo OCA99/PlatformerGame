@@ -11,6 +11,7 @@
 #include "SDL/include/SDL_scancode.h"
 #include "Scene.h"
 #include "Map.h"
+#include "Entities.h"
 
 #include "Optick/include/optick.h"
 
@@ -284,7 +285,20 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 
 		break;
 	case(Collider::Type::PIG):
-		app->ui->score += 5000;
+		center = iPoint(collider->rect.x + (collider->rect.w / 2), collider->rect.y + (collider->rect.h / 2));
+		batCenter = iPoint(b->rect.x + (b->rect.w / 2), b->rect.y + (b->rect.h / 2));
+
+		xDiff = batCenter.x - center.x;
+		yDiff = batCenter.y - center.y;
+
+		if (abs(yDiff) <= abs(xDiff) || yDiff < 0 || app->player->verticalVelocity < 0.0f)
+		{
+			ChangeState(playerState, DYING);
+		}
+		else
+		{
+			app->ui->score += 10000;
+		}
 		break;
 	default:
 		break;
@@ -691,6 +705,7 @@ void Player::UpdateLogic(float dt)
 					verticalVelocity = 0.0f;
 					position = respawnPosition;
 					isDead = false;
+					app->entities->ResetEntities();
 				}
 			}
 

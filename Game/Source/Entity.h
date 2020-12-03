@@ -56,6 +56,11 @@ public:
 
 	}
 
+	virtual void Reset()
+	{
+
+	}
+
 	Module* parent;
 
 	Type type;

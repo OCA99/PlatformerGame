@@ -25,7 +25,7 @@ Bat::Bat(Module* parent, fPoint position, SDL_Texture* texture, Type type, int s
 	questionMarkAnimation.GenerateAnimation(SDL_Rect({ 322, 0, 96, 96 }), 3, 3);
 	questionMarkAnimation.speed = 10.0f;
 
-	deathAnimation.GenerateAnimation(SDL_Rect({ 0, 96, 390, 55 }), 1, 7);
+	deathAnimation.GenerateAnimation(SDL_Rect({ 0, 96, 385, 55 }), 1, 7);
 	deathAnimation.speed = 10.0f;
 	deathAnimation.loop = false;
 
@@ -36,6 +36,8 @@ Bat::Bat(Module* parent, fPoint position, SDL_Texture* texture, Type type, int s
 	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 18, 24 }), Collider::Type::BAT, parent);
 
 	speed = s;
+
+	initialPosition = position;
 
 	state = State::IDLE;
 }
@@ -66,7 +68,7 @@ bool Bat::Update(float dt)
 	{
 		lastPlayerPosition = playerPos;
 
-		int n = app->pathfinding->CreatePath(gridPos, playerPos, false, 0, 1);
+		int n = app->pathfinding->CreatePath(gridPos, playerPos, false, 0, 12);
 		if (n == -1)
 		{
 			hasPath = false;
@@ -229,4 +231,10 @@ void Bat::Collision(Collider* other)
 			app->player->verticalVelocity = app->player->jumpForce;
 		}
 	}
+}
+
+void Bat::Reset()
+{
+	position = initialPosition;
+	state = State::IDLE;
 }
