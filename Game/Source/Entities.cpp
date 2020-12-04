@@ -110,7 +110,7 @@ void Entities::AddEntity(fPoint position, Entity::Type type)
 		entityList.add(e);
 		break;
 	case Entity::Type::PIG:
-		e = (Entity*)(new Pig((Module*)this, position, pigTexture, type, 80, 3, 1000, 350));
+		e = (Entity*)(new Pig((Module*)this, position, pigTexture, type, 80, 2, 1000, 350));
 		entityList.add(e);
 		break;
 	case Entity::Type::KNIFE:

@@ -1,3 +1,13 @@
+
+
+
+
+
+
+
+
+
+
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
@@ -92,6 +102,10 @@ public:
 
 	float cooldown = 3.0f;
 	float maxCooldown = 3.0f;
+
+	float knifeCooldown = 0.75f;
+	float maxKnifeCooldown = 0.75f;
+
 
 	Collider* collider;
 	float jumpForce;

@@ -411,16 +411,21 @@ void Player::UpdateState(float dt)
 				}
 			}
 
-			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
+			if (knifeCooldown == maxKnifeCooldown)
 			{
-				knifeDirection = 1;
-				app->entities->AddEntity(position, Entity::Type::KNIFE);
-			}
+				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
+				{
+					knifeCooldown = 0;
+					knifeDirection = 1;
+					app->entities->AddEntity(position, Entity::Type::KNIFE);
+				}
 
-			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
-			{
-				knifeDirection = -1;
-				app->entities->AddEntity(position, Entity::Type::KNIFE);
+				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
+				{
+					knifeCooldown = 0;
+					knifeDirection = -1;
+					app->entities->AddEntity(position, Entity::Type::KNIFE);
+				}
 			}
 
 			break;
@@ -469,6 +474,23 @@ void Player::UpdateState(float dt)
 				}
 			}
 
+			if (knifeCooldown == maxKnifeCooldown)
+			{
+				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
+				{
+					knifeCooldown = 0;
+					knifeDirection = 1;
+					app->entities->AddEntity(position, Entity::Type::KNIFE);
+				}
+
+				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
+				{
+					knifeCooldown = 0;
+					knifeDirection = -1;
+					app->entities->AddEntity(position, Entity::Type::KNIFE);
+				}
+			}
+
 			break;
 		}
 
@@ -511,6 +533,24 @@ void Player::UpdateState(float dt)
 				}
 			}
 
+
+			if (knifeCooldown == maxKnifeCooldown)
+			{
+				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
+				{
+					knifeCooldown = 0;
+					knifeDirection = 1;
+					app->entities->AddEntity(position, Entity::Type::KNIFE);
+				}
+
+				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
+				{
+					knifeCooldown = 0;
+					knifeDirection = -1;
+					app->entities->AddEntity(position, Entity::Type::KNIFE);
+				}
+			}
+
 			break;
 		}
 
@@ -532,9 +572,13 @@ void Player::UpdateState(float dt)
 void Player::UpdateLogic(float dt)
 {
 	cooldown += dt;
+	knifeCooldown += dt;
 
 	if (cooldown > maxCooldown)
 		cooldown = maxCooldown;
+
+	if (knifeCooldown > maxKnifeCooldown)
+		knifeCooldown = maxKnifeCooldown;
 
 	if (gravityOn == false)
 		initialWaitCount += dt;

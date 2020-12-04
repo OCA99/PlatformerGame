@@ -88,7 +88,7 @@ bool Pig::Update(float dt)
 	switch (state)
 	{
 	case State::IDLE:
-		if (health > 2)
+		if (health > 1)
 		{
 			if (!lookingRight)
 				currentAnimation = &idleLeftAnimation;
@@ -104,7 +104,7 @@ bool Pig::Update(float dt)
 		}
 		break;
 	case State::WALKING:
-		if (health > 2)
+		if (health > 1)
 		{
 			if (!lookingRight)
 				currentAnimation = &walkingLeftAnimation;
@@ -159,7 +159,7 @@ void Pig::UpdatePathfinding(float dt)
 	iPoint groundPos;
 	groundPos = app->pathfinding->GetGroundTile(playerPos);
 
-	int finalSpeed = (health > 2)? speed : (int)((float)speed * 1.5f);
+	int finalSpeed = (health != 1)? speed : (int)((float)speed * 1.75f);
 
 	if ((changedPosition || groundPos != lastPlayerPosition) && playerPos.DistanceTo(gridPos) <= 12 && state != State::DYING && !app->player->godMode && !jumping)
 	{
@@ -307,7 +307,9 @@ void Pig::Collision(Collider* other)
 		if (abs(yDiff) > abs(xDiff) && yDiff > 0 && app->player->verticalVelocity < 0.0f)
 		{
 			app->audio->PlayFx(app->player->doubleJumpFx, 0);
-			health--;
+
+			
+			health --;
 			if (health > 0)
 			{
 				state = State::HIT;
@@ -316,6 +318,7 @@ void Pig::Collision(Collider* other)
 			}
 			else if (health == 0)
 			{
+				app->audio->PlayFx(app->player->doubleJumpFx, 0);
 				collider->pendingToDelete = true;
 				state = State::DYING;
 			}
@@ -362,9 +365,21 @@ void Pig::Collision(Collider* other)
 	if (other->type == Collider::Type::KNIFE)
 	{
 		app->audio->PlayFx(app->player->doubleJumpFx, 0);
-		state = State::DYING;
-		collider->pendingToDelete = true;
+		health--;
+		if(health > 0)
+		{
+		state = State::HIT;
+		hitLeftAnimation.Reset();
+		hitRightAnimation.Reset();
+		}
+		else if (health == 0)
+		{
+			app->audio->PlayFx(app->player->doubleJumpFx, 0);
+			collider->pendingToDelete = true;
+			state = State::DYING;
+		}
 	}
+	
 }
 
 void Pig::SafeMovementX(float deltaX)
