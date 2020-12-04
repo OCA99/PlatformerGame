@@ -231,6 +231,13 @@ void Bat::Collision(Collider* other)
 			app->player->verticalVelocity = app->player->jumpForce;
 		}
 	}
+
+	if (other->type == Collider::Type::KNIFE)
+	{
+		app->audio->PlayFx(app->player->doubleJumpFx, 0);
+		state = State::DYING;
+		collider->pendingToDelete = true;
+	}
 }
 
 void Bat::Reset()

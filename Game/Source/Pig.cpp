@@ -358,6 +358,13 @@ void Pig::Collision(Collider* other)
 		}
 		collider->SetPos((int)position.x, (int)position.y - 12);
 	}
+
+	if (other->type == Collider::Type::KNIFE)
+	{
+		app->audio->PlayFx(app->player->doubleJumpFx, 0);
+		state = State::DYING;
+		collider->pendingToDelete = true;
+	}
 }
 
 void Pig::SafeMovementX(float deltaX)
