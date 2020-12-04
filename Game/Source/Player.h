@@ -112,6 +112,9 @@ public:
 
 	uint doubleJumpFx = 0;
 
+	bool saveOnce1;
+	bool saveOnce2;
+
 private:
 	SDL_Texture* texture = nullptr;
 	Animation* currentAnim = nullptr;

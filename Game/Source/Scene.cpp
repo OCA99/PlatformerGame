@@ -109,6 +109,8 @@ bool Scene::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)
 		{
+			app->player->saveOnce1 = true;
+			app->player->saveOnce2 = true;
 			app->RequestSave();
 			LOG("SAVE REQUESTED");
 		}
