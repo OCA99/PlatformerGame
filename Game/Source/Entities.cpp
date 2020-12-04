@@ -12,6 +12,8 @@
 
 #include "Player.h"
 
+#include "Optick/include/optick.h"
+
 #include <stdlib.h>
 #include <time.h>
 
@@ -133,6 +135,8 @@ bool Entities::PreUpdate()
 
 bool Entities::Update(float dt)
 {
+	OPTICK_EVENT("EntitiesUpdate", Optick::Category::GameLogic);
+
 	ListItem<Entity*>* start = entityList.start;
 
 	while (start != nullptr)
@@ -154,6 +158,8 @@ bool Entities::Update(float dt)
 
 bool Entities::PostUpdate()
 {
+	OPTICK_EVENT("EntitiesPostUpdate", Optick::Category::Rendering);
+
 	for (int i = 0; i < entityList.count(); i++)
 	{
 		ListItem<Entity*>* e = entityList.At(i);

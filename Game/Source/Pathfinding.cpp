@@ -6,6 +6,8 @@
 #include "Defs.h"
 #include "Log.h"
 
+#include "Optick/include/optick.h"
+
 PathFinding::PathFinding() : Module(), map(NULL), lastPath(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
 	name.Create("pathfinding");
@@ -251,6 +253,8 @@ iPoint PathFinding::GetGroundTile(iPoint pos)
 // ----------------------------------------------------------------------------------
 int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, bool useGravity, int maxJump, int maxLength, int maxNodes)
 {
+	OPTICK_EVENT("CalculatePath", Optick::Category::Navigation);
+
 	// L12b: TODO 1: if origin or destination are not walkable, return -1
 	if (!IsWalkable(origin) || !IsWalkable(destination))
 		return -1;
