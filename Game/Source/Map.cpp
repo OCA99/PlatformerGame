@@ -193,7 +193,7 @@ bool Map::CleanUp()
 }
 
 // Load new map
-bool Map::Load(const char* filename)
+bool Map::Load(const char* filename, bool loadEntities)
 {
 	CleanUp();
 
@@ -262,7 +262,8 @@ bool Map::Load(const char* filename)
 	app->player->position.x = data.properties.GetProperty("playerX", 0)*data.tileWidth;
 	app->player->position.y = data.properties.GetProperty("playerY", 0)*data.tileHeight;
 
-	CreateEntities();
+	if (loadEntities)
+		CreateEntities();
 
 	CreateWalkabilityMap();
 	CreatePathfindingWalkabilityMap();

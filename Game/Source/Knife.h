@@ -11,7 +11,7 @@ class Knife : Entity
 
 public:
 
-	Knife(Module* parent, fPoint position, SDL_Texture* texture, Type type, int knifeDirection);
+	Knife(Module* parent, fPoint position, SDL_Texture* texture, Type type, int knifeDirection, int s);
 
 	bool Start();
 

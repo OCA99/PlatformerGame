@@ -4,4 +4,4 @@
 </renderer>
 <audio volume="128" />
 <scene currentLevel="level1.tmx" />
-<player verticalVelocity="-16" availableJumps="2" x="234.520081" y="966.681213" />
+<player verticalVelocity="-34" availableJumps="2" x="180" y="966.870117" />

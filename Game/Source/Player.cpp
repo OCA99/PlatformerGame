@@ -243,8 +243,8 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		unlockedChekpoint1 = true;
 
 
-		if (!app->ui->drawTeleportMap)
-			app->ui->destinationCheckpoint = 1;
+		/*if (!app->ui->drawTeleportMap)
+			app->ui->destinationCheckpoint = 1;*/
 
 		app->ui->drawTeleportText = true;
 		break;
@@ -259,8 +259,8 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		checkpoint2Position = position;
 		unlockedChekpoint2 = true;
 
-		if (!app->ui->drawTeleportMap)
-			app->ui->destinationCheckpoint = 2;
+		/*if (!app->ui->drawTeleportMap)
+			app->ui->destinationCheckpoint = 2;*/
 
 		app->ui->drawTeleportText = true;
 		break;

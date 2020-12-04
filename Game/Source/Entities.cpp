@@ -22,6 +22,26 @@ Entities::Entities() : Module()
 
 bool Entities::Awake(pugi::xml_node& config)
 {
+	pugi::xml_node entities = config.child("entities");
+
+	enemySpeed = entities.attribute("enemySpeed").as_int();
+	pigHealth = entities.attribute("pigHealth").as_int();
+	enemyGravity = entities.attribute("enemyGravity").as_int();
+	enemyJumpForce = entities.attribute("enemyJumpForce").as_int();
+	knifeSpeed = entities.attribute("knifeSpeed").as_int();
+
+	return true;
+}
+
+bool Entities::Load(pugi::xml_node& savedGame)
+{
+
+	return true;
+}
+
+bool Entities::Save(pugi::xml_node& savedGame)
+{
+
 	return true;
 }
 
@@ -97,7 +117,7 @@ void Entities::AddEntity(fPoint position, Entity::Type type)
 	switch (type)
 	{
 	case Entity::Type::BAT:
-		e = (Entity*)(new Bat((Module*)this, position, batTexture, type, 80));
+		e = (Entity*)(new Bat((Module*)this, position, batTexture, type, enemySpeed));
 		entityList.add(e);
 		break;
 	case Entity::Type::FRUIT:
@@ -110,12 +130,12 @@ void Entities::AddEntity(fPoint position, Entity::Type type)
 		entityList.add(e);
 		break;
 	case Entity::Type::PIG:
-		e = (Entity*)(new Pig((Module*)this, position, pigTexture, type, 80, 2, 1000, 350));
+		e = (Entity*)(new Pig((Module*)this, position, pigTexture, type, enemySpeed, pigHealth, enemyGravity, enemyJumpForce));
 		entityList.add(e);
 		break;
 	case Entity::Type::KNIFE:
 		knifeDirection = app->player->knifeDirection;
-		e = (Entity*)(new Knife((Module*)this, position, knifetexture, type, knifeDirection));
+		e = (Entity*)(new Knife((Module*)this, position, knifetexture, type, knifeDirection, knifeSpeed));
 		entityList.add(e);
 		break;
 	}

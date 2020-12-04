@@ -3,7 +3,7 @@
 #include "App.h"
 #include "Map.h"
 
-Knife::Knife(Module* parent, fPoint position, SDL_Texture* texture_, Type type, int knifeDirection_) : Entity(parent, position, texture, type)
+Knife::Knife(Module* parent, fPoint position, SDL_Texture* texture_, Type type, int knifeDirection_, int s) : Entity(parent, position, texture, type)
 {
 	collider = app->collisions->AddCollider(SDL_Rect({ (int)position.x, (int)position.y, 25, 6 }), Collider::Type::KNIFE, parent);
 
@@ -13,7 +13,7 @@ Knife::Knife(Module* parent, fPoint position, SDL_Texture* texture_, Type type, 
 
 	texture = texture_;
 	
-	speed = 500;
+	speed = s;
 }
 
 bool Knife::Start()

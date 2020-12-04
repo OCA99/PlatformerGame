@@ -44,4 +44,8 @@
     <ui fontPath="Assets/ui/white.png" teleportMapPath1="Assets/ui/teleport_checkpoint_lvl1.png" teleportMapPath2="Assets/ui/teleport_checkpoint_lvl2.png" livesTexturePath = "Assets/ui/lives.png" teleportArrow="Assets/ui/teleport_arrow.png" teleportCross= "Assets/ui/teleport_cross.png"/>
   </ui>
 
+  <entities>
+  	<entities enemySpeed="80" pigHealth="2" enemyGravity="1000" enemyJumpForce="350" knifeSpeed="500" />
+  </entities>
+
 </config>
