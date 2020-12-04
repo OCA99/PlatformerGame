@@ -151,6 +151,7 @@ private:
 	uint pickUpFruitFx = 0;
 	uint checkpointFx = 0;
 	uint dashFx = 0;
+	uint throwKnifeFx = 0;
 
 	const char* jumpFxPath;
 	const char* doubleJumpFxPath;
@@ -158,6 +159,7 @@ private:
 	const char* pickUpFruitFxPath;
 	const char* checkpointFxPath;
 	const char* dashFxPath;
+	const char* throwKnifeFxPath;
 
 	uint nutsFx = 0;
 	const char* nutsFxPath;
