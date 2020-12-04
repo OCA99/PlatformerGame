@@ -131,11 +131,6 @@ void Entities::OnCollision(Collider* a, Collider* b, float dt)
 		{
 			e->data->Collision(b);
 		}
-
-		if (e->data->collider == b && a != nullptr)
-		{
-			e->data->Collision(a);
-		}
 	}
 }
 
