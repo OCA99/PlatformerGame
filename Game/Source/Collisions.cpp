@@ -107,13 +107,15 @@ bool Collisions::Update(float dt)
 			{
 				for each (Module * m in dynamicColliders[i]->listeners)
 				{
-					if (m == nullptr) break;
+					if (m == nullptr)
+						break;
 					if (j < dynamicColliders.count() && i < dynamicColliders.count())
 						m->OnCollision(dynamicColliders[i], dynamicColliders[j], dt);
 				}
 				for each (Module * m in dynamicColliders[j]->listeners)
 				{
-					if (m == nullptr) break;
+					if (m == nullptr)
+						break;
 					if (j < dynamicColliders.count() && i < dynamicColliders.count())
 						m->OnCollision(dynamicColliders[j], dynamicColliders[i], dt);
 				}
