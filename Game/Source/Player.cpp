@@ -270,6 +270,9 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		break;
 
 	case(Collider::Type::BAT):
+		if (dashing)
+			break;
+
 		center = iPoint(collider->rect.x + (collider->rect.w / 2), collider->rect.y + (collider->rect.h / 2));
 		batCenter = iPoint(b->rect.x + (b->rect.w / 2), b->rect.y + (b->rect.h / 2));
 
@@ -287,6 +290,9 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 
 		break;
 	case(Collider::Type::PIG):
+		if (dashing)
+			break;
+		
 		center = iPoint(collider->rect.x + (collider->rect.w / 2), collider->rect.y + (collider->rect.h / 2));
 		batCenter = iPoint(b->rect.x + (b->rect.w / 2), b->rect.y + (b->rect.h / 2));
 
