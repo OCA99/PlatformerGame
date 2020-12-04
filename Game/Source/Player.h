@@ -80,8 +80,8 @@ public:
 
 	Point<float> checkpoint1Position;
 	Point<float> checkpoint2Position;
-	bool unlockedChekpoint1 = false;
-	bool unlockedChekpoint2 = false;
+	bool unlockedChekpoint1 = true;
+	bool unlockedChekpoint2 = true;
 
 	int knifeDirection;
 

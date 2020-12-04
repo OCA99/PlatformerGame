@@ -563,11 +563,11 @@ bool Map::IntersectsWithMap(Collider* c, int direction)
 		if (c->Intersects(r) && direction == 0)
 			return true;
 
-		r = SDL_Rect({ p.x, p.y + 1, data.tileWidth, data.tileHeight - 2 });
+		r = SDL_Rect({ p.x, p.y + 7, data.tileWidth, data.tileHeight - 14 });
 		if (c->Intersects(r) && direction == 1)
 			return true;
 
-		r = SDL_Rect({ p.x + 1, p.y, data.tileWidth - 2, data.tileHeight });
+		r = SDL_Rect({ p.x + 7, p.y, data.tileWidth - 14, data.tileHeight });
 		if (c->Intersects(r) && direction == 2)
 			return true;
 	}

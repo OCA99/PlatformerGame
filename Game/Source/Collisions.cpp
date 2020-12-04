@@ -78,17 +78,21 @@ bool Collisions::Update(float dt)
 	{
 		for (int j = 0; j < staticColliders.count(); j++)
 		{
+			if (i >= dynamicColliders.count())
+				break;
 			if (dynamicColliders[i]->Intersects(staticColliders[j]->rect))
 			{
 				for each (Module*m in dynamicColliders[i]->listeners)
 				{
 					if (m == nullptr) break;
-					m->OnCollision(dynamicColliders[i], staticColliders[j], dt);
+					if (j < staticColliders.count() && i < dynamicColliders.count())
+						m->OnCollision(dynamicColliders[i], staticColliders[j], dt);
 				}
 				for each (Module*m in staticColliders[j]->listeners)
 				{
 					if (m == nullptr) break;
-					m->OnCollision(staticColliders[j], dynamicColliders[i], dt);
+					if (j < staticColliders.count() && i < dynamicColliders.count())
+						m->OnCollision(staticColliders[j], dynamicColliders[i], dt);
 				}
 			}
 		}
@@ -97,17 +101,21 @@ bool Collisions::Update(float dt)
 		{
 			if (i == j)
 				continue;
+			if (i >= dynamicColliders.count())
+				break;
 			if (dynamicColliders[i]->Intersects(dynamicColliders[j]->rect))
 			{
 				for each (Module * m in dynamicColliders[i]->listeners)
 				{
 					if (m == nullptr) break;
-					m->OnCollision(dynamicColliders[i], dynamicColliders[j], dt);
+					if (j < dynamicColliders.count() && i < dynamicColliders.count())
+						m->OnCollision(dynamicColliders[i], dynamicColliders[j], dt);
 				}
 				for each (Module * m in dynamicColliders[j]->listeners)
 				{
 					if (m == nullptr) break;
-					m->OnCollision(dynamicColliders[j], dynamicColliders[i], dt);
+					if (j < dynamicColliders.count() && i < dynamicColliders.count())
+						m->OnCollision(dynamicColliders[j], dynamicColliders[i], dt);
 				}
 			}
 		}

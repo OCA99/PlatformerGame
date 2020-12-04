@@ -91,11 +91,20 @@ bool ModuleUI::Update(float dt)
 		arrow3.x = 325;
 		arrow3.y = 106;
 
+		arrow4.x = 375;
+		arrow4.y = 205;
+
 		crossPos1.x = 203;
 		crossPos1.y = 116;
 
 		crossPos2.x = 317;
 		crossPos2.y = 116;
+
+		checkpointCoordinates.clear();
+		checkpointCoordinates.add(iPoint(176, 960));
+		checkpointCoordinates.add(iPoint(1344, 512));
+		checkpointCoordinates.add(iPoint(2384, 512));
+		checkpointCoordinates.add(iPoint(2816, 1040));
 
 		renderedMap = teleportMapLevel1;
 
@@ -111,11 +120,20 @@ bool ModuleUI::Update(float dt)
 		arrow3.x = 252;
 		arrow3.y = 188;
 
+		arrow4.x = 375;
+		arrow4.y = 149;
+
 		crossPos1.x = 216;
 		crossPos1.y = 124;
 
 		crossPos2.x = 245;
 		crossPos2.y = 197;
+
+		checkpointCoordinates.clear();
+		checkpointCoordinates.add(iPoint(192, 816));
+		checkpointCoordinates.add(iPoint(1456, 576));
+		checkpointCoordinates.add(iPoint(1712, 944));
+		checkpointCoordinates.add(iPoint(2784, 736));
 
 		renderedMap = teleportMapLevel2;
 
@@ -127,7 +145,7 @@ bool ModuleUI::Update(float dt)
 
 	if (canDrawMap)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->gameplayState == Scene::GameplayState::PLAYING)
 		{
 			if (drawTeleportMap)
 			{
@@ -144,9 +162,9 @@ bool ModuleUI::Update(float dt)
 			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 			{
 				destinationCheckpoint++;
-				if (destinationCheckpoint > 2)
+				if (destinationCheckpoint > 3)
 				{
-					destinationCheckpoint = 2;
+					destinationCheckpoint = 3;
 				}
 			}
 
@@ -172,6 +190,9 @@ bool ModuleUI::Update(float dt)
 			case 2:
 				renderedArrowPos = arrow3;
 				break;
+			case 3:
+				renderedArrowPos = arrow4;
+				break;
 
 			default:
 				break;
@@ -184,15 +205,16 @@ bool ModuleUI::Update(float dt)
 				switch (destinationCheckpoint)
 				{
 				case 0:
-					app->player->position = app->player->initialPosition;
+					app->player->position = fPoint(checkpointCoordinates[0].x, checkpointCoordinates[0].y);
 					app->player->collider->SetPos(app->player->position.x, app->player->position.y);
+					drawTeleportMap = false;
 					break;
 
 				case 1:
 					if (!app->player->unlockedChekpoint1)
 						break;
 
-					app->player->position = app->player->checkpoint1Position;
+					app->player->position = fPoint(checkpointCoordinates[1].x, checkpointCoordinates[1].y);
 					app->player->collider->SetPos(app->player->position.x, app->player->position.y);
 					drawTeleportMap = false;
 					break;
@@ -201,10 +223,18 @@ bool ModuleUI::Update(float dt)
 					if (!app->player->unlockedChekpoint2)
 						break;
 
-					app->player->position = app->player->checkpoint2Position;
+					app->player->position = fPoint(checkpointCoordinates[2].x, checkpointCoordinates[2].y);
 					app->player->collider->SetPos(app->player->position.x, app->player->position.y);
 					drawTeleportMap = false;
 					break;
+
+				case 3:
+					if (!app->player->unlockedChekpoint2)
+						break;
+
+					app->player->position = fPoint(checkpointCoordinates[3].x, checkpointCoordinates[3].y);
+					app->player->collider->SetPos(app->player->position.x, app->player->position.y);
+					drawTeleportMap = false;
 
 				default:
 					break;
@@ -213,10 +243,10 @@ bool ModuleUI::Update(float dt)
 		}
 	}
 	
-	if (!drawTeleportText)
-		drawTeleportMap = false;
+	/*if (!drawTeleportText)
+		drawTeleportMap = false;*/
 
-	canDrawMap = false;
+	//canDrawMap = false;
 	canDrawSecret = false;
 	drawTeleportText = false;
 
@@ -275,8 +305,8 @@ bool ModuleUI::PostUpdate()
 	IntToDynamicString(scoreText, score);
 	BlitText(uiposx + 375, 5, font, scoreText, false);
 
-	if (drawTeleportText && !drawTeleportMap)
-		BlitText(app->player->position.x - 70, app->player->position.y + 30, font, "PRESS T TO TELEPORT", true);
+	//if (drawTeleportText && !drawTeleportMap)
+		//BlitText(app->player->position.x - 70, app->player->position.y + 30, font, "PRESS T TO TELEPORT", true);
 
 	if (canDrawSecret)
 	{

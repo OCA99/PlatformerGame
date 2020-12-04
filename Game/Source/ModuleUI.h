@@ -48,7 +48,7 @@ public:
 
 	bool drawTeleportText;
 	bool drawTeleportMap;
-	bool canDrawMap;
+	bool canDrawMap = true;
 	bool canDrawSecret;
 
 	int font = -1;
@@ -83,6 +83,7 @@ public:
 	iPoint arrow1;
 	iPoint arrow2;
 	iPoint arrow3;
+	iPoint arrow4;
 	iPoint renderedArrowPos;
 
 	SDL_Texture* teleportCrossTex = nullptr;
@@ -112,6 +113,8 @@ public:
 	void BlitText(int x, int y, int fontIndex, const char* text, bool useCamera) const;
 	void IntToDynamicString(char* buffer, int k);
 	void IntToString(char* buffer, int k, int length);
+
+	List<iPoint> checkpointCoordinates;
 
 	int k = 0;
 

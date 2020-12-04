@@ -380,10 +380,6 @@ void Player::UpdateState(float dt)
 				app->audio->PlayFx(jumpFx, 0);
 				if (availableJumps > 0)
 				{
-					//LOG("%f\n", verticalVelocity * dt);
-					//if (verticalVelocity*dt < -0.0f)
-					//	availableJumps -= 2;
-					//else
 					availableJumps--;
 				}
 
@@ -410,18 +406,18 @@ void Player::UpdateState(float dt)
 					cooldown = 0;
 					frameCounter = 0;
 					impulse = initialImpulse;
-					position.y -= 1;
+					//position.y -= 1;
 					ChangeState(playerState, DASHING);
 				}
 			}
 
-			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode)
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
 			{
 				knifeDirection = 1;
 				app->entities->AddEntity(position, Entity::Type::KNIFE);
 			}
 
-			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode)
+			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
 			{
 				knifeDirection = -1;
 				app->entities->AddEntity(position, Entity::Type::KNIFE);
@@ -442,9 +438,6 @@ void Player::UpdateState(float dt)
 				app->audio->PlayFx(jumpFx, 0);
 				if (availableJumps > 0)
 				{
-					//if (verticalVelocity < 0.0f)
-					//	availableJumps -= 2;
-					//else
 					availableJumps--;
 				}
 
@@ -471,7 +464,7 @@ void Player::UpdateState(float dt)
 					cooldown = 0;
 					frameCounter = 0;
 					impulse = initialImpulse;
-					position.y -= 1;
+					//position.y -= 1;
 					ChangeState(playerState, DASHING);
 				}
 			}
@@ -513,7 +506,7 @@ void Player::UpdateState(float dt)
 					cooldown = 0;
 					frameCounter = 0;
 					impulse = initialImpulse;
-					position.y -= 1;
+					//position.y -= 1;
 					ChangeState(playerState, DASHING);
 				}
 			}
@@ -569,7 +562,6 @@ void Player::UpdateLogic(float dt)
 		yDirection = 0;
 
 	SafeMovementY(-verticalVelocity * dt);
-	//position.y -= verticalVelocity*dt;
 
 	switch (playerState)
 	{
