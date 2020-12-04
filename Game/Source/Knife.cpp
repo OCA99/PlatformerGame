@@ -1,6 +1,7 @@
 #include "Knife.h"
-#include "Bat.h"
 #include "Render.h"
+#include "App.h"
+#include "Map.h"
 
 Knife::Knife(Module* parent, fPoint position, SDL_Texture* texture_, Type type, int knifeDirection_) : Entity(parent, position, texture, type)
 {
@@ -11,22 +12,21 @@ Knife::Knife(Module* parent, fPoint position, SDL_Texture* texture_, Type type, 
 	knifeDirection = knifeDirection_;
 
 	texture = texture_;
+	
+	speed = 600;
 }
 
 bool Knife::Start()
 {
 
-	position.x = initialPosition.x;
 
 	return true;
 }
 
 bool Knife::Update(float dt)
 {
-
-	speed = 10;
-	position.y = initialPosition.y + 8;
-	position.x += speed * knifeDirection;
+	position.y = initialPosition.y + 16;
+	SafeMovementX(speed * knifeDirection * dt);
 	
 	if (knifeDirection == 1)
 	{
@@ -75,4 +75,29 @@ void Knife::Collision(Collider* other)
 		break;
 	}
 
+}
+
+void Knife::SafeMovementX(float deltaX)
+{
+
+	float initialX = position.x;
+
+	int xDir = 0;
+	if (deltaX > 0.0f)
+		xDir = 1;
+	else if (deltaX < 0.0f)
+		xDir = -1;
+
+	for (int x = 1; x <= abs((int)deltaX); x++)
+	{
+		position.x = initialX + (float)(x * xDir);
+		collider->SetPos(position.x, position.y - 12);
+		if (app->map->IntersectsWithMap(collider, 1))
+		{
+			break;
+		}
+	}
+
+	float remainder = deltaX - (float)((int)deltaX);
+	position.x += remainder;
 }

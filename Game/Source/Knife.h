@@ -21,6 +21,8 @@ public:
 
 	void Collision(Collider* other);
 
+	void SafeMovementX(float deltaX);
+
 private:
 	fPoint initialPosition;
 	int speed;
