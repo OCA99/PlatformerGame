@@ -24,7 +24,9 @@ public:
 private:
 	fPoint initialPosition;
 	int speed;
+
 	int knifeDirection;
+	SDL_Rect knifeRect;
 };
 
 #endif // !__KNIFE_H__

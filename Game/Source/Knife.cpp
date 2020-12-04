@@ -1,4 +1,5 @@
 #include "Knife.h"
+#include "Bat.h"
 #include "Render.h"
 
 Knife::Knife(Module* parent, fPoint position, SDL_Texture* texture_, Type type, int knifeDirection_) : Entity(parent, position, texture, type)
@@ -27,6 +28,15 @@ bool Knife::Update(float dt)
 	position.y = initialPosition.y + 8;
 	position.x += speed * knifeDirection;
 	
+	if (knifeDirection == 1)
+	{
+		knifeRect = SDL_Rect({ 0, 0, 25, 6 });
+	}
+	else
+	{
+		knifeRect = SDL_Rect({ 25, 0, 25, 6 });
+	}
+
 	collider->SetPos(position.x, position.y);
 
 	return true;
@@ -35,12 +45,28 @@ bool Knife::Update(float dt)
 bool Knife::Draw()
 {
 
-	app->render->DrawTexture(texture, position.x, position.y, NULL);
+	app->render->DrawTexture(texture, position.x, position.y, &knifeRect);
 
 	return true;
 }
 
 void Knife::Collision(Collider* other)
 {
+
+	switch (other->type)
+	{
+
+	case(Collider::Type::STATIC):
+		pendingToDelete = true;
+		break;
+
+	case(Collider::Type::BAT):
+		other->pendingToDelete = true;
+		pendingToDelete = true;
+		break;
+
+	default:
+		break;
+	}
 
 }

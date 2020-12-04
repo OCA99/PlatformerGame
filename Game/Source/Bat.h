@@ -33,6 +33,7 @@ public:
 
 	void Reset();
 
+
 private:
 	Animation idleAnimation;
 	Animation flyingLeftAnimation;
