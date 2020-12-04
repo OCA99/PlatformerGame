@@ -61,6 +61,9 @@ bool Player::Start()
 
 	health = 3;
 
+	saveOnce1 = true;
+	saveOnce2 = true;
+
 	LOG("Loading Player textures");
 
 	texture = app->tex->Load(texturePath);
@@ -167,6 +170,7 @@ bool Player::Load(pugi::xml_node& savedGame)
 	position.x = savedGame.attribute("x").as_int(176);
 	position.y = savedGame.attribute("y").as_int(976);
 
+
 	return true;
 }
 
@@ -247,6 +251,13 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 			app->ui->destinationCheckpoint = 1;
 
 		app->ui->drawTeleportText = true;
+
+		if (saveOnce1)
+			app->RequestSave();
+
+		saveOnce1 = false;
+		saveOnce2 = true;
+
 		break;
 
 	case(Collider::Type::CHECKPOINT2):
@@ -263,6 +274,13 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 			app->ui->destinationCheckpoint = 2;
 
 		app->ui->drawTeleportText = true;
+
+		if(saveOnce2)
+		app->RequestSave();
+		
+		saveOnce2 = false;
+		saveOnce1 = true;
+
 		break;
 
 	case(Collider::Type::SECRETTEXT):
