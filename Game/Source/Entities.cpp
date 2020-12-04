@@ -32,6 +32,12 @@ bool Entities::Awake(pugi::xml_node& config)
 	enemyJumpForce = entities.attribute("enemyJumpForce").as_int();
 	knifeSpeed = entities.attribute("knifeSpeed").as_int();
 
+	batTexturePath = config.child("batTexture").child_value();
+	pigTexturePath = config.child("pigTexture").child_value();
+	fruitTexturePath = config.child("fruitTexture").child_value();
+	heartTexturePath = config.child("heartTexture").child_value();
+	knifeTexturePath = config.child("knifeTexture").child_value();
+
 	return true;
 }
 
@@ -117,11 +123,11 @@ bool Entities::Save(pugi::xml_node& savedGame)
 
 bool Entities::Start()
 {
-	batTexture = app->tex->Load("Assets/enemies/bat/bat.png");
-	pigTexture = app->tex->Load("Assets/enemies/pig/pig.png");
-	fruitTexture = app->tex->Load("Assets/Items/item_spritesheet.png");
-	heartTexture = app->tex->Load("Assets/Items/heart_anim.png");
-	knifetexture = app->tex->Load("Assets/textures/Main Characters/Virtual Guy/knife.png");
+	batTexture = app->tex->Load(batTexturePath);
+	pigTexture = app->tex->Load(pigTexturePath);
+	fruitTexture = app->tex->Load(fruitTexturePath);
+	heartTexture = app->tex->Load(heartTexturePath);
+	knifetexture = app->tex->Load(knifeTexturePath);
 
 	srand(time(NULL));
 

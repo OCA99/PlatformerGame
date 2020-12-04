@@ -54,6 +54,12 @@ private:
 	SDL_Texture* heartTexture;
 	SDL_Texture* pigTexture;
 	SDL_Texture* knifetexture;
+
+	const char* batTexturePath;
+	const char* fruitTexturePath;
+	const char* heartTexturePath;
+	const char* pigTexturePath;
+	const char* knifeTexturePath;
 };
 
 #endif // __ENTITIES_H__
