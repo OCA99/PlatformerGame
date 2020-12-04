@@ -83,6 +83,8 @@ public:
 	bool unlockedChekpoint1 = false;
 	bool unlockedChekpoint2 = false;
 
+	int knifeDirection;
+
 	bool gravityOn = false;
 
 	uint gameStartFx = 0;

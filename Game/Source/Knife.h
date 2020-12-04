@@ -11,7 +11,7 @@ class Knife : Entity
 
 public:
 
-	Knife(Module* parent, fPoint position, SDL_Texture* texture, Type type);
+	Knife(Module* parent, fPoint position, SDL_Texture* texture, Type type, int knifeDirection);
 
 	bool Start();
 
@@ -21,6 +21,10 @@ public:
 
 	void Collision(Collider* other);
 
+private:
+	fPoint initialPosition;
+	int speed;
+	int knifeDirection;
 };
 
 #endif // !__KNIFE_H__

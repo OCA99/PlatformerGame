@@ -22,7 +22,8 @@ struct Collider
 		CHECKPOINT2,
 		DEATH,
 		BAT,
-		PIG
+		PIG,
+		KNIFE
 	};
 
 	//Methods

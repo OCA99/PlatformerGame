@@ -304,7 +304,7 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		break;
 	}
 
-	if (b->type != Collider::Type::ENDLEVEL && b->type != Collider::Type::PIG && b->type != Collider::Type::BAT && b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::SECRETTEXT && b->type != Collider::Type::CHECKPOINT1 && b->type != Collider::Type::CHECKPOINT2)
+	if (b->type != Collider::Type::ENDLEVEL && b->type != Collider::Type::KNIFE && b->type != Collider::Type::PIG && b->type != Collider::Type::BAT && b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::SECRETTEXT && b->type != Collider::Type::CHECKPOINT1 && b->type != Collider::Type::CHECKPOINT2)
 	{
 		int deltaX = a->rect.x - b->rect.x;
 		int deltaY = a->rect.y - b->rect.y;
@@ -413,6 +413,18 @@ void Player::UpdateState(float dt)
 					position.y -= 1;
 					ChangeState(playerState, DASHING);
 				}
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode)
+			{
+				knifeDirection = 1;
+				app->entities->AddEntity(position, Entity::Type::KNIFE);
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode)
+			{
+				knifeDirection = -1;
+				app->entities->AddEntity(position, Entity::Type::KNIFE);
 			}
 
 			break;

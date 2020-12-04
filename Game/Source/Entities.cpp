@@ -8,6 +8,7 @@
 #include "Fruit.h"
 #include "Heart.h"
 #include "Pig.h"
+#include "Knife.h"
 
 #include "Player.h"
 
@@ -30,6 +31,7 @@ bool Entities::Start()
 	pigTexture = app->tex->Load("Assets/enemies/pig/pig.png");
 	fruitTexture = app->tex->Load("Assets/Items/item_spritesheet.png");
 	heartTexture = app->tex->Load("Assets/Items/heart_anim.png");
+	knifetexture = app->tex->Load("Assets/textures/Main Characters/Virtual Guy/knife.png");
 
 	srand(time(NULL));
 
@@ -90,6 +92,7 @@ void Entities::AddEntity(fPoint position, Entity::Type type)
 {
 	Entity* e;
 	int r;
+	int knifeDirection;
 
 	switch (type)
 	{
@@ -108,6 +111,11 @@ void Entities::AddEntity(fPoint position, Entity::Type type)
 		break;
 	case Entity::Type::PIG:
 		e = (Entity*)(new Pig((Module*)this, position, pigTexture, type, 80, 3, 1000, 350));
+		entityList.add(e);
+		break;
+	case Entity::Type::KNIFE:
+		knifeDirection = app->player->knifeDirection;
+		e = (Entity*)(new Knife((Module*)this, position, knifetexture, type, knifeDirection));
 		entityList.add(e);
 		break;
 	}
