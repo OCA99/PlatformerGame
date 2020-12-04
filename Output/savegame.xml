@@ -1,55 +1,38 @@
 <?xml version="1.0"?>
 <renderer>
-	<camera x="-2208" y="-754" />
+	<camera x="-2988" y="-1586" />
 </renderer>
 <audio volume="128" />
-<scene currentLevel="level1.tmx" />
-<player verticalVelocity="-21" availableJumps="2" x="1344" y="512" score="20000" health="3" />
+<scene currentLevel="level2.tmx" />
+<player verticalVelocity="-19" availableJumps="2" x="1734.42249" y="928.233765" score="0" health="3" />
 <entities>
 	<entities>
-		<entity x="2000" y="464" type="0" />
-		<entity x="2096" y="464" type="0" />
-		<entity x="2192" y="464" type="0" />
-		<entity x="2288" y="464" type="0" />
-		<entity x="1472" y="496" type="0" />
-		<entity x="1696" y="496" type="0" />
-		<entity x="2496" y="544" type="0" />
-		<entity x="2512" y="544" type="0" />
-		<entity x="1104" y="592" type="0" />
-		<entity x="928" y="640" type="0" />
-		<entity x="2608" y="720" type="0" />
-		<entity x="2624" y="720" type="0" />
-		<entity x="1200" y="800" type="0" />
-		<entity x="1488" y="800" type="0" />
-		<entity x="1680" y="800" type="0" />
-		<entity x="1472" y="816" type="0" />
-		<entity x="1696" y="816" type="0" />
-		<entity x="1488" y="832" type="0" />
-		<entity x="1680" y="832" type="0" />
-		<entity x="1136" y="848" type="0" />
-		<entity x="1472" y="848" type="0" />
-		<entity x="1696" y="848" type="0" />
-		<entity x="1488" y="864" type="0" />
-		<entity x="1680" y="864" type="0" />
-		<entity x="1472" y="880" type="0" />
-		<entity x="1696" y="880" type="0" />
-		<entity x="432" y="896" type="0" />
-		<entity x="448" y="896" type="0" />
-		<entity x="1200" y="896" type="0" />
-		<entity x="1488" y="896" type="0" />
-		<entity x="1680" y="896" type="0" />
-		<entity x="416" y="912" type="0" />
-		<entity x="464" y="912" type="0" />
-		<entity x="848" y="912" type="0" />
-		<entity x="1472" y="912" type="0" />
-		<entity x="1696" y="912" type="0" />
-		<entity x="2496" y="912" type="0" />
-		<entity x="2512" y="912" type="0" />
-		<entity x="288" y="960" type="3" />
-		<entity x="1120" y="784.785889" type="4" health="2" />
-		<entity x="608" y="976.785889" type="4" health="2" />
-		<entity x="1088" y="976.785889" type="4" health="2" />
-		<entity x="1584" y="480" type="1" />
-		<entity x="1056" y="928" type="1" />
+		<entity x="1216" y="576.310364" type="4" health="2" />
+		<entity x="1328" y="576.310364" type="4" health="2" />
+		<entity x="2336" y="800.310364" type="4" health="2" />
+		<entity x="2208" y="848.310364" type="4" health="2" />
+		<entity x="992" y="624" type="0" />
+		<entity x="2464" y="704" type="0" />
+		<entity x="2480" y="704" type="0" />
+		<entity x="2464" y="720" type="0" />
+		<entity x="2480" y="720" type="0" />
+		<entity x="880" y="736" type="0" />
+		<entity x="896" y="736" type="0" />
+		<entity x="2464" y="736" type="0" />
+		<entity x="2480" y="736" type="0" />
+		<entity x="752" y="752" type="0" />
+		<entity x="768" y="752" type="0" />
+		<entity x="2464" y="752" type="0" />
+		<entity x="2480" y="752" type="0" />
+		<entity x="624" y="768" type="0" />
+		<entity x="640" y="768" type="0" />
+		<entity x="2464" y="768" type="0" />
+		<entity x="496" y="784" type="0" />
+		<entity x="512" y="784" type="0" />
+		<entity x="1616" y="928" type="0" />
+		<entity x="896" y="816" type="3" />
+		<entity x="768" y="832" type="3" />
+		<entity x="640" y="848" type="3" />
+		<entity x="512" y="864" type="3" />
 	</entities>
 </entities>
