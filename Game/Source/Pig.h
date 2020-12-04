@@ -37,6 +37,7 @@ public:
 
 	void Reset();
 
+	int health;
 private:
 
 	void SafeMovementX(float deltaX);
@@ -70,7 +71,6 @@ private:
 	int initialHealth;
 
 	int speed;
-	int health;
 	int gravity;
 	int jumpForce;
 

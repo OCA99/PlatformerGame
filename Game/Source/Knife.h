@@ -23,11 +23,11 @@ public:
 
 	void SafeMovementX(float deltaX);
 
+	int knifeDirection;
 private:
 	fPoint initialPosition;
 	int speed;
 
-	int knifeDirection;
 	SDL_Rect knifeRect;
 };
 
