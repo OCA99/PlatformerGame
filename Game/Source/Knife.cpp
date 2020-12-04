@@ -58,14 +58,17 @@ void Knife::Collision(Collider* other)
 
 	case(Collider::Type::STATIC):
 		pendingToDelete = true;
+		collider->pendingToDelete = true;
 		break;
 
 	case(Collider::Type::BAT):
 		pendingToDelete = true;
+		collider->pendingToDelete = true;
 		break;
 
 	case(Collider::Type::PIG):
 		pendingToDelete = true;
+		collider->pendingToDelete = true;
 		break;
 
 	default:
