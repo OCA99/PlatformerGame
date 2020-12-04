@@ -20,9 +20,9 @@
   </window>
 
   <player>
-  	<texture>Assets/textures/Main Characters/Virtual Guy/SpriteSheet.png</texture>
+  	<texture>Assets/character/sprite_sheet.png</texture>
   	<movement gravity="1000" jumpForce="350" speed="220" maxJumps="2" initialImpulse="1000" />
-    <audio jump="Assets/audio/fx/jump.wav" doubleJump="Assets/audio/fx/double.wav" gameOver="Assets/audio/fx/game over.wav" gameStart="Assets/audio/fx/game start.wav" nuts="Assets/audio/fx/deez_nuts.wav" fruit="Assets/audio/fx/pick_up_fruit.wav" checkpoint="Assets/audio/fx/checkpoint.wav" dash="Assets/audio/fx/dash.wav" throwKnife="Assets/audio/fx/throw_knife.wav" />
+    <audio jump="Assets/audio/fx/jump.wav" doubleJump="Assets/audio/fx/double.wav" gameOver="Assets/audio/fx/game_over.wav" gameStart="Assets/audio/fx/game_start.wav" nuts="Assets/audio/fx/deez_nuts.wav" fruit="Assets/audio/fx/pick_up_fruit.wav" checkpoint="Assets/audio/fx/checkpoint.wav" dash="Assets/audio/fx/dash.wav" throwKnife="Assets/audio/fx/throw_knife.wav" />
   </player>
 
   <!-- L03: Added maps folder as config option -->
@@ -33,7 +33,7 @@
 
   <scene>
     <music path="Assets/audio/music/song.ogg"/>
-    <texture screen="Assets/title screen/reduced title screen.png"/>
+    <texture screen="Assets/title screen/reduced_title_screen.png"/>
   </scene>
 
   <parallax>
@@ -49,7 +49,7 @@
   	<pigTexture>Assets/enemies/pig/pig.png</pigTexture>
   	<fruitTexture>Assets/Items/item_spritesheet.png</fruitTexture>
   	<heartTexture>Assets/Items/heart_anim.png</heartTexture>
-  	<knifeTexture>Assets/textures/Main Characters/Virtual Guy/knife.png</knifeTexture>
+  	<knifeTexture>Assets/character/knife.png</knifeTexture>
   	<entities enemySpeed="80" pigHealth="2" enemyGravity="1000" enemyJumpForce="350" knifeSpeed="500" />
   </entities>
 

@@ -8,22 +8,22 @@
   <property name="playerY" type="int" value="60"/>
  </properties>
  <tileset firstgid="1" name="platforms" tilewidth="16" tileheight="16" tilecount="242" columns="22">
-  <image source="Terrain (16x16).png" width="352" height="176"/>
+  <image source="terrain.png" width="352" height="176"/>
   <terraintypes>
    <terrain name="Grass" tile="-1"/>
   </terraintypes>
  </tileset>
  <tileset firstgid="243" name="Idle" tilewidth="16" tileheight="16" tilecount="4" columns="2">
-  <image source="../textures/Traps/Spikes/Idle.png" width="32" height="32"/>
+  <image source="spikes.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="247" name="Bottom Hit (42x42)" tilewidth="16" tileheight="16" tilecount="18" columns="6">
-  <image source="../textures/Traps/Rock Head/Bottom Hit (42x42).png" width="96" height="48"/>
+  <image source="rock_face.png" width="96" height="48"/>
  </tileset>
  <tileset firstgid="265" name="colliderColors" tilewidth="16" tileheight="16" tilecount="6" columns="6">
-  <image source="../colliders/colliderColors.png" width="96" height="16"/>
+  <image source="../colliders/collider_colors.png" width="96" height="16"/>
  </tileset>
  <tileset firstgid="271" name="endflag" tilewidth="16" tileheight="16" tilecount="8" columns="4">
-  <image source="../textures/Items/Checkpoints/Start/Start (Idle) cut.png" width="64" height="32"/>
+  <image source="checkpoint_flag.png" width="64" height="32"/>
  </tileset>
  <tileset firstgid="279" name="sign" tilewidth="16" tileheight="16" tilecount="1" columns="1">
   <image source="sign.png" width="16" height="16"/>
@@ -32,7 +32,7 @@
   <image source="../Items/deez_nuts.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="284" name="Off" tilewidth="16" tileheight="16" tilecount="2" columns="2">
-  <image source="../textures/Traps/Falling Platforms/Off.png" width="32" height="16"/>
+  <image source="platform.png" width="32" height="16"/>
  </tileset>
  <layer id="11" name="Background" width="206" height="78">
   <data>
