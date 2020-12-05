@@ -20,36 +20,36 @@
   </window>
 
   <player>
-  	<texture>Assets/character/sprite_sheet.png</texture>
+  	<texture>assets/character/sprite_sheet.png</texture>
   	<movement gravity="1000" jumpForce="350" speed="220" maxJumps="2" initialImpulse="1000" />
-    <audio jump="Assets/audio/fx/jump.wav" doubleJump="Assets/audio/fx/double.wav" gameOver="Assets/audio/fx/game_over.wav" gameStart="Assets/audio/fx/game_start.wav" nuts="Assets/audio/fx/deez_nuts.wav" fruit="Assets/audio/fx/pick_up_fruit.wav" checkpoint="Assets/audio/fx/checkpoint.wav" dash="Assets/audio/fx/dash.wav" throwKnife="Assets/audio/fx/throw_knife.wav" />
+    <audio jump="assets/audio/fx/jump.wav" doubleJump="assets/audio/fx/double.wav" gameOver="assets/audio/fx/game_over.wav" gameStart="assets/audio/fx/game_start.wav" nuts="assets/audio/fx/deez_nuts.wav" fruit="assets/audio/fx/pick_up_fruit.wav" checkpoint="assets/audio/fx/checkpoint.wav" dash="assets/audio/fx/dash.wav" throwKnife="assets/audio/fx/throw_knife.wav" />
   </player>
 
   <!-- L03: Added maps folder as config option -->
   <map>
-    <folder>Assets/maps/</folder>
-    <mapcomponent endFlag="Assets/maps/flag.png"/>
+    <folder>assets/maps/</folder>
+    <mapcomponent endFlag="assets/maps/flag.png"/>
   </map>
 
   <scene>
-    <music path="Assets/audio/music/song.ogg"/>
-    <texture screen="Assets/title screen/reduced_title_screen.png"/>
+    <music path="assets/audio/music/song.ogg"/>
+    <texture screen="assets/title_screen/reduced_title_screen.png"/>
   </scene>
 
   <parallax>
-    <texture tex1="Assets/parallax background/background_0.png" tex2="Assets/parallax background/background_1.png" tex3="Assets/parallax background/background_2.png"/>
+    <texture tex1="assets/parallax_background/background_0.png" tex2="assets/parallax_background/background_1.png" tex3="assets/parallax_background/background_2.png"/>
   </parallax>
 
   <ui>
-    <ui fontPath="Assets/ui/white.png" teleportMapPath1="Assets/ui/teleport_checkpoint_lvl1.png" teleportMapPath2="Assets/ui/teleport_checkpoint_lvl2.png" livesTexturePath = "Assets/ui/lives.png" teleportArrow="Assets/ui/teleport_arrow.png" teleportCross= "Assets/ui/teleport_cross.png"/>
+    <ui fontPath="assets/ui/white.png" teleportMapPath1="assets/ui/teleport_checkpoint_lvl1.png" teleportMapPath2="assets/ui/teleport_checkpoint_lvl2.png" livesTexturePath = "assets/ui/lives.png" teleportArrow="assets/ui/teleport_arrow.png" teleportCross= "assets/ui/teleport_cross.png"/>
   </ui>
 
   <entities>
-  	<batTexture>Assets/enemies/bat/bat.png</batTexture>
-  	<pigTexture>Assets/enemies/pig/pig.png</pigTexture>
-  	<fruitTexture>Assets/Items/item_spritesheet.png</fruitTexture>
-  	<heartTexture>Assets/Items/heart_anim.png</heartTexture>
-  	<knifeTexture>Assets/character/knife.png</knifeTexture>
+  	<batTexture>assets/enemies/bat/bat.png</batTexture>
+  	<pigTexture>assets/enemies/pig/pig.png</pigTexture>
+  	<fruitTexture>assets/items/item_spritesheet.png</fruitTexture>
+  	<heartTexture>assets/items/heart_anim.png</heartTexture>
+  	<knifeTexture>assets/character/knife.png</knifeTexture>
   	<entities enemySpeed="80" pigHealth="2" enemyGravity="1000" enemyJumpForce="350" knifeSpeed="500" />
   </entities>
 
