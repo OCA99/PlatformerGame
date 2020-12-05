@@ -143,110 +143,94 @@ bool ModuleUI::Update(float dt)
 		break;
 	}
 
-	if (canDrawMap)
+	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->gameplayState == Scene::GameplayState::PLAYING)
 	{
-		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->gameplayState == Scene::GameplayState::PLAYING)
+		if (drawTeleportMap)
 		{
-			if (drawTeleportMap)
+			drawTeleportMap = false;
+		}
+		else
+		{
+			drawTeleportMap = true;
+		}
+	}
+
+	if (drawTeleportMap)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+		{
+			destinationCheckpoint++;
+			if (destinationCheckpoint > 3)
 			{
-				drawTeleportMap = false;
-			}
-			else
-			{
-				drawTeleportMap = true;
+				destinationCheckpoint = 3;
 			}
 		}
 
-		if (drawTeleportMap)
+		if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
 		{
-			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
+			destinationCheckpoint--;
+			if (destinationCheckpoint < 0)
 			{
-				destinationCheckpoint++;
-				if (destinationCheckpoint > 3)
-				{
-					destinationCheckpoint = 3;
-				}
+				destinationCheckpoint = 0;
 			}
+		}
 
-			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)
-			{
-				destinationCheckpoint--;
-				if (destinationCheckpoint < 0)
-				{
-					destinationCheckpoint = 0;
-				}
-			}
+		switch (destinationCheckpoint)
+		{
+		case 0:
+			renderedArrowPos = arrow1;
+			break;
+
+		case 1:
+			renderedArrowPos = arrow2;
+			break;
+
+		case 2:
+			renderedArrowPos = arrow3;
+			break;
+		case 3:
+			renderedArrowPos = arrow4;
+			break;
+
+		default:
+			break;
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		{
+			app->audio->PlayFx(app->player->gameStartFx, 0);
 
 			switch (destinationCheckpoint)
 			{
 			case 0:
-				renderedArrowPos = arrow1;
+				app->player->position = fPoint(checkpointCoordinates[0].x, checkpointCoordinates[0].y);
+				app->player->collider->SetPos(app->player->position.x, app->player->position.y);
+				drawTeleportMap = false;
 				break;
 
 			case 1:
-				renderedArrowPos = arrow2;
+				app->player->position = fPoint(checkpointCoordinates[1].x, checkpointCoordinates[1].y);
+				app->player->collider->SetPos(app->player->position.x, app->player->position.y);
+				drawTeleportMap = false;
 				break;
 
 			case 2:
-				renderedArrowPos = arrow3;
+				app->player->position = fPoint(checkpointCoordinates[2].x, checkpointCoordinates[2].y);
+				app->player->collider->SetPos(app->player->position.x, app->player->position.y);
+				drawTeleportMap = false;
 				break;
+
 			case 3:
-				renderedArrowPos = arrow4;
-				break;
+				app->player->position = fPoint(checkpointCoordinates[3].x, checkpointCoordinates[3].y);
+				app->player->collider->SetPos(app->player->position.x, app->player->position.y);
+				drawTeleportMap = false;
 
 			default:
 				break;
 			}
-
-			if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
-			{
-				app->audio->PlayFx(app->player->gameStartFx, 0);
-
-				switch (destinationCheckpoint)
-				{
-				case 0:
-					app->player->position = fPoint(checkpointCoordinates[0].x, checkpointCoordinates[0].y);
-					app->player->collider->SetPos(app->player->position.x, app->player->position.y);
-					drawTeleportMap = false;
-					break;
-
-				case 1:
-					if (!app->player->unlockedChekpoint1)
-						break;
-
-					app->player->position = fPoint(checkpointCoordinates[1].x, checkpointCoordinates[1].y);
-					app->player->collider->SetPos(app->player->position.x, app->player->position.y);
-					drawTeleportMap = false;
-					break;
-
-				case 2:
-					if (!app->player->unlockedChekpoint2)
-						break;
-
-					app->player->position = fPoint(checkpointCoordinates[2].x, checkpointCoordinates[2].y);
-					app->player->collider->SetPos(app->player->position.x, app->player->position.y);
-					drawTeleportMap = false;
-					break;
-
-				case 3:
-					if (!app->player->unlockedChekpoint2)
-						break;
-
-					app->player->position = fPoint(checkpointCoordinates[3].x, checkpointCoordinates[3].y);
-					app->player->collider->SetPos(app->player->position.x, app->player->position.y);
-					drawTeleportMap = false;
-
-				default:
-					break;
-				}
-			}
 		}
 	}
 	
-	/*if (!drawTeleportText)
-		drawTeleportMap = false;*/
-
-	//canDrawMap = false;
 	canDrawSecret = false;
 	drawTeleportText = false;
 
@@ -320,11 +304,11 @@ bool ModuleUI::PostUpdate()
 		app->render->DrawTexture(renderedMap, 0, 0, NULL, 0, 0, 0, 0, false);
 		app->render->DrawTexture(teleportArrowTex, renderedArrowPos.x, renderedArrowPos.y, NULL, 0, 0, 0, 0, false);
 
-		if (!app->player->unlockedChekpoint1)
+		/*if (!app->player->unlockedChekpoint1)
 			app->render->DrawTexture(teleportCrossTex, crossPos1.x, crossPos1.y, NULL, 0, 0, 0, 0, false);
 		
 		if (!app->player->unlockedChekpoint2)
-			app->render->DrawTexture(teleportCrossTex, crossPos2.x, crossPos2.y, NULL, 0, 0, 0, 0, false);
+			app->render->DrawTexture(teleportCrossTex, crossPos2.x, crossPos2.y, NULL, 0, 0, 0, 0, false);*/
 	}
 
 	return true;

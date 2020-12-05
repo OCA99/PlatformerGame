@@ -248,7 +248,6 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		break;
 
 	case(Collider::Type::CHECKPOINT1):
-		app->ui->canDrawMap = true;
 
 		if (!unlockedChekpoint1)
 			app->audio->PlayFx(checkpointFx, 0);
@@ -272,7 +271,6 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		break;
 
 	case(Collider::Type::CHECKPOINT2):
-		app->ui->canDrawMap = true;
 
 		if (!unlockedChekpoint2)
 			app->audio->PlayFx(checkpointFx, 0);
@@ -280,9 +278,6 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		respawnPosition = position;
 		checkpoint2Position = position;
 		unlockedChekpoint2 = true;
-
-		/*if (!app->ui->drawTeleportMap)
-			app->ui->destinationCheckpoint = 2;*/
 
 		app->ui->drawTeleportText = true;
 

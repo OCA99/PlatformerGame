@@ -207,8 +207,8 @@ void Scene::ChangeGameplayState(GameplayState newState)
 			currentLevel.Create("level1.tmx");
 			app->map->Load("level1.tmx");
 			app->player->Reload();
-			app->player->unlockedChekpoint1 = true;
-			app->player->unlockedChekpoint2 = true;
+			app->player->unlockedChekpoint1 = false;
+			app->player->unlockedChekpoint2 = false;
 			break;
 		case TITLE_SCREEN:
 			screenDisplayAnim = &titleScreenAnim;
@@ -234,8 +234,8 @@ void Scene::ChangeGameplayState(GameplayState newState)
 
 void Scene::LoadLevel(SString name, bool loadEntities)
 {
-	//app->player->unlockedChekpoint1 = false;
-	//app->player->unlockedChekpoint2 = false;
+	app->player->unlockedChekpoint1 = false;
+	app->player->unlockedChekpoint2 = false;
 	app->player->isDead = false;
 	currentLevel = name;
 	app->map->Load(name.GetString(), loadEntities);

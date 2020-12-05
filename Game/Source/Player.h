@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
@@ -90,8 +80,8 @@ public:
 
 	Point<float> checkpoint1Position;
 	Point<float> checkpoint2Position;
-	bool unlockedChekpoint1 = true;
-	bool unlockedChekpoint2 = true;
+	bool unlockedChekpoint1 = false;
+	bool unlockedChekpoint2 = false;
 
 	int knifeDirection;
 
