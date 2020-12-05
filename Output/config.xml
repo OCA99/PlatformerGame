@@ -22,7 +22,7 @@
   <player>
   	<texture>assets/character/sprite_sheet.png</texture>
   	<movement gravity="1000" jumpForce="350" speed="220" maxJumps="2" initialImpulse="1000" />
-    <audio jump="assets/audio/fx/jump.wav" doubleJump="assets/audio/fx/double.wav" gameOver="assets/audio/fx/game_over.wav" gameStart="assets/audio/fx/game_start.wav" nuts="assets/audio/fx/deez_nuts.wav" fruit="assets/audio/fx/pick_up_fruit.wav" checkpoint="assets/audio/fx/checkpoint.wav" dash="assets/audio/fx/dash.wav" throwKnife="assets/audio/fx/throw_knife.wav" />
+    <audio jump="assets/audio/fx/jump.wav" doubleJump="assets/audio/fx/double.wav" gameOver="assets/audio/fx/game_over.wav" gameStart="assets/audio/fx/game_start.wav" nuts="assets/audio/fx/deez_nuts.wav" fruit="assets/audio/fx/pick_up_fruit.wav" heart="assets/audio/fx/pick_up_heart.wav" checkpoint="assets/audio/fx/checkpoint.wav" dash="assets/audio/fx/dash.wav" throwKnife="assets/audio/fx/throw_knife.wav" />
   </player>
 
   <!-- L03: Added maps folder as config option -->

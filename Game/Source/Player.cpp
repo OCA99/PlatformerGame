@@ -49,6 +49,7 @@ bool Player::Awake(pugi::xml_node& config)
 	nutsFxPath = audio.attribute("nuts").as_string();
 	dashFxPath = audio.attribute("dash").as_string();
 	throwKnifeFxPath = audio.attribute("throwKnife").as_string();
+	pickUpHeartFxPath = audio.attribute("heart").as_string();
 
 	initialImpulse = movement.attribute("initialImpulse").as_float();
 
@@ -79,6 +80,7 @@ bool Player::Start()
 	checkpointFx = app->audio->LoadFx(checkpointFxPath);
 	dashFx = app->audio->LoadFx(dashFxPath);
 	throwKnifeFx = app->audio->LoadFx(throwKnifeFxPath);
+	pickUpHeartFx = app->audio->LoadFx(pickUpHeartFxPath);
 
 	currentAnim = &idleRightAnim;
 
@@ -236,6 +238,7 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 
 	case(Collider::Type::ITEMHEALTH):
 		health++;
+		app->audio->PlayFx(pickUpHeartFx, 0);
 		b->pendingToDelete = true;
 		break;
 
@@ -308,10 +311,6 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		if (abs(yDiff) <= abs(xDiff) || yDiff < 0)
 		{
 			ChangeState(playerState, DYING);
-		}
-		else
-		{
-			app->ui->score += 5000;
 		}
 
 		break;
