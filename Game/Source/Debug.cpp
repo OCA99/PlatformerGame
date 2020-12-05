@@ -65,14 +65,6 @@ bool Debug::Update(float dt)
 		}
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
-	{
-		fPoint pos;
-		pos.x = 176;
-		pos.y = 928;
-		app->entities->AddEntity(pos, Entity::Type::BAT);
-	}
-
 	return ret;
 }
 
