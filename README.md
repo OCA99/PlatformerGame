@@ -69,3 +69,5 @@ This project is licensed under an unmodified MIT license, which is an OSI-certif
 
 [PUGI License](https://pugixml.org/license.html)
 
+[Optick License](https://github.com/bombomby/optick/blob/master/LICENSE)
+
