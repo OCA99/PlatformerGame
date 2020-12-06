@@ -107,7 +107,7 @@ public:
 		requestLoad = true;
 	}
 
-	float cappedMs = -1;
+	float cappedMs = -1.0f;
 
 private:
 

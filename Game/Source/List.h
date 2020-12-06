@@ -186,9 +186,9 @@ public:
 	/**
 	* const read operator access directly to a position in the list
 	*/
-	const List<tdata>& operator +=(const List<tdata>& other_list)
+	const List<tdata>& operator +=(const List<tdata>& otherList)
 	{
-		ListItem<tdata>* pItem = other_list.start;
+		ListItem<tdata>* pItem = otherList.start;
 
 		while(pItem != NULL)
 		{
@@ -290,23 +290,23 @@ public:
 
 		while(pOtherList != NULL)
 		{
-			ListItem<tdata>* p_new_item = new ListItem<tdata>(pOtherList->data);
+			ListItem<tdata>* pNewItem = new ListItem<tdata>(pOtherList->data);
 
-			p_new_item->next = (pMyList)? pMyList->next : NULL;
+			pNewItem->next = (pMyList)? pMyList->next : NULL;
 
-			if(p_new_item->next != NULL)
-				p_new_item->next->prev = p_new_item;
+			if(pNewItem->next != NULL)
+				pNewItem->next->prev = pNewItem;
 			else
-				end = p_new_item;
+				end = pNewItem;
 
-			p_new_item->prev = pMyList;
+			pNewItem->prev = pMyList;
 
-			if(p_new_item->prev != NULL)
-				p_new_item->prev->next = p_new_item;
+			if(pNewItem->prev != NULL)
+				pNewItem->prev->next = pNewItem;
 			else
-				start = p_new_item;
+				start = pNewItem;
 
-			pMyList = p_new_item;
+			pMyList = pNewItem;
 			pOtherList = pOtherList->next;
 		}
 	}

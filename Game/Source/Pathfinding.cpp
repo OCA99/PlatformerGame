@@ -202,7 +202,7 @@ uint PathNode::FindWalkableAdjacents(PathList& listToFill, bool useGravity, int 
 		cell.create(pos.x, pos.y - 1);
 		if (app->pathfinding->IsWalkable(cell) && useGravity)
 		{
-			listToFill.list.Add(PathNode(-1, -1, cell, this, (jump % 2) ? jump + 1 : jump + 2));
+			listToFill.list.Add(PathNode(-1, -1, cell, this, (jump % 2)? jump + 1 : jump + 2));
 		}
 		else if (app->pathfinding->IsWalkable(cell) && !useGravity)
 		{

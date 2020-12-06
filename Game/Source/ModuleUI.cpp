@@ -289,9 +289,6 @@ bool ModuleUI::PostUpdate()
 	IntToDynamicString(scoreText, score);
 	BlitText(uiposx + 375, 5, font, scoreText, false);
 
-	//if (drawTeleportText && !drawTeleportMap)
-		//BlitText(app->player->position.x - 70, app->player->position.y + 30, font, "PRESS T TO TELEPORT", true);
-
 	if (canDrawSecret)
 	{
 		BlitText(app->player->position.x - 70, app->player->position.y + 30, font, "ONLY A GOD CAN REACH", true);
@@ -320,16 +317,16 @@ bool ModuleUI::CleanUp()
 
 
 // Load new texture from file path
-int ModuleUI::Load(const char* texture_path, const char* characters, uint rows)
+int ModuleUI::Load(const char* texturePath, const char* characters, uint rows)
 {
 	int id = -1;
 
-	if (texture_path == nullptr || characters == nullptr || rows == 0)
+	if (texturePath == nullptr || characters == nullptr || rows == 0)
 	{
 		return id;
 	}
 
-	SDL_Texture* tex = app->tex->Load(texture_path);
+	SDL_Texture* tex = app->tex->Load(texturePath);
 
 	if (tex == nullptr || strlen(characters) >= MAX_FONT_CHARS)
 	{
@@ -363,10 +360,10 @@ int ModuleUI::Load(const char* texture_path, const char* characters, uint rows)
 	font.totalLength = strlen(characters);
 	font.columns = fonts[id].totalLength / rows;
 
-	uint tex_w, tex_h;
-	app->tex->GetSize(tex, tex_w, tex_h);
-	font.charW = tex_w / font.columns;
-	font.charH = tex_h / font.rows;
+	uint texW, texH;
+	app->tex->GetSize(tex, texW, texH);
+	font.charW = texW / font.columns;
+	font.charH = texH / font.rows;
 
 
 	k++;
@@ -374,24 +371,24 @@ int ModuleUI::Load(const char* texture_path, const char* characters, uint rows)
 	return id;
 }
 
-void ModuleUI::UnLoad(int font_id)
+void ModuleUI::UnLoad(int fontId)
 {
-	if (font_id >= 0 && font_id < MAX_FONTS && fonts[font_id].texture != nullptr)
+	if (fontId >= 0 && fontId < MAX_FONTS && fonts[fontId].texture != nullptr)
 	{
-		app->tex->UnLoad(fonts[font_id].texture);
-		fonts[font_id].texture = nullptr;
+		app->tex->UnLoad(fonts[fontId].texture);
+		fonts[fontId].texture = nullptr;
 	}
 	k--;
 }
 
-void ModuleUI::BlitText(int x, int y, int font_id, const char* text, bool useCamera) const
+void ModuleUI::BlitText(int x, int y, int fontId, const char* text, bool useCamera) const
 {
-	if (text == nullptr || font_id < 0 || font_id >= MAX_FONTS || fonts[font_id].texture == nullptr)
+	if (text == nullptr || fontId < 0 || fontId >= MAX_FONTS || fonts[fontId].texture == nullptr)
 	{
 		return;
 	}
 
-	const Font* font = &fonts[font_id];
+	const Font* font = &fonts[fontId];
 	SDL_Rect spriteRect;
 	uint len = strlen(text);
 

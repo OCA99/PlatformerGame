@@ -196,12 +196,12 @@ public:
 	{
 		if(string != NULL)
 		{
-			unsigned int need_size = strlen(string) + Length() + 1;
+			unsigned int needSize = strlen(string) + Length() + 1;
 
-			if(need_size > size)
+			if(needSize > size)
 			{
 				char* tmp = str;
-				Alloc(need_size);
+				Alloc(needSize);
 				strcpy_s(str, size, tmp);
 				delete[] tmp;
 			}

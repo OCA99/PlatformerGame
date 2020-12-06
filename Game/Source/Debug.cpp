@@ -55,7 +55,7 @@ bool Debug::Update(float dt)
 		if (capFrameRate)
 		{
 			storeFrameRateCap = app->cappedMs;
-			app->cappedMs = 1000 / 30;
+			app->cappedMs = 1000.0f / 30.0f;
 			capFrameRate = false;
 		}
 		else
@@ -98,7 +98,7 @@ void Debug::GodMode()
 		app->player->ChangeState(app->player->playerState, IDLE);
 		app->player->godMode = true;
 		storeGravity = app->player->gravity;
-		app->player->gravity = 0;
+		app->player->gravity = 0.0f;
 		app->player->verticalVelocity = 0.0f;
 	}
 	else if (app->player->godMode == true)

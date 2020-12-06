@@ -25,7 +25,7 @@ bool Knife::Start()
 
 bool Knife::Update(float dt)
 {
-	position.y = initialPosition.y + 8;
+	position.y = initialPosition.y + 8.0f;
 	SafeMovementX(speed * knifeDirection * dt);
 	
 	if (knifeDirection == 1)

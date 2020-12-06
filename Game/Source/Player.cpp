@@ -438,7 +438,7 @@ void Player::UpdateState(float dt)
 				if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
 				{
 					app->audio->PlayFx(dashFx, 0);
-					cooldown = 0;
+					cooldown = 0.0f;
 					frameCounter = 0;
 					impulse = initialImpulse;
 					//position.y -= 1;
@@ -451,7 +451,7 @@ void Player::UpdateState(float dt)
 				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
 				{
 					app->audio->PlayFx(throwKnifeFx, 0);
-					knifeCooldown = 0;
+					knifeCooldown = 0.0f;
 					knifeDirection = 1;
 					app->entities->AddEntity(position, Entity::Type::KNIFE);
 				}
@@ -459,7 +459,7 @@ void Player::UpdateState(float dt)
 				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
 				{
 					app->audio->PlayFx(throwKnifeFx, 0);
-					knifeCooldown = 0;
+					knifeCooldown = 0.0f;
 					knifeDirection = -1;
 					app->entities->AddEntity(position, Entity::Type::KNIFE);
 				}
@@ -503,7 +503,7 @@ void Player::UpdateState(float dt)
 				if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
 				{
 					app->audio->PlayFx(dashFx, 0);
-					cooldown = 0;
+					cooldown = 0.0f;
 					frameCounter = 0;
 					impulse = initialImpulse;
 					//position.y -= 1;
@@ -516,7 +516,7 @@ void Player::UpdateState(float dt)
 				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
 				{
 					app->audio->PlayFx(throwKnifeFx, 0);
-					knifeCooldown = 0;
+					knifeCooldown = 0.0f;
 					knifeDirection = 1;
 					app->entities->AddEntity(position, Entity::Type::KNIFE);
 				}
@@ -524,7 +524,7 @@ void Player::UpdateState(float dt)
 				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
 				{
 					app->audio->PlayFx(throwKnifeFx, 0);
-					knifeCooldown = 0;
+					knifeCooldown = 0.0f;
 					knifeDirection = -1;
 					app->entities->AddEntity(position, Entity::Type::KNIFE);
 				}
@@ -564,7 +564,7 @@ void Player::UpdateState(float dt)
 				if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
 				{
 					app->audio->PlayFx(dashFx, 0);
-					cooldown = 0;
+					cooldown = 0.0f;
 					frameCounter = 0;
 					impulse = initialImpulse;
 					//position.y -= 1;
@@ -578,7 +578,7 @@ void Player::UpdateState(float dt)
 				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
 				{
 					app->audio->PlayFx(throwKnifeFx, 0);
-					knifeCooldown = 0;
+					knifeCooldown = 0.0f;
 					knifeDirection = 1;
 					app->entities->AddEntity(position, Entity::Type::KNIFE);
 				}
@@ -586,7 +586,7 @@ void Player::UpdateState(float dt)
 				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
 				{
 					app->audio->PlayFx(throwKnifeFx, 0);
-					knifeCooldown = 0;
+					knifeCooldown = 0.0f;
 					knifeDirection = -1;
 					app->entities->AddEntity(position, Entity::Type::KNIFE);
 				}
@@ -818,7 +818,7 @@ void Player::UpdateLogic(float dt)
 			}
 			else
 			{
-				impulseAcceleration = 200;
+				impulseAcceleration = 200.0f;
 				impulse -= impulseAcceleration;
 				if (impulse < 0)
 				{

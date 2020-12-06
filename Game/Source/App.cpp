@@ -103,7 +103,7 @@ bool App::Awake()
 
 		int cap = configApp.attribute("framerate_cap").as_int(-1);
 
-		if (cap > 0) cappedMs = 1000 / cap;
+		if (cap > 0) cappedMs = 1000.0f / cap;
 
 		ListItem<Module*>* item;
 		item = modules.start;
@@ -232,7 +232,7 @@ void App::FinishUpdate()
 
 	app->win->SetTitle(title);
 
-	if ((cappedMs > 0) && (lastFrameMs < cappedMs))
+	if ((cappedMs > 0.0f) && (lastFrameMs < cappedMs))
 	{
 		SDL_Delay(cappedMs - lastFrameMs);
 	}

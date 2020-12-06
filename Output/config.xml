@@ -41,7 +41,7 @@
   </parallax>
 
   <ui>
-    <ui fontPath="Assets/Textures/Ui/white.png" teleportMapPath1="Assets/Textures/Ui/TeleportCheckpoint_lvl1.png" teleportMapPath2="Assets/Textures/Ui/TeleportCheckpoint_lvl2.png" livesTexturePath = "Assets/Textures/Ui/lives.png" teleportArrow="Assets/Textures/Ui/teleport_arrow.png" teleportCross= "Assets/Textures/Ui/teleport_cross.png"/>
+    <ui fontPath="Assets/Textures/Ui/white.png" teleportMapPath1="Assets/Textures/Ui/teleport_checkpoint_lvl1.png" teleportMapPath2="Assets/Textures/Ui/teleport_checkpoint_lvl2.png" livesTexturePath = "Assets/Textures/Ui/lives.png" teleportArrow="Assets/Textures/Ui/teleport_arrow.png" teleportCross= "Assets/Textures/Ui/teleport_cross.png"/>
   </ui>
 
   <entities>

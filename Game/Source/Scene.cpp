@@ -147,7 +147,7 @@ bool Scene::Update(float dt)
 
 	if (gameplayState != targetState)
 	{
-		currentFade += 0.02f;
+		currentFade += 1.3f * dt;
 		if (currentFade >= 1.0f)
 		{
 			currentFade = 1.0f;
@@ -156,7 +156,7 @@ bool Scene::Update(float dt)
 	}
 	else if (currentFade > 0.0f)
 	{
-		currentFade -= 0.02f;
+		currentFade -= 1.3f * dt;
 	}
 	else if (currentFade <= 0.0f)
 	{
