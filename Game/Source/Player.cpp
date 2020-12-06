@@ -173,7 +173,8 @@ bool Player::Load(pugi::xml_node& savedGame)
 	position.y = savedGame.attribute("y").as_int(976);
 	health = savedGame.attribute("health").as_int(3);
 	app->ui->score = savedGame.attribute("score").as_int(0);
-
+	unlockedChekpoint1 = savedGame.attribute("checkpoint1").as_bool(false);
+	unlockedChekpoint2 = savedGame.attribute("checkpoint2").as_bool(false);
 
 	return true;
 }
@@ -197,6 +198,12 @@ bool Player::Save(pugi::xml_node& savedGame)
 
 	pugi::xml_attribute h = savedGame.append_attribute("health");
 	h.set_value(health);
+
+	pugi::xml_attribute chp1 = savedGame.append_attribute("checkpoint1");
+	chp1.set_value(unlockedChekpoint1);
+
+	pugi::xml_attribute chp2 = savedGame.append_attribute("checkpoint2");
+	chp2.set_value(unlockedChekpoint2);
 
 	return true;
 }
@@ -405,25 +412,29 @@ void Player::UpdateState(float dt)
 
 			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !godMode)
 			{
-				app->audio->PlayFx(jumpFx, 0);
-				if (availableJumps > 0)
+				if (app->scene->gameplayState == Scene::GameplayState::PLAYING)
 				{
-					availableJumps--;
+					app->audio->PlayFx(jumpFx, 0);
+					if (availableJumps > 0)
+					{
+						availableJumps--;
+					}
+
+					verticalVelocity = jumpForce;
+
+					if (verticalVelocity > maxVerticalVelocity)
+					{
+						verticalVelocity = maxVerticalVelocity;
+					}
+
+					if (verticalVelocity < -maxVerticalVelocity)
+					{
+						verticalVelocity = -maxVerticalVelocity;
+					}
+
+					ChangeState(playerState, JUMPING);
 				}
 
-				verticalVelocity = jumpForce;
-
-				if (verticalVelocity > maxVerticalVelocity)
-				{
-					verticalVelocity = maxVerticalVelocity;
-				}
-
-				if (verticalVelocity < -maxVerticalVelocity)
-				{
-					verticalVelocity = -maxVerticalVelocity;
-				}
-
-				ChangeState(playerState, JUMPING);
 			}
 			
 			if (cooldown == maxCooldown)

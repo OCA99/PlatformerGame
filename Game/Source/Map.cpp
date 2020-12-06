@@ -30,7 +30,7 @@ Map::~Map()
 
 int Properties::GetProperty(const char* name, int defaultValue) const
 {
-	for (int i = 0; i < propertyList.count(); i++)
+	for (int i = 0; i < propertyList.Count(); i++)
 	{
 		if (propertyList[i]->name == name)
 		{
@@ -43,7 +43,7 @@ int Properties::GetProperty(const char* name, int defaultValue) const
 
 void Properties::SetProperty(const char* name, int value)
 {
-	for (int i = 0; i < propertyList.count(); i++)
+	for (int i = 0; i < propertyList.Count(); i++)
 	{
 		if (propertyList[i]->name == name)
 		{
@@ -111,7 +111,7 @@ void Map::Draw()
 		app->render->DrawTexture(flagTex, 3028, 1026, &rect);
 	}
 
-	for (int i = 0; i < data.maplayers.count(); i++)
+	for (int i = 0; i < data.maplayers.Count(); i++)
 	{
 		if (data.maplayers[i]->properties.GetProperty("draw", 1) == 0)
 			continue;
@@ -121,11 +121,11 @@ void Map::Draw()
 			uint tileGid = data.maplayers[i]->data[j];
 			int layerWidth = data.maplayers[i]->width;
 
-			for (int k = 0; k < data.tilesets.count(); k++)
+			for (int k = 0; k < data.tilesets.Count(); k++)
 			{
 				TileSet* tileset = data.tilesets[k];
 
-				if (data.tilesets.count() > k + 1 && data.tilesets[k + 1]->firstgid <= tileGid)
+				if (data.tilesets.Count() > k + 1 && data.tilesets[k + 1]->firstgid <= tileGid)
 				{
 					continue;
 				}
@@ -166,22 +166,22 @@ bool Map::CleanUp()
     LOG("Unloading map");
     // L03: DONE 2: Make sure you clean up any memory allocated from tilesets/map
     // Remove all tilesets
-	for (int i = 0; i < data.tilesets.count(); i++)
+	for (int i = 0; i < data.tilesets.Count(); i++)
 	{
 		TileSet* t = data.tilesets[i];
 		delete t;
 	}
-	data.tilesets.clear();
+	data.tilesets.Clear();
 
 	// L04: TODO 2: clean up all layer data
 	// Remove all layers
-	for (int i = 0; i < data.maplayers.count(); i++)
+	for (int i = 0; i < data.maplayers.Count(); i++)
 	{
 		delete[] data.maplayers[i]->data;
-		data.maplayers[i]->properties.propertyList.clear();
+		data.maplayers[i]->properties.propertyList.Clear();
 	}
-	data.maplayers.clear();
-	data.properties.propertyList.clear();
+	data.maplayers.Clear();
+	data.properties.propertyList.Clear();
 
 	app->collisions->CleanUp();
 	app->entities->CleanUp();
@@ -225,7 +225,7 @@ bool Map::Load(const char* filename, bool loadEntities)
 
 		if (ret == true) ret = LoadTilesetImage(tileset, set);
 
-		data.tilesets.add(set);
+		data.tilesets.Add(set);
 	}
 	// L04: TODO 4: Iterate all layers and load each of them
 	pugi::xml_node layerNode;
@@ -236,7 +236,7 @@ bool Map::Load(const char* filename, bool loadEntities)
 
 		if (ret == true) ret = LoadLayer(layerNode, layerSet);
 
-		data.maplayers.add(layerSet);
+		data.maplayers.Add(layerSet);
 	}
 
     if(ret == true)
@@ -246,7 +246,7 @@ bool Map::Load(const char* filename, bool loadEntities)
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tileWidth, data.tileHeight);
 
-		for (int i = 0; i < data.tilesets.count(); i++)
+		for (int i = 0; i < data.tilesets.Count(); i++)
 		{
 			TileSet* t = data.tilesets[i];
 			LOG("Tileset ----");
@@ -403,7 +403,7 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties* properties)
 		prop->name.Create(propertyNode.attribute("name").as_string("Not Found"));
 		prop->type.Create(propertyNode.attribute("type").as_string("Not Found"));
 		prop->value = propertyNode.attribute("value").as_int(0);
-		properties->propertyList.add(prop);
+		properties->propertyList.Add(prop);
 	}
 
 	return ret;
@@ -421,7 +421,7 @@ bool Map::StoreID(pugi::xml_node& node, MapLayer* layer, int ID)
 bool Map::CreateColliders() {
 	bool ret = true;
 
-	for (int i = 0; i < data.maplayers.count(); i++)
+	for (int i = 0; i < data.maplayers.Count(); i++)
 	{
 		if (data.maplayers[i]->properties.GetProperty("navigation", 0) == 0)
 			continue;
@@ -478,7 +478,7 @@ bool Map::CreateEntities()
 {
 	bool ret = true;
 
-	for (int i = 0; i < data.maplayers.count(); i++)
+	for (int i = 0; i < data.maplayers.Count(); i++)
 	{
 		if (data.maplayers[i]->properties.GetProperty("entityType", 0) == 0)
 			continue;
@@ -520,7 +520,7 @@ void Map::CreateWalkabilityMap()
 	walkabilityMap = new uchar[data.width * data.height];
 	std::fill_n(walkabilityMap, data.width * data.height, 1);
 	List<Collider*>* colliders = &app->collisions->staticColliders;
-	for (int i = 0; i < colliders->count(); i++)
+	for (int i = 0; i < colliders->Count(); i++)
 	{
 		if ((*colliders)[i]->type == Collider::Type::STATIC || (*colliders)[i]->type == Collider::Type::DEATH)
 		{
@@ -538,7 +538,7 @@ void Map::CreatePathfindingWalkabilityMap()
 	pathfindingWalkabilityMap = new uchar[data.width * data.height];
 	std::fill_n(pathfindingWalkabilityMap, data.width * data.height, 1);
 	List<Collider*>* colliders = &app->collisions->staticColliders;
-	for (int i = 0; i < colliders->count(); i++)
+	for (int i = 0; i < colliders->Count(); i++)
 	{
 		if ((*colliders)[i]->type == Collider::Type::STATIC)
 		{

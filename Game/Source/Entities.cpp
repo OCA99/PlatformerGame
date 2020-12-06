@@ -61,25 +61,25 @@ bool Entities::Load(pugi::xml_node& savedGame)
 		case 0:
 			r = rand() % 3;
 			en = (Entity*)(new Fruit((Module*)this, position, fruitTexture, Entity::Type::FRUIT, r));
-			entityList.add(en);
+			entityList.Add(en);
 			break;
 		case 1:
 			en = (Entity*)(new Heart((Module*)this, position, heartTexture, Entity::Type::HEART));
-			entityList.add(en);
+			entityList.Add(en);
 			break;
 		case 2:
 			dir = e.attribute("direction").as_int();
 			en = (Entity*)(new Knife((Module*)this, position, knifetexture, Entity::Type::KNIFE, dir, knifeSpeed));
-			entityList.add(en);
+			entityList.Add(en);
 			break;
 		case 3:
 			en = (Entity*)(new Bat((Module*)this, position, batTexture, Entity::Type::BAT, enemySpeed));
-			entityList.add(en);
+			entityList.Add(en);
 			break;
 		case 4:
 			int h = e.attribute("health").as_int();
 			en = (Entity*)(new Pig((Module*)this, position, pigTexture, Entity::Type::PIG, enemySpeed, h, enemyGravity, enemyJumpForce));
-			entityList.add(en);
+			entityList.Add(en);
 			break;
 		}
 	}
@@ -91,7 +91,7 @@ bool Entities::Save(pugi::xml_node& savedGame)
 {
 	pugi::xml_node ents = savedGame.append_child("entities");
 
-	for (int i = 0; i < entityList.count(); i++)
+	for (int i = 0; i < entityList.Count(); i++)
 	{
 		Entity* e = entityList[i];
 		pugi::xml_node eNode = ents.append_child("entity");
@@ -150,7 +150,7 @@ bool Entities::Update(float dt)
 		if (start->data->pendingToDelete)
 		{
 			delete start->data;
-			entityList.del(start);
+			entityList.Del(start);
 			start = start->next;
 			continue;
 		}
@@ -166,7 +166,7 @@ bool Entities::PostUpdate()
 {
 	OPTICK_EVENT("EntitiesPostUpdate", Optick::Category::Rendering);
 
-	for (int i = 0; i < entityList.count(); i++)
+	for (int i = 0; i < entityList.Count(); i++)
 	{
 		ListItem<Entity*>* e = entityList.At(i);
 		e->data->Draw();
@@ -177,13 +177,13 @@ bool Entities::PostUpdate()
 
 bool Entities::CleanUp()
 {
-	for (int i = 0; i < entityList.count(); i++)
+	for (int i = 0; i < entityList.Count(); i++)
 	{
 		ListItem<Entity*>* e = entityList.At(i);
 		delete e->data;
 	}
 
-	entityList.clear();
+	entityList.Clear();
 
 	return true;
 }
@@ -198,32 +198,32 @@ void Entities::AddEntity(fPoint position, Entity::Type type)
 	{
 	case Entity::Type::BAT:
 		e = (Entity*)(new Bat((Module*)this, position, batTexture, type, enemySpeed));
-		entityList.add(e);
+		entityList.Add(e);
 		break;
 	case Entity::Type::FRUIT:
 		r = rand() % 3;
 		e = (Entity*)(new Fruit((Module*)this, position, fruitTexture, type, r));
-		entityList.add(e);
+		entityList.Add(e);
 		break;
 	case Entity::Type::HEART:
 		e = (Entity*)(new Heart((Module*)this, position, heartTexture, type));
-		entityList.add(e);
+		entityList.Add(e);
 		break;
 	case Entity::Type::PIG:
 		e = (Entity*)(new Pig((Module*)this, position, pigTexture, type, enemySpeed, pigHealth, enemyGravity, enemyJumpForce));
-		entityList.add(e);
+		entityList.Add(e);
 		break;
 	case Entity::Type::KNIFE:
 		knifeDirection = app->player->knifeDirection;
 		e = (Entity*)(new Knife((Module*)this, position, knifetexture, type, knifeDirection, knifeSpeed));
-		entityList.add(e);
+		entityList.Add(e);
 		break;
 	}
 }
 
 void Entities::OnCollision(Collider* a, Collider* b, float dt)
 {
-	for (int i = 0; i < entityList.count(); i++)
+	for (int i = 0; i < entityList.Count(); i++)
 	{
 		ListItem<Entity*>* e = entityList.At(i);
 
@@ -236,7 +236,7 @@ void Entities::OnCollision(Collider* a, Collider* b, float dt)
 
 void Entities::ResetEntities()
 {
-	for (int i = 0; i < entityList.count(); i++)
+	for (int i = 0; i < entityList.Count(); i++)
 	{
 		ListItem<Entity*>* e = entityList.At(i);
 

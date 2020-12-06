@@ -1,5 +1,5 @@
-#ifndef __ModuleUI_H__
-#define __ModuleUI_H__
+#ifndef __MODULE_UI_H__
+#define __MODULE_UI_H__
 
 #include "Module.h"
 #include "Animation.h"
@@ -23,7 +23,7 @@ struct Font
 	// Font setup data
 	uint totalLength;
 	uint rows, columns;
-	uint char_w, char_h;
+	uint charW, charH;
 };
 
 

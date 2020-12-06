@@ -142,7 +142,7 @@ uint PathNode::FindWalkableAdjacents(PathList& listToFill, bool useGravity, int 
 {
 	iPoint cell;
 	iPoint ground;
-	uint before = listToFill.list.count();
+	uint before = listToFill.list.Count();
 
 
 	// right
@@ -154,11 +154,11 @@ uint PathNode::FindWalkableAdjacents(PathList& listToFill, bool useGravity, int 
 			ground.create(cell.x, cell.y + 1);
 			if (!app->pathfinding->IsWalkable(ground) || !useGravity)
 			{
-				listToFill.list.add(PathNode(-1, -1, cell, this));
+				listToFill.list.Add(PathNode(-1, -1, cell, this));
 			}
 			else
 			{
-				listToFill.list.add(PathNode(-1, -1, cell, this, jump + 1));
+				listToFill.list.Add(PathNode(-1, -1, cell, this, jump + 1));
 			}
 		}
 	}
@@ -172,11 +172,11 @@ uint PathNode::FindWalkableAdjacents(PathList& listToFill, bool useGravity, int 
 			ground.create(cell.x, cell.y + 1);
 			if (!app->pathfinding->IsWalkable(ground) || !useGravity)
 			{
-				listToFill.list.add(PathNode(-1, -1, cell, this));
+				listToFill.list.Add(PathNode(-1, -1, cell, this));
 			}
 			else
 			{
-				listToFill.list.add(PathNode(-1, -1, cell, this, jump + 1));
+				listToFill.list.Add(PathNode(-1, -1, cell, this, jump + 1));
 			}
 		}
 	}
@@ -188,11 +188,11 @@ uint PathNode::FindWalkableAdjacents(PathList& listToFill, bool useGravity, int 
 		ground.create(cell.x, cell.y + 1);
 		if (!app->pathfinding->IsWalkable(ground) || !useGravity)
 		{
-			listToFill.list.add(PathNode(-1, -1, cell, this));
+			listToFill.list.Add(PathNode(-1, -1, cell, this));
 		}
 		else
 		{
-			listToFill.list.add(PathNode(-1, -1, cell, this, maxJump * 2));
+			listToFill.list.Add(PathNode(-1, -1, cell, this, maxJump * 2));
 		}
 	}
 
@@ -202,15 +202,15 @@ uint PathNode::FindWalkableAdjacents(PathList& listToFill, bool useGravity, int 
 		cell.create(pos.x, pos.y - 1);
 		if (app->pathfinding->IsWalkable(cell) && useGravity)
 		{
-			listToFill.list.add(PathNode(-1, -1, cell, this, (jump % 2) ? jump + 1 : jump + 2));
+			listToFill.list.Add(PathNode(-1, -1, cell, this, (jump % 2) ? jump + 1 : jump + 2));
 		}
 		else if (app->pathfinding->IsWalkable(cell) && !useGravity)
 		{
-			listToFill.list.add(PathNode(-1, -1, cell, this));
+			listToFill.list.Add(PathNode(-1, -1, cell, this));
 		}
 	}
 
-	return listToFill.list.count();
+	return listToFill.list.Count();
 }
 
 // PathNode -------------------------------------------------------------------------
@@ -268,29 +268,29 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, boo
 	PathList close;
 	PathNode* o = new PathNode(-1, -1, origin, NULL);
 	o->CalculateF(destination, useGravity);
-	open.list.add(*o);
+	open.list.Add(*o);
 
 	int k = 0;
 
-	while (open.list.count() > 0)
+	while (open.list.Count() > 0)
 	{
 		ListItem<PathNode>* lowest = open.GetNodeLowestScore();
 
 		if (lowest->data.g > maxLength)
 		{
-			open.list.del(lowest);
+			open.list.Del(lowest);
 			continue;
 		}
 
 		int j = lowest->data.jump;
 
-		close.list.add(lowest->data);
-		open.list.del(lowest);
+		close.list.Add(lowest->data);
+		open.list.Del(lowest);
 
 		if (lowest->data.pos == destination)
 		{
-			lastPath.PushBack(close.list[close.list.count() - 1].pos);
-			PathNode p = *close.list[close.list.count() - 1].parent;
+			lastPath.PushBack(close.list[close.list.Count() - 1].pos);
+			PathNode p = *close.list[close.list.Count() - 1].parent;
 			lastPath.PushBack(p.pos);
 			while (p.pos != origin)
 			{
@@ -306,17 +306,17 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, boo
 			break;
 
 		PathList adjacent;
-		close.list[close.list.count() - 1].FindWalkableAdjacents(adjacent, useGravity, maxJump);
-		for (int i = 0; i < adjacent.list.count(); i++)
+		close.list[close.list.Count() - 1].FindWalkableAdjacents(adjacent, useGravity, maxJump);
+		for (int i = 0; i < adjacent.list.Count(); i++)
 		{
-			if (close.list.find(adjacent.list[i]) != -1)
+			if (close.list.Find(adjacent.list[i]) != -1)
 			{
 				continue;
 			}
 
 			PathNode n = adjacent.list[i];
 			n.CalculateF(destination, useGravity);
-			int index = open.list.find(n);
+			int index = open.list.Find(n);
 			if (index != -1)
 			{
 				if (open.list[index].g > n.g)
@@ -327,7 +327,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination, boo
 			}
 			else
 			{
-				open.list.add(n);
+				open.list.Add(n);
 			}
 		}
 	}

@@ -100,11 +100,11 @@ bool ModuleUI::Update(float dt)
 		crossPos2.x = 317;
 		crossPos2.y = 116;
 
-		checkpointCoordinates.clear();
-		checkpointCoordinates.add(iPoint(176, 960));
-		checkpointCoordinates.add(iPoint(1344, 512));
-		checkpointCoordinates.add(iPoint(2384, 512));
-		checkpointCoordinates.add(iPoint(2816, 1040));
+		checkpointCoordinates.Clear();
+		checkpointCoordinates.Add(iPoint(176, 960));
+		checkpointCoordinates.Add(iPoint(1344, 512));
+		checkpointCoordinates.Add(iPoint(2384, 512));
+		checkpointCoordinates.Add(iPoint(2816, 1040));
 
 		renderedMap = teleportMapLevel1;
 
@@ -129,11 +129,11 @@ bool ModuleUI::Update(float dt)
 		crossPos2.x = 245;
 		crossPos2.y = 197;
 
-		checkpointCoordinates.clear();
-		checkpointCoordinates.add(iPoint(192, 816));
-		checkpointCoordinates.add(iPoint(1456, 576));
-		checkpointCoordinates.add(iPoint(1712, 944));
-		checkpointCoordinates.add(iPoint(2784, 736));
+		checkpointCoordinates.Clear();
+		checkpointCoordinates.Add(iPoint(192, 816));
+		checkpointCoordinates.Add(iPoint(1456, 576));
+		checkpointCoordinates.Add(iPoint(1712, 944));
+		checkpointCoordinates.Add(iPoint(2784, 736));
 
 		renderedMap = teleportMapLevel2;
 
@@ -371,8 +371,8 @@ int ModuleUI::Load(const char* texture_path, const char* characters, uint rows)
 
 	uint tex_w, tex_h;
 	app->tex->GetSize(tex, tex_w, tex_h);
-	font.char_w = tex_w / font.columns;
-	font.char_h = tex_h / font.rows;
+	font.charW = tex_w / font.columns;
+	font.charH = tex_h / font.rows;
 
 
 	k++;
@@ -401,8 +401,8 @@ void ModuleUI::BlitText(int x, int y, int font_id, const char* text, bool useCam
 	SDL_Rect spriteRect;
 	uint len = strlen(text);
 
-	spriteRect.w = font->char_w;
-	spriteRect.h = font->char_h;
+	spriteRect.w = font->charW;
+	spriteRect.h = font->charH;
 
 	for (uint i = 0; i < len; ++i)
 	{
