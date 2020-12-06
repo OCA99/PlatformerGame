@@ -303,12 +303,6 @@ bool ModuleUI::PostUpdate()
 	{
 		app->render->DrawTexture(renderedMap, 0, 0, NULL, 0, 0, 0, 0, false);
 		app->render->DrawTexture(teleportArrowTex, renderedArrowPos.x, renderedArrowPos.y, NULL, 0, 0, 0, 0, false);
-
-		/*if (!app->player->unlockedChekpoint1)
-			app->render->DrawTexture(teleportCrossTex, crossPos1.x, crossPos1.y, NULL, 0, 0, 0, 0, false);
-		
-		if (!app->player->unlockedChekpoint2)
-			app->render->DrawTexture(teleportCrossTex, crossPos2.x, crossPos2.y, NULL, 0, 0, 0, 0, false);*/
 	}
 
 	return true;
@@ -429,32 +423,38 @@ void ModuleUI::BlitText(int x, int y, int font_id, const char* text, bool useCam
 	}
 }
 
-void ModuleUI::IntToDynamicString(char* buffer, int k) {
+void ModuleUI::IntToDynamicString(char* buffer, int k)
+{
 
-	for (int i = 0; i < DYNAMIC_TEXT_LEN; i++) {
+	for (int i = 0; i < DYNAMIC_TEXT_LEN; i++)
+	{
 		buffer[i] = '0';
 	}
 
 	buffer[DYNAMIC_TEXT_LEN] = 0;
 
 	int i = DYNAMIC_TEXT_LEN - 1;
-	while (k != 0) {
+	while (k != 0)
+	{
 		if (i < 0) break;
 		buffer[i--] += k % 10;
 		k /= 10;
 	}
 }
 
-void ModuleUI::IntToString(char* buffer, int k, int length) {
+void ModuleUI::IntToString(char* buffer, int k, int length)
+{
 
-	for (int i = 0; i < length; i++) {
+	for (int i = 0; i < length; i++)
+	{
 		buffer[i] = '0';
 	}
 
 	buffer[length] = 0;
 
 	int i = length - 1;
-	while (k != 0) {
+	while (k != 0)
+	{
 		if (i < 0) break;
 		buffer[i--] += k % 10;
 		k /= 10;

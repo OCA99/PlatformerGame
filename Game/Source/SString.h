@@ -44,14 +44,14 @@ public:
 		strcpy_s(str, size, string.str);
 	}
 
-	SString(const char *format, ...)
+	SString(const char* format, ...)
 	{
 		size = 0;
 
 		if(format != NULL)
 		{
 			static char tmp[TMP_STRING_SIZE];
-			static va_list  ap;
+			static va_list ap;
 
 			// Construct the string from variable arguments
 			va_start(ap, format);
@@ -79,14 +79,14 @@ public:
 			delete[] str;
 	}
 
-	const SString& Create(const char *format, ...)
+	const SString& Create(const char* format, ...)
 	{
 		size = 0;
 
 		if(format != NULL)
 		{
 			static char tmp[TMP_STRING_SIZE];
-			static va_list  ap;
+			static va_list ap;
 
 			// Construct the string from variable arguments
 			va_start(ap, format);
@@ -267,7 +267,7 @@ public:
 			str[i] = start[i];
 	}
 
-	uint Substitute(const char* src, const char *dst)
+	uint Substitute(const char* src, const char* dst)
 	{
 		assert(src);
 		assert(dst);
@@ -279,7 +279,7 @@ public:
 			uint srcLen = strlen(src);
 			uint dstLen = strlen(dst);
 			uint diff = dstLen - srcLen;
-			uint neededSize = 1 + strlen(str) + (diff*instances);
+			uint neededSize = 1 + strlen(str) + (diff * instances);
 
 			if(size < neededSize)
 			{

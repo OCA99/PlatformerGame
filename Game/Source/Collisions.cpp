@@ -82,13 +82,13 @@ bool Collisions::Update(float dt)
 				break;
 			if (dynamicColliders[i]->Intersects(staticColliders[j]->rect))
 			{
-				for each (Module*m in dynamicColliders[i]->listeners)
+				for each (Module* m in dynamicColliders[i]->listeners)
 				{
 					if (m == nullptr) break;
 					if (j < staticColliders.Count() && i < dynamicColliders.Count())
 						m->OnCollision(dynamicColliders[i], staticColliders[j], dt);
 				}
-				for each (Module*m in staticColliders[j]->listeners)
+				for each (Module* m in staticColliders[j]->listeners)
 				{
 					if (m == nullptr) break;
 					if (j < staticColliders.Count() && i < dynamicColliders.Count())
@@ -105,14 +105,14 @@ bool Collisions::Update(float dt)
 				break;
 			if (dynamicColliders[i]->Intersects(dynamicColliders[j]->rect))
 			{
-				for each (Module * m in dynamicColliders[i]->listeners)
+				for each (Module* m in dynamicColliders[i]->listeners)
 				{
 					if (m == nullptr)
 						break;
 					if (j < dynamicColliders.Count() && i < dynamicColliders.Count())
 						m->OnCollision(dynamicColliders[i], dynamicColliders[j], dt);
 				}
-				for each (Module * m in dynamicColliders[j]->listeners)
+				for each (Module* m in dynamicColliders[j]->listeners)
 				{
 					if (m == nullptr)
 						break;

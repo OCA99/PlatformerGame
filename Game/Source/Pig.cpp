@@ -208,7 +208,7 @@ void Pig::UpdatePathfinding(float dt)
 
 			iPoint pixelPos = iPoint(path[pathIndex].x * app->map->data.tileWidth, path[pathIndex].y * app->map->data.tileHeight);
 
-			while (pixelPos.x == (int)position.x/* && (abs(pixelPos.y - (int)position.y) <= 12 || jumping)*/)
+			while (pixelPos.x == (int)position.x)
 			{
 				pathIndex++;
 				if (pathIndex < path.Count())

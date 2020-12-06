@@ -14,8 +14,8 @@ Input::Input() : Module()
 	name.Create("input");
 
 	keyboard = new KeyState[MAX_KEYS];
-	memset(keyboard, KEY_IDLE, sizeof(KeyState)*MAX_KEYS);
-	memset(mouseButtons, KEY_IDLE, sizeof(KeyState)*NUM_MOUSE_BUTTONS);
+	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
+	memset(mouseButtons, KEY_IDLE, sizeof(KeyState) * NUM_MOUSE_BUTTONS);
 }
 
 // Destructor
@@ -121,10 +121,10 @@ bool Input::PreUpdate()
 
 			case SDL_MOUSEMOTION:
 				int scale = app->win->GetScale();
-				mouseMotionX = event.motion.xrel/scale;
-				mouseMotionY = event.motion.yrel/scale;
-				mouseX = event.motion.x/scale;
-				mouseY = event.motion.y/scale;
+				mouseMotionX = event.motion.xrel / scale;
+				mouseMotionY = event.motion.yrel / scale;
+				mouseX = event.motion.x / scale;
+				mouseY = event.motion.y / scale;
 			break;
 		}
 	}

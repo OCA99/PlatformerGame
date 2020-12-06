@@ -79,19 +79,19 @@ bool Render::Update(float dt)
 
 	if (app->scene->gameplayState == Scene::GameplayState::PLAYING)
 	{
-		camera.x = -(int)app->player->position.x*scale + camera.w/2;
-		camera.y = -(int)app->player->position.y*scale + camera.h/2;
+		camera.x = -(int)app->player->position.x * scale + camera.w / 2;
+		camera.y = -(int)app->player->position.y * scale + camera.h / 2;
 
 		//Camera limits ---> HARDCODED
 		if (camera.x > -160)
 			camera.x = -160;
-		if (camera.x < -16*206*1.66)
-			camera.x = -16*206*1.66;
+		if (camera.x < -16 * 206 * 1.66f)
+			camera.x = -16 * 206 * 1.66f;
 
 		if (camera.y > -160)
 			camera.y = -160;
-		if (camera.y < -16*78*1.425)
-			camera.y = -16*78*1.425;
+		if (camera.y < -16 * 78 * 1.425f)
+			camera.y = -16 * 78 * 1.425f;
 	}
 
 	return true;
@@ -159,8 +159,8 @@ bool Render::DrawTexture(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	uint scale = app->win->GetScale();
 
 	SDL_Rect rect;
-	rect.x = (int)(camera.x*speed) + x*scale;
-	rect.y = (int)(camera.y*speed) + y*scale;
+	rect.x = (int)(camera.x * speed) + x * scale;
+	rect.y = (int)(camera.y * speed) + y * scale;
 
 	if(section != NULL)
 	{
@@ -211,8 +211,8 @@ bool Render::DrawRectangle(const SDL_Rect& rect, Uint8 r, Uint8 g, Uint8 b, Uint
 	SDL_Rect rec(rect);
 	if(useCamera)
 	{
-		rec.x = (int)(camera.x + rect.x*scale);
-		rec.y = (int)(camera.y + rect.y*scale);
+		rec.x = (int)(camera.x + rect.x * scale);
+		rec.y = (int)(camera.y + rect.y * scale);
 		rec.w *= scale;
 		rec.h *= scale;
 	}
@@ -239,9 +239,9 @@ bool Render::DrawLine(int x1, int y1, int x2, int y2, Uint8 r, Uint8 g, Uint8 b,
 	int result = -1;
 
 	if(useCamera)
-		result = SDL_RenderDrawLine(renderer, camera.x + x1*scale, camera.y + y1*scale, camera.x + x2*scale, camera.y + y2*scale);
+		result = SDL_RenderDrawLine(renderer, camera.x + x1 * scale, camera.y + y1 * scale, camera.x + x2 * scale, camera.y + y2 * scale);
 	else
-		result = SDL_RenderDrawLine(renderer, x1*scale, y1*scale, x2*scale, y2*scale);
+		result = SDL_RenderDrawLine(renderer, x1 * scale, y1 * scale, x2 * scale, y2 * scale);
 
 	if(result != 0)
 	{
@@ -267,8 +267,8 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
 	for(uint i = 0; i < 360; ++i)
 	{
-		points[i].x = (int)(x + radius*cos(i*factor));
-		points[i].y = (int)(y + radius*sin(i*factor));
+		points[i].x = (int)(x + radius * cos(i * factor));
+		points[i].y = (int)(y + radius * sin(i * factor));
 	}
 
 	result = SDL_RenderDrawPoints(renderer, points, 360);

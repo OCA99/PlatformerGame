@@ -19,7 +19,7 @@
 
 Map::Map() : Module(), mapLoaded(false)
 {
-    name.Create("map");
+	name.Create("map");
 }
 
 // Destructor
@@ -55,16 +55,15 @@ void Properties::SetProperty(const char* name, int value)
 // Called before render is available
 bool Map::Awake(pugi::xml_node& config)
 {
-    LOG("Loading Map Parser");
-    bool ret = true;
-
-    folder.Create(config.child("folder").child_value());
-
+	LOG("Loading Map Parser");
+	bool ret = true;
+	
+	folder.Create(config.child("folder").child_value());
 	pugi::xml_node mapPathN = config.child("mapcomponent");
-
+	
 	flagPath = mapPathN.attribute("endFlag").as_string();
-
-    return ret;
+	
+	return ret;
 }
 
 bool Map::Start()
@@ -115,7 +114,7 @@ void Map::Draw()
 	{
 		if (data.maplayers[i]->properties.GetProperty("draw", 1) == 0)
 			continue;
-		int layerSize = data.maplayers[i]->width*data.maplayers[i]->height;
+		int layerSize = data.maplayers[i]->width * data.maplayers[i]->height;
 		for (int j = 0; j < layerSize; j++)
 		{
 			uint tileGid = data.maplayers[i]->data[j];
@@ -131,8 +130,8 @@ void Map::Draw()
 				}
 
 				int tilesetPosition = tileGid - tileset->firstgid;
-				SDL_Rect section = { tilesetPosition % tileset->numTilesWidth*tileset->tileWidth, tilesetPosition/tileset->numTilesWidth*tileset->tileHeight, tileset->tileWidth, tileset->tileHeight };
-				app->render->DrawTexture(tileset->texture, j % layerWidth*data.tileWidth, j/layerWidth*data.tileHeight, &section);
+				SDL_Rect section = { tilesetPosition % tileset->numTilesWidth * tileset->tileWidth, tilesetPosition / tileset->numTilesWidth * tileset->tileHeight, tileset->tileWidth, tileset->tileHeight };
+				app->render->DrawTexture(tileset->texture, j % layerWidth * data.tileWidth, j / layerWidth * data.tileHeight, &section);
 				break;
 			}
 		}
@@ -144,8 +143,8 @@ iPoint Map::MapToWorld(int x, int y) const
 {
 	iPoint ret;
 
-	ret.x = x*data.tileWidth;
-	ret.y = y*data.tileHeight;
+	ret.x = x * data.tileWidth;
+	ret.y = y * data.tileHeight;
 
 	return ret;
 }
@@ -163,9 +162,9 @@ SDL_Rect TileSet::GetTileRect(int id) const
 // Called before quitting
 bool Map::CleanUp()
 {
-    LOG("Unloading map");
-    // L03: DONE 2: Make sure you clean up any memory allocated from tilesets/map
-    // Remove all tilesets
+	LOG("Unloading map");
+	// L03: DONE 2: Make sure you clean up any memory allocated from tilesets/map
+	// Remove all tilesets
 	for (int i = 0; i < data.tilesets.Count(); i++)
 	{
 		TileSet* t = data.tilesets[i];
@@ -188,34 +187,34 @@ bool Map::CleanUp()
 
 	// Clean up the pugui tree
 	mapFile.reset();
-
-    return true;
+	
+	return true;
 }
 
 // Load new map
 bool Map::Load(const char* filename, bool loadEntities)
 {
 	CleanUp();
-
-    bool ret = true;
-    SString tmp("%s%s", folder.GetString(), filename);
-
-    pugi::xml_parse_result result = mapFile.load_file(tmp.GetString());
-
-    if(result == NULL)
-    {
-        LOG("Could not load map xml file %s. pugi error: %s", filename, result.description());
-        ret = false;
-    }
-
-    if(ret == true)
-    {
-        // L03: DONE 3: Create and call a private function to load and fill all your map data
+	
+	bool ret = true;
+	SString tmp("%s%s", folder.GetString(), filename);
+	
+	pugi::xml_parse_result result = mapFile.load_file(tmp.GetString());
+	
+	if(result == NULL)
+	{
+		LOG("Could not load map xml file %s. pugi error: %s", filename, result.description());
+		ret = false;
+	}
+	
+	if(ret == true)
+	{
+		// L03: DONE 3: Create and call a private function to load and fill all your map data
 		ret = LoadMap();
 	}
-
-    // L03: DONE 4: Create and call a private function to load a tileset
-    // remember to support more any number of tilesets!
+	
+	// L03: DONE 4: Create and call a private function to load a tileset
+	// remember to support more any number of tilesets!
 	pugi::xml_node tileset;
 	for (tileset = mapFile.child("map").child("tileset"); tileset && ret; tileset = tileset.next_sibling("tileset"))
 	{
@@ -238,10 +237,10 @@ bool Map::Load(const char* filename, bool loadEntities)
 
 		data.maplayers.Add(layerSet);
 	}
-
-    if(ret == true)
-    {
-        // L03: DONE 5: LOG all the data loaded iterate all tilesets and LOG everything
+	
+	if(ret == true)
+	{
+		// L03: DONE 5: LOG all the data loaded iterate all tilesets and LOG everything
 		LOG("Successfully parsed map XML file: %s", filename);
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tileWidth, data.tileHeight);
@@ -256,11 +255,11 @@ bool Map::Load(const char* filename, bool loadEntities)
 		}
 
 		// L04: TODO 4: LOG the info for each loaded layer
-    }
+	}
 
 	CreateColliders();
-	app->player->position.x = data.properties.GetProperty("playerX", 0)*data.tileWidth;
-	app->player->position.y = data.properties.GetProperty("playerY", 0)*data.tileHeight;
+	app->player->position.x = data.properties.GetProperty("playerX", 0) * data.tileWidth;
+	app->player->position.y = data.properties.GetProperty("playerY", 0) * data.tileHeight;
 
 	if (loadEntities)
 		CreateEntities();
@@ -269,10 +268,10 @@ bool Map::Load(const char* filename, bool loadEntities)
 	CreatePathfindingWalkabilityMap();
 
 	app->pathfinding->SetMap(data.width, data.height, pathfindingWalkabilityMap);
-
-    mapLoaded = ret;
-
-    return ret;
+	
+	mapLoaded = ret;
+	
+	return ret;
 }
 
 // L03: DONE: Load map general properties
@@ -305,16 +304,20 @@ bool Map::LoadMap()
 		data.backgroundColor.g = strtol(green.GetString(), nullptr, 16);
 		data.backgroundColor.b = strtol(blue.GetString(), nullptr, 16);
 		SString orientation = map.attribute("orientation").as_string();
-		if (orientation == "orthogonal") {
+		if (orientation == "orthogonal")
+		{
 			data.type = MAPTYPE_ORTHOGONAL;
 		}
-		else if (orientation == "isometric") {
+		else if (orientation == "isometric")
+		{
 			data.type = MAPTYPE_ISOMETRIC;
 		}
-		else if (orientation == "staggered") {
+		else if (orientation == "staggered")
+		{
 			data.type = MAPTYPE_STAGGERED;
 		}
-		else {
+		else
+		{
 			data.type = MAPTYPE_UNKNOWN;
 		}
 
@@ -357,8 +360,8 @@ bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 		set->texture = app->tex->Load(tmp.GetString());
 		set->texWidth = image.attribute("width").as_int(0);
 		set->texHeight = image.attribute("height").as_int(0);
-		set->numTilesWidth = set->texWidth/set->tileWidth;
-		set->numTilesHeight = set->texHeight/set->tileHeight;
+		set->numTilesWidth = set->texWidth / set->tileWidth;
+		set->numTilesHeight = set->texHeight / set->tileHeight;
 		set->offsetX = image.attribute("offsetx").as_int(0);
 		set->offsetY = image.attribute("offsety").as_int(0);
 	}
@@ -374,8 +377,8 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name.Create(node.attribute("name").as_string("Not Found"));
 	layer->width = node.attribute("width").as_int(0);
 	layer->height = node.attribute("height").as_int(0);
-	layer->data = new uint[(data.width*data.height*sizeof(uint))];
-	memset(layer->data, 0, size_t(data.width*data.height*sizeof(uint)));
+	layer->data = new uint[(data.width * data.height * sizeof(uint))];
+	memset(layer->data, 0, size_t(data.width * data.height * sizeof(uint)));
 
 	pugi::xml_node nodeID;
 
@@ -418,20 +421,21 @@ bool Map::StoreID(pugi::xml_node& node, MapLayer* layer, int ID)
 	return ret;
 }
 
-bool Map::CreateColliders() {
+bool Map::CreateColliders()
+{
 	bool ret = true;
 
 	for (int i = 0; i < data.maplayers.Count(); i++)
 	{
 		if (data.maplayers[i]->properties.GetProperty("navigation", 0) == 0)
 			continue;
-		int layerSize = data.maplayers[i]->width*data.maplayers[i]->height;
+		int layerSize = data.maplayers[i]->width * data.maplayers[i]->height;
 		for (int j = 0; j < layerSize; j++)
 		{
 			if (data.maplayers[i]->data[j] == 0)
 				continue;
 			int layerWidth = data.maplayers[i]->width;
-			SDL_Rect section = { j % layerWidth*data.tileWidth, j/layerWidth*data.tileHeight, data.tileWidth, data.tileHeight };
+			SDL_Rect section = { j % layerWidth * data.tileWidth, j / layerWidth * data.tileHeight, data.tileWidth, data.tileHeight };
 			if (data.maplayers[i]->properties.GetProperty("nextLevel", 0) == 1)
 			{
 				app->collisions->AddCollider(section, Collider::Type::ENDLEVEL, this);

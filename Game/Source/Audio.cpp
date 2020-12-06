@@ -96,7 +96,7 @@ bool Audio::PlayMusic(const char* path, float fadeTime)
 	{
 		if(fadeTime > 0.0f)
 		{
-			Mix_FadeOutMusic(int(fadeTime*1000.0f));
+			Mix_FadeOutMusic(int(fadeTime * 1000.0f));
 		}
 		else
 		{
@@ -118,7 +118,7 @@ bool Audio::PlayMusic(const char* path, float fadeTime)
 	{
 		if(fadeTime > 0.0f)
 		{
-			if(Mix_FadeInMusic(music, -1, (int) (fadeTime*1000.0f)) < 0)
+			if(Mix_FadeInMusic(music, -1, (int) (fadeTime * 1000.0f)) < 0)
 			{
 				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
 				ret = false;
@@ -181,7 +181,7 @@ void Audio::VolumeDown()
 {
 	Mix_VolumeMusic(Mix_Volume(-1, Mix_Volume(-1, -1) - volumeChange));
 
-	if (Mix_Volume(-1, -1) > 0 && Mix_Volume(-1, -1) < 2*volumeChange)
+	if (Mix_Volume(-1, -1) > 0 && Mix_Volume(-1, -1) < 2 * volumeChange)
 		Mix_VolumeMusic(0);
 }
 
@@ -191,12 +191,14 @@ void Audio::VolumeUp()
 
 }
 
-bool Audio::Load(pugi::xml_node& savedGame) {
+bool Audio::Load(pugi::xml_node& savedGame)
+{
 	//Mix_VolumeMusic(Mix_Volume(-1, savedGame.attribute("audio").as_int()));
 	return true;
 }
 
-bool Audio::Save(pugi::xml_node& savedGame) {
+bool Audio::Save(pugi::xml_node& savedGame)
+{
 	pugi::xml_attribute volume = savedGame.append_attribute("volume");
 	volume.set_value(Mix_Volume(-1, -1));
 	return true;

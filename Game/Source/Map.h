@@ -122,29 +122,29 @@ struct MapData
 class Map : public Module
 {
 public:
-
-    Map();
-
-    // Destructor
-    virtual ~Map();
-
-    // Called before render is available
-    bool Awake(pugi::xml_node& conf);
+	
+	Map();
+	
+	// Destructor
+	virtual ~Map();
+	
+	// Called before render is available
+	bool Awake(pugi::xml_node& conf);
 
 	bool Start();
 
 	bool Update(float dt);
 
 	bool PostUpdate();
-
-    // Called each loop iteration
-    void Draw();
-
-    // Called before quitting
-    bool CleanUp();
-
-    // Load new map
-    bool Load(const char* path, bool loadEntities = true);
+	
+	// Called each loop iteration
+	void Draw();
+	
+	// Called before quitting
+	bool CleanUp();
+	
+	// Load new map
+	bool Load(const char* path, bool loadEntities = true);
 
 	// L04: DONE 8: Create a method that translates x,y coordinates from map positions to world positions
 	iPoint MapToWorld(int x, int y) const;
@@ -167,8 +167,8 @@ private:
 	void CreatePathfindingWalkabilityMap();
 
 public:
-
-    // L03: DONE 1: Add your struct for map info
+	
+	// L03: DONE 1: Add your struct for map info
 	MapData data;
 
 private:
@@ -177,10 +177,10 @@ private:
 	SDL_Texture* flagTex = nullptr;
 
 	Animation flagAnimation;
-
-    pugi::xml_document mapFile;
-    SString folder;
-    bool mapLoaded;
+	
+	pugi::xml_document mapFile;
+	SString folder;
+	bool mapLoaded;
 	uchar* walkabilityMap = nullptr;
 	uchar* pathfindingWalkabilityMap = nullptr;
 };

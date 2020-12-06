@@ -263,10 +263,6 @@ void Player::OnCollision(Collider* a, Collider* b, float dt)
 		checkpoint1Position = position;
 		unlockedChekpoint1 = true;
 
-
-		/*if (!app->ui->drawTeleportMap)
-			app->ui->destinationCheckpoint = 1;*/
-
 		app->ui->drawTeleportText = true;
 
 		if (saveOnce1)
@@ -631,7 +627,7 @@ void Player::UpdateLogic(float dt)
 	if (initialWaitCount > initialWait)
 		gravityOn = true;
 
-	if(!godMode && gravityOn && !dashing && playerState != DYING) verticalVelocity -= gravity*dt;
+	if(!godMode && gravityOn && !dashing && playerState != DYING) verticalVelocity -= gravity * dt;
 
 	if (verticalVelocity > maxVerticalVelocity)
 	{
@@ -875,7 +871,7 @@ void Player::Reload()
 		app->ui->score = 0;
 	}
 	delete collider;
-	collider = app->collisions->AddCollider(SDL_Rect({ (int)(position.x + 3.0), (int)(position.y + 10.0), 16, 16 }), Collider::Type::DYNAMIC, this);
+	collider = app->collisions->AddCollider(SDL_Rect({ (int)(position.x + 3.0f), (int)(position.y + 10.0f), 16, 16 }), Collider::Type::DYNAMIC, this);
 	initialPosition = position;
 	respawnPosition = initialPosition;
 	gravityOn = false;
@@ -885,11 +881,11 @@ void Player::Reload()
 void Player::GodMovement(float dt)
 {
 	if (app->input->GetKey(SDL_SCANCODE_W) == KEY_REPEAT)
-		position.y -= speed*dt;
+		position.y -= speed * dt;
 	if (app->input->GetKey(SDL_SCANCODE_S) == KEY_REPEAT)
-		position.y += speed*dt;
+		position.y += speed * dt;
 	if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-		position.x -= speed*dt;
+		position.x -= speed * dt;
 	if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 		position.x += speed * dt;
 }

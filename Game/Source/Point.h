@@ -108,7 +108,7 @@ public:
 		TYPE fx = x - v.x;
 		TYPE fy = y - v.y;
 
-		return sqrtf((fx*fx) + (fy*fy));
+		return sqrtf((fx * fx) + (fy * fy));
 	}
 
 	TYPE DistanceNoSqrt(const Point& v) const
@@ -116,7 +116,7 @@ public:
 		TYPE fx = x - v.x;
 		TYPE fy = y - v.y;
 
-		return (fx*fx) + (fy*fy);
+		return (fx * fx) + (fy * fy);
 	}
 
 	TYPE DistanceManhattan(const Point& v) const
