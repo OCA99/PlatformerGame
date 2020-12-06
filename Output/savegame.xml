@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 <renderer>
-	<camera x="-2262" y="-676" />
+	<camera x="-160" y="-1662" />
 </renderer>
 <audio volume="128" />
 <scene currentLevel="level1.tmx" />
-<player verticalVelocity="-154" availableJumps="2" x="1371.48047" y="473.968719" score="0" health="3" />
+<player verticalVelocity="0" availableJumps="2" x="176" y="966.152954" score="70000" health="4" checkpoint1="false" checkpoint2="false" />
 <entities>
 	<entities>
 		<entity x="2000" y="464" type="0" />
@@ -24,25 +24,32 @@
 		<entity x="1680" y="800" type="0" />
 		<entity x="1472" y="816" type="0" />
 		<entity x="1696" y="816" type="0" />
+		<entity x="1488" y="832" type="0" />
 		<entity x="1680" y="832" type="0" />
 		<entity x="1136" y="848" type="0" />
+		<entity x="1472" y="848" type="0" />
 		<entity x="1696" y="848" type="0" />
+		<entity x="1488" y="864" type="0" />
 		<entity x="1680" y="864" type="0" />
+		<entity x="1472" y="880" type="0" />
 		<entity x="1696" y="880" type="0" />
 		<entity x="432" y="896" type="0" />
 		<entity x="448" y="896" type="0" />
+		<entity x="1200" y="896" type="0" />
 		<entity x="1488" y="896" type="0" />
 		<entity x="1680" y="896" type="0" />
+		<entity x="416" y="912" type="0" />
+		<entity x="464" y="912" type="0" />
 		<entity x="848" y="912" type="0" />
 		<entity x="1472" y="912" type="0" />
 		<entity x="1696" y="912" type="0" />
 		<entity x="2496" y="912" type="0" />
 		<entity x="2512" y="912" type="0" />
 		<entity x="432" y="960" type="3" />
-		<entity x="1378.07996" y="512.819153" type="4" health="2" />
-		<entity x="1120" y="784.819153" type="4" health="2" />
-		<entity x="608" y="976.819153" type="4" health="2" />
-		<entity x="1088" y="976.819153" type="4" health="2" />
+		<entity x="1376" y="512.117859" type="4" health="2" />
+		<entity x="1120" y="784.117859" type="4" health="2" />
+		<entity x="608" y="976.117859" type="4" health="2" />
+		<entity x="1088" y="976.117859" type="4" health="2" />
 		<entity x="1584" y="480" type="1" />
 		<entity x="1056" y="928" type="1" />
 	</entities>

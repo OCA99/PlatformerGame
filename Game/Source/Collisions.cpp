@@ -43,7 +43,7 @@ bool Collisions::PreUpdate()
 		if (start->data->pendingToDelete)
 		{
 			delete start->data;
-			dynamicColliders.del(start);
+			dynamicColliders.Del(start);
 			start = start->next;
 			continue;
 		}
@@ -58,7 +58,7 @@ bool Collisions::PreUpdate()
 		if (start->data->pendingToDelete)
 		{
 			delete start->data;
-			staticColliders.del(start);
+			staticColliders.Del(start);
 			start = start->next;
 			continue;
 		}
@@ -74,34 +74,34 @@ bool Collisions::Update(float dt)
 	OPTICK_EVENT("CollisionsUpdate", Optick::Category::Physics);
 	bool ret = true;
 
-	for (int i = 0; i < dynamicColliders.count(); i++)
+	for (int i = 0; i < dynamicColliders.Count(); i++)
 	{
-		for (int j = 0; j < staticColliders.count(); j++)
+		for (int j = 0; j < staticColliders.Count(); j++)
 		{
-			if (i >= dynamicColliders.count())
+			if (i >= dynamicColliders.Count())
 				break;
 			if (dynamicColliders[i]->Intersects(staticColliders[j]->rect))
 			{
 				for each (Module*m in dynamicColliders[i]->listeners)
 				{
 					if (m == nullptr) break;
-					if (j < staticColliders.count() && i < dynamicColliders.count())
+					if (j < staticColliders.Count() && i < dynamicColliders.Count())
 						m->OnCollision(dynamicColliders[i], staticColliders[j], dt);
 				}
 				for each (Module*m in staticColliders[j]->listeners)
 				{
 					if (m == nullptr) break;
-					if (j < staticColliders.count() && i < dynamicColliders.count())
+					if (j < staticColliders.Count() && i < dynamicColliders.Count())
 						m->OnCollision(staticColliders[j], dynamicColliders[i], dt);
 				}
 			}
 		}
 
-		for (int j = i; j < dynamicColliders.count(); j++)
+		for (int j = i; j < dynamicColliders.Count(); j++)
 		{
 			if (i == j)
 				continue;
-			if (i >= dynamicColliders.count())
+			if (i >= dynamicColliders.Count())
 				break;
 			if (dynamicColliders[i]->Intersects(dynamicColliders[j]->rect))
 			{
@@ -109,14 +109,14 @@ bool Collisions::Update(float dt)
 				{
 					if (m == nullptr)
 						break;
-					if (j < dynamicColliders.count() && i < dynamicColliders.count())
+					if (j < dynamicColliders.Count() && i < dynamicColliders.Count())
 						m->OnCollision(dynamicColliders[i], dynamicColliders[j], dt);
 				}
 				for each (Module * m in dynamicColliders[j]->listeners)
 				{
 					if (m == nullptr)
 						break;
-					if (j < dynamicColliders.count() && i < dynamicColliders.count())
+					if (j < dynamicColliders.Count() && i < dynamicColliders.Count())
 						m->OnCollision(dynamicColliders[j], dynamicColliders[i], dt);
 				}
 			}
@@ -133,7 +133,7 @@ bool Collisions::PostUpdate()
 
 	if (showColliders == true)
 	{
-		for (uint i = 0; i < staticColliders.count(); ++i)
+		for (uint i = 0; i < staticColliders.Count(); ++i)
 		{
 			if (staticColliders[i]->type == Collider::Type::DEATH)
 			{
@@ -165,7 +165,7 @@ bool Collisions::PostUpdate()
 			}
 		}
 
-		for (uint i = 0; i < dynamicColliders.count(); ++i)
+		for (uint i = 0; i < dynamicColliders.Count(); ++i)
 		{
 			DrawCollider(&dynamicColliders[i]->rect, 255, 0, 0, 80);
 		}
@@ -177,19 +177,19 @@ bool Collisions::PostUpdate()
 // Called before quitting
 bool Collisions::CleanUp()
 {
-	for (int i = 0; i < staticColliders.count(); i++)
+	for (int i = 0; i < staticColliders.Count(); i++)
 	{
 		delete staticColliders[i];
 	}
 
-	for (int i = 0; i < dynamicColliders.count(); i++)
+	for (int i = 0; i < dynamicColliders.Count(); i++)
 	{
 		if (dynamicColliders[i] != app->player->collider)
 			delete dynamicColliders[i];
 	}
 
-	staticColliders.clear();
-	dynamicColliders.clear();
+	staticColliders.Clear();
+	dynamicColliders.Clear();
 
 	return true;
 }
@@ -202,11 +202,11 @@ Collider* Collisions::AddCollider(SDL_Rect rect, Collider::Type type, Module* li
 
 	if (type == Collider::Type::DYNAMIC || type == Collider::Type::PIG || type == Collider::Type::BAT || type == Collider::Type::KNIFE)
 	{
-		dynamicColliders.add(ret);
+		dynamicColliders.Add(ret);
 	}
 	else
 	{
-		staticColliders.add(ret);
+		staticColliders.Add(ret);
 	}
 
 	return ret;
@@ -219,23 +219,23 @@ void Collisions::DrawCollider(const SDL_Rect* section, Uint8 r, Uint8 g, Uint8 b
 
 void Collisions::RemoveCollider(Collider* collider)
 {
-	for (int i = 0; i < staticColliders.count(); i++)
+	for (int i = 0; i < staticColliders.Count(); i++)
 	{
 		Collider* c = staticColliders[i];
 		if (c == collider)
 		{
 			ListItem<Collider*>* item = staticColliders.At(i);
-			staticColliders.del(item);
+			staticColliders.Del(item);
 		}
 	}
 
-	for (int i = 0; i < dynamicColliders.count(); i++)
+	for (int i = 0; i < dynamicColliders.Count(); i++)
 	{
 		Collider* c = dynamicColliders[i];
 		if (c == collider)
 		{
 			ListItem<Collider*>* item = dynamicColliders.At(i);
-			dynamicColliders.del(item);
+			dynamicColliders.Del(item);
 		}
 	}
 
