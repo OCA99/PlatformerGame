@@ -448,7 +448,7 @@ void Player::UpdateState(float dt)
 
 			if (knifeCooldown == maxKnifeCooldown)
 			{
-				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
+				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
 				{
 					app->audio->PlayFx(throwKnifeFx, 0);
 					knifeCooldown = 0.0f;
@@ -456,7 +456,7 @@ void Player::UpdateState(float dt)
 					app->entities->AddEntity(position, Entity::Type::KNIFE);
 				}
 
-				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
+				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
 				{
 					app->audio->PlayFx(throwKnifeFx, 0);
 					knifeCooldown = 0.0f;
@@ -513,7 +513,7 @@ void Player::UpdateState(float dt)
 
 			if (knifeCooldown == maxKnifeCooldown)
 			{
-				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
+				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
 				{
 					app->audio->PlayFx(throwKnifeFx, 0);
 					knifeCooldown = 0.0f;
@@ -521,7 +521,7 @@ void Player::UpdateState(float dt)
 					app->entities->AddEntity(position, Entity::Type::KNIFE);
 				}
 
-				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
+				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
 				{
 					app->audio->PlayFx(throwKnifeFx, 0);
 					knifeCooldown = 0.0f;
@@ -575,7 +575,7 @@ void Player::UpdateState(float dt)
 
 			if (knifeCooldown == maxKnifeCooldown)
 			{
-				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
+				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
 				{
 					app->audio->PlayFx(throwKnifeFx, 0);
 					knifeCooldown = 0.0f;
@@ -583,7 +583,7 @@ void Player::UpdateState(float dt)
 					app->entities->AddEntity(position, Entity::Type::KNIFE);
 				}
 
-				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && !app->ui->drawTeleportMap)
+				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
 				{
 					app->audio->PlayFx(throwKnifeFx, 0);
 					knifeCooldown = 0.0f;

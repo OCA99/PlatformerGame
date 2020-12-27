@@ -38,6 +38,12 @@ bool ModuleUI::Awake(pugi::xml_node& config)
 
 	livesTexturePath= uiPathN.attribute("livesTexturePath").as_string();
 
+	optionsMenuPath = uiPathN.attribute("optionsMenu").as_string();
+	settingsMenuPath = uiPathN.attribute("settingsMenu").as_string();
+
+	menuArrowPath = uiPathN.attribute("menuArrow").as_string();
+
+
 	score = 0;
 
 	currentLevel = 1;
@@ -66,10 +72,14 @@ bool ModuleUI::Start()
 	
 	teleportCrossTex = app->tex->Load(teleportCrossPath);
 
+	optionsMenuTex = app->tex->Load(optionsMenuPath);
+	settingsMenuTex = app->tex->Load(settingsMenuPath);
+
+	menuArrowTex = app->tex->Load(menuArrowPath);
+
 	livesTexture = app->tex->Load(livesTexturePath);
 	livesRect = SDL_Rect({ 0,0,12,10 });
 	extraLivesRect = SDL_Rect({ 12,0,12,10 });
-
 
 	destinationCheckpoint = 0;	
 
@@ -143,20 +153,13 @@ bool ModuleUI::Update(float dt)
 		break;
 	}
 
-	if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->gameplayState == Scene::GameplayState::PLAYING)
-	{
-		if (drawTeleportMap)
-		{
-			drawTeleportMap = false;
-		}
-		else
-		{
-			drawTeleportMap = true;
-		}
-	}
+	
 
-	if (drawTeleportMap)
+	switch (uiToRender)
 	{
+	case 1:
+		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->gameplayState == Scene::GameplayState::PLAYING) uiToRender = 0;
+
 		if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)
 		{
 			destinationCheckpoint++;
@@ -205,30 +208,46 @@ bool ModuleUI::Update(float dt)
 			case 0:
 				app->player->position = fPoint(checkpointCoordinates[0].x, checkpointCoordinates[0].y);
 				app->player->collider->SetPos(app->player->position.x, app->player->position.y);
-				drawTeleportMap = false;
+				uiToRender = 0;
 				break;
 
 			case 1:
 				app->player->position = fPoint(checkpointCoordinates[1].x, checkpointCoordinates[1].y);
 				app->player->collider->SetPos(app->player->position.x, app->player->position.y);
-				drawTeleportMap = false;
+				uiToRender = 0;
 				break;
 
 			case 2:
 				app->player->position = fPoint(checkpointCoordinates[2].x, checkpointCoordinates[2].y);
 				app->player->collider->SetPos(app->player->position.x, app->player->position.y);
-				drawTeleportMap = false;
+				uiToRender = 0;
 				break;
 
 			case 3:
 				app->player->position = fPoint(checkpointCoordinates[3].x, checkpointCoordinates[3].y);
 				app->player->collider->SetPos(app->player->position.x, app->player->position.y);
-				drawTeleportMap = false;
+				uiToRender = 0;
+				break;
 
 			default:
 				break;
 			}
 		}
+		break;
+
+	case 2:
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && app->scene->gameplayState == Scene::GameplayState::PLAYING) uiToRender = 0;
+		//GUI buttons for options menu
+		break;
+	case 3:
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && app->scene->gameplayState == Scene::GameplayState::PLAYING) uiToRender = 2;
+		//GUI buttons for settings menu
+		break;
+
+	default:
+		if (app->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN && app->scene->gameplayState == Scene::GameplayState::PLAYING) uiToRender = 1;
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && app->scene->gameplayState == Scene::GameplayState::PLAYING) uiToRender = 2;
+		break;
 	}
 	
 	canDrawSecret = false;
@@ -295,11 +314,23 @@ bool ModuleUI::PostUpdate()
 		BlitText(app->player->position.x - 70, app->player->position.y + 40, font, "MIDAS' HALL", true);
 	}
 
-
-	if (drawTeleportMap)
+	switch (uiToRender)
 	{
+	case 1:
 		app->render->DrawTexture(renderedMap, 0, 0, NULL, 0, 0, 0, 0, false);
 		app->render->DrawTexture(teleportArrowTex, renderedArrowPos.x, renderedArrowPos.y, NULL, 0, 0, 0, 0, false);
+		break;
+
+	case 2:
+		app->render->DrawTexture(optionsMenuTex, 0, 0, NULL, 0, 0, 0, 0, false);
+		break;
+
+	case 3:
+		app->render->DrawTexture(settingsMenuTex, 0, 0, NULL, 0, 0, 0, 0, false);
+		break;
+
+	default:
+		break;
 	}
 
 	return true;

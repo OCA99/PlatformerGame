@@ -47,8 +47,9 @@ public:
 	int destinationCheckpoint;
 
 	bool drawTeleportText;
-	bool drawTeleportMap;
 	bool canDrawSecret;
+
+	int uiToRender;
 
 	int font = -1;
 
@@ -60,6 +61,11 @@ public:
 
 	const char* teleportCrossPath;
 	
+	const char* optionsMenuPath;
+	const char* settingsMenuPath;
+
+	const char* menuArrowPath;
+
 	const char* livesTexturePath;
 
 	char scoreText[DYNAMIC_TEXT_LEN + 1] = { "0000000000" };
@@ -77,6 +83,10 @@ public:
 	SDL_Texture* teleportMapLevel1 = nullptr;
 	SDL_Texture* teleportMapLevel2 = nullptr;
 	SDL_Texture* renderedMap = nullptr;
+
+	SDL_Texture* optionsMenuTex = nullptr;
+	SDL_Texture* settingsMenuTex = nullptr;
+	SDL_Texture* menuArrowTex = nullptr;
 
 	SDL_Texture* teleportArrowTex = nullptr;
 	iPoint arrow1;
