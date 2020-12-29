@@ -95,6 +95,10 @@
     <ClCompile Include="Source\Debug.cpp" />
     <ClCompile Include="Source\Entities.cpp" />
     <ClCompile Include="Source\Fruit.cpp" />
+    <ClCompile Include="Source\GuiButton.cpp" />
+    <ClCompile Include="Source\GuiCheckBox.cpp" />
+    <ClCompile Include="Source\GuiManager.cpp" />
+    <ClCompile Include="Source\GuiSlider.cpp" />
     <ClCompile Include="Source\Heart.cpp" />
     <ClCompile Include="Source\Knife.cpp" />
     <ClCompile Include="Source\Main.cpp" />
@@ -123,6 +127,11 @@
     <ClInclude Include="Source\External\Optick\include\optick.config.h" />
     <ClInclude Include="Source\External\Optick\include\optick.h" />
     <ClInclude Include="Source\Fruit.h" />
+    <ClInclude Include="Source\GuiButton.h" />
+    <ClInclude Include="Source\GuiCheckBox.h" />
+    <ClInclude Include="Source\GuiControl.h" />
+    <ClInclude Include="Source\GuiManager.h" />
+    <ClInclude Include="Source\GuiSlider.h" />
     <ClInclude Include="Source\Heart.h" />
     <ClInclude Include="Source\Knife.h" />
     <ClInclude Include="Source\Map.h" />

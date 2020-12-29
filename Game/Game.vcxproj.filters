@@ -31,6 +31,18 @@
     <ClCompile Include="Source\Heart.cpp" />
     <ClCompile Include="Source\Knife.cpp" />
     <ClCompile Include="Source\Pig.cpp" />
+    <ClCompile Include="Source\GuiButton.cpp">
+      <Filter>GuiControls</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiSlider.cpp">
+      <Filter>GuiControls</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiCheckBox.cpp">
+      <Filter>GuiControls</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\GuiManager.cpp">
+      <Filter>GuiControls</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Window.h" />
@@ -89,6 +101,21 @@
     <ClInclude Include="Source\Heart.h" />
     <ClInclude Include="Source\Knife.h" />
     <ClInclude Include="Source\Pig.h" />
+    <ClInclude Include="Source\GuiButton.h">
+      <Filter>GuiControls</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiControl.h">
+      <Filter>GuiControls</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiSlider.h">
+      <Filter>GuiControls</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiCheckBox.h">
+      <Filter>GuiControls</Filter>
+    </ClInclude>
+    <ClInclude Include="Source\GuiManager.h">
+      <Filter>GuiControls</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="External">
@@ -102,6 +129,9 @@
     </Filter>
     <Filter Include="External\Optick">
       <UniqueIdentifier>{dafa520a-b7ed-4339-938e-68ebe1db94b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="GuiControls">
+      <UniqueIdentifier>{244ac655-9154-4221-9ed5-872f0f766872}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
