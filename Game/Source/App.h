@@ -23,6 +23,7 @@ class Parallax;
 class ModuleUI;
 class PathFinding;
 class Entities;
+class GuiManager;
 
 class App
 {
@@ -93,6 +94,7 @@ public:
 	ModuleUI* ui;
 	PathFinding* pathfinding;
 	Entities* entities;
+	GuiManager* guimanager;
 
 	bool Load();
 	bool Save();

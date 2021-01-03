@@ -10,6 +10,7 @@
 #include "Audio.h"
 #include "Parallax.h"
 #include "ModuleUI.h"
+#include "GuiManager.h"
 
 #include "Optick/include/optick.h"
 
@@ -101,6 +102,11 @@ bool Scene::Update(float dt)
 
 	if (gameplayState == PLAYING)
 	{
+		if (app->input->GetKey(SDL_SCANCODE_Y) == KEY_DOWN)
+		{
+			app->guimanager->CreateGuiControl(GuiControlType::BUTTON);
+		}
+
 		if (app->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)
 		{
 			app->RequestLoad();
@@ -139,6 +145,7 @@ bool Scene::Update(float dt)
 		app->audio->VolumeDown();
 		LOG("Volume down");
 	}
+
 	if (app->input->GetKey(SDL_SCANCODE_9) == KEY_REPEAT)
 	{
 		app->audio->VolumeUp();

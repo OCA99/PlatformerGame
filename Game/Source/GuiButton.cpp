@@ -2,16 +2,19 @@
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::BUTTON, id)
 {
+    
     this->bounds = bounds;
     this->text = text;
 }
 
 GuiButton::~GuiButton()
 {
+    
 }
 
 bool GuiButton::Update(Input* input, float dt)
 {
+    
     if (state != GuiControlState::DISABLED)
     {
         int mouseX, mouseY;
@@ -45,9 +48,9 @@ bool GuiButton::Draw(Render* render)
     // Draw the right button depending on state
     switch (state)
     {
-    case GuiControlState::DISABLED: render->DrawRectangle(bounds, 100, 100, 100, 255);
+    case GuiControlState::DISABLED: render->DrawRectangle(bounds, 255, 255, 0, 255);
         break;
-    case GuiControlState::NORMAL: render->DrawRectangle(bounds, 0, 255, 0, 255);
+    case GuiControlState::NORMAL:render->DrawRectangle(bounds, 255, 255, 0, 255);
         break;
     case GuiControlState::FOCUSED: render->DrawRectangle(bounds, 255, 255, 0, 255);
         break;
