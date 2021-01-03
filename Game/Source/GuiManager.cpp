@@ -59,7 +59,7 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type)
 	switch (type)
 	{
 		case GuiControlType::BUTTON: 
-			control = new GuiButton(id, { 1280 / 2 - 300 / 2, 200, 20, 20 }, "EXIT");
+			control = new GuiButton(id, { 0, 0, 20, 20 }, "EXIT");
 			break;
 		case GuiControlType::CHECKBOX:
 			control = new GuiCheckBox(id, { 1280 / 2 - 300 / 2, 200, 20, 20 }, "EXIT");
@@ -80,7 +80,9 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type)
 
 void GuiManager::DestroyGuiControl(GuiControl* entity)
 {
-	//controls.Del(entity);
+	int i = controls.Find(entity);
+	ListItem<GuiControl*>* c = controls.At(i);
+	controls.Del(c);
 }
 
 void GuiManager::AddGuiControl(GuiControl* entity)
