@@ -20,6 +20,7 @@ bool GuiManager::Awake(pugi::xml_node& config)
 
 	checkBoxPath = guimanagerPathN.attribute("checkbox").as_string();
 	arrowMenuPath = guimanagerPathN.attribute("menuArrow").as_string();
+	sliderPath = guimanagerPathN.attribute("slider").as_string();
 
 	return true;
 }
@@ -29,6 +30,7 @@ bool GuiManager::Start()
 
 	checkBoxTex = app->tex->Load(checkBoxPath);
 	arrowMenuTex = app->tex->Load(arrowMenuPath);
+	sliderTex = app->tex->Load(sliderPath);
 
 	return true;
 }
@@ -77,8 +79,8 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int x, int y, SDL_
 			control->SetObserver(app->scene);
 			break;
 		case GuiControlType::SLIDER:
-			/*control = new GuiSlider(id, bounds, "EXIT");
-			control->SetObserver(app->scene);*/
+			control = new GuiSlider(id, bounds, sliderTex);
+			control->SetObserver(app->scene);
 			break;
 
 		default: break;

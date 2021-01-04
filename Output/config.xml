@@ -45,7 +45,7 @@
   </ui>
 
   <guimanager>
-    <guimanager checkbox="Assets/Textures/Ui/checkbox.png" menuArrow="Assets/Textures/Ui/settings_arrow.png"/>
+    <guimanager checkbox="Assets/Textures/Ui/checkbox.png" menuArrow="Assets/Textures/Ui/settings_arrow.png" slider="Assets/Textures/Ui/slider.png" />
   </guimanager>
 
   <entities>
