@@ -97,6 +97,16 @@ void GuiManager::DestroyGuiControl(GuiControl* entity)
 	controls.Del(c);
 }
 
+void GuiManager::DestroyAllGuiControls()
+{
+	int u = controls.Count();
+
+	for (int i = 0; i < u; i++)
+	{
+		controls.Del(controls.At(0));
+	}
+}
+
 void GuiManager::AddGuiControl(GuiControl* entity)
 {
 	if (entity != nullptr) controls.Add(entity);
