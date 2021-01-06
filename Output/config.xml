@@ -33,7 +33,7 @@
 
   <scene>
     <music path="Assets/Audio/Music/song.ogg"/>
-    <texture screen="Assets/Textures/TitleScreen/reduced_title_screen.png"/>
+    <texture screen="Assets/Textures/TitleScreen/reduced_title_screen.png" titleButtons="Assets/Textures/TitleScreen/title_buttons.png"/>
   </scene>
 
   <parallax>

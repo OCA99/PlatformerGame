@@ -61,14 +61,30 @@ public:
 	bool gameOver = false;
 	SString currentLevel;
 	GameplayState gameplayState = LOGO_SCREEN;
+
+	Animation continueButtonAnim;
+	Animation newGameButtonAnim;
+	Animation settingsButtonAnim;
+	Animation creditsButtonAnim;
+	Animation exitButtonAnim;
+
 private:
 	SDL_Texture* screenTexture = nullptr;
+	SDL_Texture* continueButtonTex = nullptr;
+	SDL_Texture* newGameButtonTex = nullptr;
+	SDL_Texture* settingsButtonTex = nullptr;
+	SDL_Texture* creditsButtonTex = nullptr;
+	SDL_Texture* exitButtonTex = nullptr;
+
+	int buttonsPosX = 183;
+	int buttonsPosY = 125;
 
 	Animation* screenDisplayAnim;
 	Animation titleScreenAnim;
 	Animation gameOverAnim;
 	Animation turnOffAnim;
 	Animation logoAnim;
+
 
 	float currentFade = 0.0f;
 	bool fading = false;
@@ -77,6 +93,7 @@ private:
 
 	const char* musicPath;
 	const char* screenTexturePath;
+	const char* titleButtonsPath;
 
 	bool exit = false;
 };

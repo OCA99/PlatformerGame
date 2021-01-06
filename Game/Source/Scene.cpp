@@ -39,6 +39,8 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	screenTexturePath = texture.attribute("screen").as_string();
 
+	titleButtonsPath = texture.attribute("titleButtons").as_string();
+
 	bool ret = true;
 
 	return ret;
@@ -54,6 +56,12 @@ bool Scene::Start()
 	if (screenTexture == nullptr)
 		LOG("Couldn't load title screen");
 
+	continueButtonTex = app->tex->Load(titleButtonsPath);
+	newGameButtonTex = app->tex->Load(titleButtonsPath);
+	settingsButtonTex = app->tex->Load(titleButtonsPath);
+	creditsButtonTex = app->tex->Load(titleButtonsPath);
+	exitButtonTex = app->tex->Load(titleButtonsPath);
+
 	titleScreenAnim.PushBack({ 0,0,480,270});
 	titleScreenAnim.PushBack({ 0,270, 480, 270 });
 
@@ -65,10 +73,27 @@ bool Scene::Start()
 
 	turnOffAnim.PushBack({ 0,0,0,0, });
 
+	continueButtonAnim.PushBack({ 0,0,101,24 });
+	continueButtonAnim.PushBack({ 101,0,101,24 });
+
+	newGameButtonAnim.PushBack({ 0,24,101,24 });
+	newGameButtonAnim.PushBack({ 101,24,101,24 });
+
+	settingsButtonAnim.PushBack({ 0,48,101,24 });
+	settingsButtonAnim.PushBack({ 101,48,101,24 });
+
+	creditsButtonAnim.PushBack({ 0,72,101,24 });
+	creditsButtonAnim.PushBack({ 101,72,101,24 });
+
+	exitButtonAnim.PushBack({ 0,96,101,24 });
+	exitButtonAnim.PushBack({ 101,96,101,24 });
+
 	app->audio->PlayMusic(musicPath);
 
 	titleScreenAnim.loop = gameOverAnim.loop = logoAnim.loop = true;
+	continueButtonAnim.loop = newGameButtonAnim.loop = settingsButtonAnim.loop = creditsButtonAnim.loop = exitButtonAnim.loop = false;
 
+	continueButtonAnim.speed = newGameButtonAnim.speed = settingsButtonAnim.speed = creditsButtonAnim.speed = exitButtonAnim.speed = 6.0f;
 	logoAnim.speed = 6.0f;
 	titleScreenAnim.speed = 6.0f;
 	gameOverAnim.speed = 1.8f;
@@ -169,6 +194,12 @@ bool Scene::Update(float dt)
 
 	screenDisplayAnim->Update(dt);
 
+	continueButtonAnim.Update(dt);
+	newGameButtonAnim.Update(dt);
+	settingsButtonAnim.Update(dt);
+	creditsButtonAnim.Update(dt);
+	exitButtonAnim.Update(dt);
+
 	return true;
 }
 
@@ -199,67 +230,106 @@ void Scene::FadeToNewState(GameplayState newState)
 
 bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 {
-
-	switch (control->type)
+	if (gameplayState == TITLE_SCREEN)
 	{
+		switch (control->type)
+		{
 		case GuiControlType::BUTTON:
 			switch (control->id)
 			{
-				case 1:
-					app->guimanager->DestroyAllGuiControls();
-					app->ui->uiToRender = 0;
-					break;
+			case 1:
+				break;
 
-				case 2:
-					app->guimanager->DestroyAllGuiControls();
-					app->guimanager->CreateGuiControl(GuiControlType::SLIDER, 0, 0, SDL_Rect({ 188, 93, 116, 23 }), 1);
-					app->guimanager->CreateGuiControl(GuiControlType::SLIDER, 0, 0, SDL_Rect({ 188, 141, 116, 23 }), 1);
-					app->guimanager->CreateGuiControl(GuiControlType::CHECKBOX, 0, 0, SDL_Rect({ 275, 166, 20, 20 }), 1);
-					app->guimanager->CreateGuiControl(GuiControlType::CHECKBOX, 0, 0, SDL_Rect({ 238, 189, 20, 20 }), 2);
-					app->ui->uiToRender = 3;
-					break;
+			case 2:
+				break;
 
-				case 3:
-					//lo q se tenga q hacer antes de cambiar
-					//gameplayState = TITLE_SCREEN;
-					break;
+			case 3:
+				break;
 
-				case 4:
-					exit = true;
-					break;
+			case 4:
+				break;
 
-				default:
-					break;
+			case 5:
+				break;
+
+			default:
+				break;
+			}
+			break;
+
+		case GuiControlType::CHECKBOX:
+			break;
+
+		case GuiControlType::SLIDER:
+			break;
+
+		default:
+			break;
+		}
+	}
+	else if (gameplayState == PLAYING)
+	{
+
+		switch (control->type)
+		{
+		case GuiControlType::BUTTON:
+			switch (control->id)
+			{
+			case 1:
+				app->guimanager->DestroyAllGuiControls();
+				app->ui->uiToRender = 0;
+				break;
+
+			case 2:
+				app->guimanager->DestroyAllGuiControls();
+				app->guimanager->CreateGuiControl(GuiControlType::SLIDER, 0, 0, SDL_Rect({ 188, 93, 116, 23 }), 1);
+				app->guimanager->CreateGuiControl(GuiControlType::SLIDER, 0, 0, SDL_Rect({ 188, 141, 116, 23 }), 2);
+				app->guimanager->CreateGuiControl(GuiControlType::CHECKBOX, 0, 0, SDL_Rect({ 275, 166, 20, 20 }), 1);
+				app->guimanager->CreateGuiControl(GuiControlType::CHECKBOX, 0, 0, SDL_Rect({ 238, 189, 20, 20 }), 2);
+				app->ui->uiToRender = 3;
+				break;
+
+			case 3:
+				//lo q se tenga q hacer antes de cambiar
+				//gameplayState = TITLE_SCREEN;
+				break;
+
+			case 4:
+				exit = true;
+				break;
+
+			default:
+				break;
 			}
 			break;
 
 		case GuiControlType::CHECKBOX:
 			switch (control->id)
 			{
-				case 1:
-					//music
-					break;
+			case 1:
+				//music
+				break;
 
-				case 2:
-					//fx
-					break;
+			case 2:
+				//fx
+				break;
 
-				case 3:
-					//do fullscreen
-					break;
+			case 3:
+				//do fullscreen
+				break;
 
-				case 4:
-					app->render->vSync = !app->render->vSync;
-					break;
+			case 4:
+				app->render->vSync = !app->render->vSync;
+				break;
 
-				default:
-					break;
+			default:
+				break;
 			}
 			break;
 
 		default: break;
+		}
 	}
-
 	return true;
 }
 
@@ -287,6 +357,12 @@ void Scene::ChangeGameplayState(GameplayState newState)
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
 			app->ui->uiToRender = 0;
+			//create buttons
+			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY, 101, 24 }), 1);
+			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 24, 101, 24 }), 2);
+			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 48, 101, 24 }), 3);
+			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 72, 101, 24 }), 4);
+			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 96, 101, 24 }), 5);
 			break;
 		case GAME_OVER_SCREEN:
 			screenDisplayAnim = &gameOverAnim;
@@ -322,8 +398,25 @@ bool Scene::PostUpdate()
 		ret = false;
 
 	SDL_Rect rect = screenDisplayAnim->GetCurrentFrame();
-
 	app->render->DrawTexture(screenTexture, 0, 0, &rect);
+
+	if (gameplayState == TITLE_SCREEN)
+	{
+		SDL_Rect continueRect = continueButtonAnim.GetCurrentFrame();
+		app->render->DrawTexture(continueButtonTex, buttonsPosX, buttonsPosY, &continueRect, 0, 0, 0, 0, false);
+
+		SDL_Rect newGameRect = newGameButtonAnim.GetCurrentFrame();
+		app->render->DrawTexture(newGameButtonTex, buttonsPosX, buttonsPosY + 24, &newGameRect, 0, 0, 0, 0, false);
+
+		SDL_Rect settingsRect = settingsButtonAnim.GetCurrentFrame();
+		app->render->DrawTexture(settingsButtonTex, buttonsPosX, buttonsPosY + 48, &settingsRect, 0, 0, 0, 0, false);
+
+		SDL_Rect creditsRect = creditsButtonAnim.GetCurrentFrame();
+		app->render->DrawTexture(creditsButtonTex, buttonsPosX, buttonsPosY + 72, &creditsRect, 0, 0, 0, 0, false);
+
+		SDL_Rect exitRect = exitButtonAnim.GetCurrentFrame();
+		app->render->DrawTexture(exitButtonTex, buttonsPosX, buttonsPosY + 96, &exitRect, 0, 0, 0, 0, false);
+	}
 
 	float adjustedFade = currentFade;
 	if (adjustedFade < 0.0f) adjustedFade = 0.0f;
