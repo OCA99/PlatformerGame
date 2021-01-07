@@ -1,6 +1,7 @@
 #include "GuiButton.h"
 #include "App.h"
 #include "Scene.h"
+#include "GuiManager.h"
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, SDL_Texture* tex) : GuiControl(GuiControlType::BUTTON, id)
 {
@@ -55,6 +56,7 @@ bool GuiButton::Draw(Render* render)
     {
         switch (id)
         {
+            //continue
         case 1:
             switch (state)
             {
@@ -67,6 +69,8 @@ bool GuiButton::Draw(Render* render)
                 app->scene->continueButtonAnim.loop = true;
                 break;
             case GuiControlState::PRESSED:
+                app->guimanager->DestroyAllGuiControls();
+                app->scene->continueButtonPressed = true;
                 break;
             case GuiControlState::SELECTED:
                 break;
@@ -74,7 +78,7 @@ bool GuiButton::Draw(Render* render)
                 break;
             }
             break;
-
+            //new game
         case 2:
             switch (state)
             {
@@ -87,6 +91,8 @@ bool GuiButton::Draw(Render* render)
                 app->scene->newGameButtonAnim.loop = true;
                 break;
             case GuiControlState::PRESSED:
+                app->guimanager->DestroyAllGuiControls();
+                app->scene->FadeToNewState(Scene::GameplayState::PLAYING);
                 break;
             case GuiControlState::SELECTED:
                 break;
@@ -94,7 +100,7 @@ bool GuiButton::Draw(Render* render)
                 break;
             }
             break;
-
+            //settings
         case 3:
             switch (state)
             {
@@ -107,6 +113,7 @@ bool GuiButton::Draw(Render* render)
                 app->scene->settingsButtonAnim.loop = true;
                 break;
             case GuiControlState::PRESSED:
+                app->guimanager->DestroyAllGuiControls();
                 break;
             case GuiControlState::SELECTED:
                 break;
@@ -114,7 +121,7 @@ bool GuiButton::Draw(Render* render)
                 break;
             }
             break;
-
+            //credits
         case 4:
             switch (state)
             {
@@ -127,6 +134,7 @@ bool GuiButton::Draw(Render* render)
                 app->scene->creditsButtonAnim.loop = true;
                 break;
             case GuiControlState::PRESSED:
+                app->guimanager->DestroyAllGuiControls();
                 break;
             case GuiControlState::SELECTED:
                 break;
@@ -134,7 +142,7 @@ bool GuiButton::Draw(Render* render)
                 break;
             }
             break;
-
+            //exit
         case 5:
             switch (state)
             {
@@ -147,6 +155,7 @@ bool GuiButton::Draw(Render* render)
                 app->scene->exitButtonAnim.loop = true;
                 break;
             case GuiControlState::PRESSED:
+                app->scene->exit = true;
                 break;
             case GuiControlState::SELECTED:
                 break;

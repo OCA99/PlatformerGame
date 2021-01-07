@@ -68,6 +68,9 @@ public:
 	Animation creditsButtonAnim;
 	Animation exitButtonAnim;
 
+	bool continueButtonPressed = false;
+	bool exit = false;
+
 private:
 	SDL_Texture* screenTexture = nullptr;
 	SDL_Texture* continueButtonTex = nullptr;
@@ -95,7 +98,6 @@ private:
 	const char* screenTexturePath;
 	const char* titleButtonsPath;
 
-	bool exit = false;
 };
 
 #endif // __SCENE_H__
