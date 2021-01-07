@@ -17,6 +17,7 @@ public:
 	{
 		LOGO_SCREEN,
 		TITLE_SCREEN,
+		TITLE_MENU,
 		PLAYING,
 		PAUSE,
 		GAME_OVER_SCREEN
@@ -70,9 +71,11 @@ public:
 
 	bool continueButtonPressed = false;
 	bool exit = false;
+	bool fading = false;
 
 private:
 	SDL_Texture* screenTexture = nullptr;
+	SDL_Texture* titleMenuTex = nullptr;
 	SDL_Texture* continueButtonTex = nullptr;
 	SDL_Texture* newGameButtonTex = nullptr;
 	SDL_Texture* settingsButtonTex = nullptr;
@@ -84,18 +87,19 @@ private:
 
 	Animation* screenDisplayAnim;
 	Animation titleScreenAnim;
+	Animation titleMenuAnim;
 	Animation gameOverAnim;
 	Animation turnOffAnim;
 	Animation logoAnim;
 
 
 	float currentFade = 0.0f;
-	bool fading = false;
 	GameplayState targetState = gameplayState;
 	SDL_Rect fullScreenRect;
 
 	const char* musicPath;
 	const char* screenTexturePath;
+	const char* titleMenuPath;
 	const char* titleButtonsPath;
 
 };

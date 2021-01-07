@@ -41,6 +41,8 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	titleButtonsPath = texture.attribute("titleButtons").as_string();
 
+	titleMenuPath = texture.attribute("titleMenu").as_string();
+
 	bool ret = true;
 
 	return ret;
@@ -56,6 +58,8 @@ bool Scene::Start()
 	if (screenTexture == nullptr)
 		LOG("Couldn't load title screen");
 
+	titleMenuTex = app->tex->Load(titleMenuPath);
+
 	continueButtonTex = app->tex->Load(titleButtonsPath);
 	newGameButtonTex = app->tex->Load(titleButtonsPath);
 	settingsButtonTex = app->tex->Load(titleButtonsPath);
@@ -64,6 +68,9 @@ bool Scene::Start()
 
 	titleScreenAnim.PushBack({ 0,0,480,270});
 	titleScreenAnim.PushBack({ 0,270, 480, 270 });
+
+	titleMenuAnim.PushBack({ 0,0,480,270 });
+	titleMenuAnim.PushBack({ 480,0,480,270 });
 
 	gameOverAnim.PushBack({ 0,540,480,270 });
 	gameOverAnim.PushBack({ 0,810,480,270 });
@@ -96,6 +103,7 @@ bool Scene::Start()
 	continueButtonAnim.speed = newGameButtonAnim.speed = settingsButtonAnim.speed = creditsButtonAnim.speed = exitButtonAnim.speed = 6.0f;
 	logoAnim.speed = 6.0f;
 	titleScreenAnim.speed = 6.0f;
+	titleMenuAnim.speed = 6.0f;
 	gameOverAnim.speed = 1.8f;
 
 	screenDisplayAnim = &logoAnim;
@@ -116,15 +124,20 @@ bool Scene::Update(float dt)
 	{
 		FadeToNewState(TITLE_SCREEN);
 	}
-	else if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && gameplayState == TITLE_SCREEN)
-	{
-		FadeToNewState(PLAYING);
-	}
 
 	if (gameplayState == TITLE_SCREEN && continueButtonPressed == true)
 	{
 		app->scene->FadeToNewState(Scene::GameplayState::PLAYING);
 		LOG("LOAD REQUESTED");
+	}
+
+	if (gameplayState == TITLE_MENU)
+	{
+		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		{
+			app->guimanager->DestroyAllGuiControls();
+			FadeToNewState(TITLE_SCREEN);
+		}
 	}
 
 	if (gameplayState == PLAYING)
@@ -242,18 +255,31 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			switch (control->id)
 			{
 			case 1:
+				app->guimanager->DestroyAllGuiControls();
+				continueButtonPressed = true;
 				break;
 
 			case 2:
+				app->guimanager->DestroyAllGuiControls();
+				FadeToNewState(PLAYING);
 				break;
 
 			case 3:
+				app->guimanager->DestroyAllGuiControls();
+				FadeToNewState(TITLE_MENU);
+				app->guimanager->CreateGuiControl(GuiControlType::SLIDER, 0, 0, SDL_Rect({ 220, 62, 116, 23 }), 1);
+				app->guimanager->CreateGuiControl(GuiControlType::SLIDER, 0, 0, SDL_Rect({ 220, 105, 116, 23 }), 2);
+				app->guimanager->CreateGuiControl(GuiControlType::CHECKBOX, 0, 0, SDL_Rect({ 316, 147, 20, 20 }), 1);
+				app->guimanager->CreateGuiControl(GuiControlType::CHECKBOX, 0, 0, SDL_Rect({ 316, 186, 20, 20 }), 2);
 				break;
 
 			case 4:
+				app->guimanager->DestroyAllGuiControls();
+
 				break;
 
 			case 5:
+				exit = true;
 				break;
 
 			default:
@@ -368,6 +394,15 @@ void Scene::ChangeGameplayState(GameplayState newState)
 			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 72, 101, 24 }), 4);
 			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 96, 101, 24 }), 5);
 			break;
+		case TITLE_MENU:
+			screenDisplayAnim = &titleMenuAnim;
+			gameplayState = TITLE_MENU;
+			app->parallax->enabled = false;
+			app->map->CleanUp();
+			app->render->camera.x = 0;
+			app->render->camera.y = 0;
+			app->ui->uiToRender = 0;
+			break;
 		case GAME_OVER_SCREEN:
 			screenDisplayAnim = &gameOverAnim;
 			gameplayState = GAME_OVER_SCREEN;
@@ -400,11 +435,15 @@ bool Scene::PostUpdate()
 
 	if(exit)
 		ret = false;
-
+		
 	SDL_Rect rect = screenDisplayAnim->GetCurrentFrame();
 	app->render->DrawTexture(screenTexture, 0, 0, &rect);
 
-	if (gameplayState == TITLE_SCREEN)
+	if (gameplayState == TITLE_MENU)
+	{
+		app->render->DrawTexture(titleMenuTex, 0, 0, &rect, 0, 0, 0, false);
+	} 
+	else if (gameplayState == TITLE_SCREEN)
 	{
 		SDL_Rect continueRect = continueButtonAnim.GetCurrentFrame();
 		app->render->DrawTexture(continueButtonTex, buttonsPosX, buttonsPosY, &continueRect, 0, 0, 0, 0, false);

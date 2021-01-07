@@ -60,20 +60,13 @@ bool GuiButton::Draw(Render* render)
         case 1:
             switch (state)
             {
-            case GuiControlState::DISABLED:
-                break;
             case GuiControlState::NORMAL:
                 app->scene->continueButtonAnim.loop = false;
                 break;
             case GuiControlState::FOCUSED:
                 app->scene->continueButtonAnim.loop = true;
                 break;
-            case GuiControlState::PRESSED:
-                app->guimanager->DestroyAllGuiControls();
-                app->scene->continueButtonPressed = true;
-                break;
-            case GuiControlState::SELECTED:
-                break;
+
             default:
                 break;
             }
@@ -82,19 +75,11 @@ bool GuiButton::Draw(Render* render)
         case 2:
             switch (state)
             {
-            case GuiControlState::DISABLED:
-                break;
             case GuiControlState::NORMAL:
                 app->scene->newGameButtonAnim.loop = false;
                 break;
             case GuiControlState::FOCUSED:
                 app->scene->newGameButtonAnim.loop = true;
-                break;
-            case GuiControlState::PRESSED:
-                app->guimanager->DestroyAllGuiControls();
-                app->scene->FadeToNewState(Scene::GameplayState::PLAYING);
-                break;
-            case GuiControlState::SELECTED:
                 break;
             default:
                 break;
@@ -104,18 +89,11 @@ bool GuiButton::Draw(Render* render)
         case 3:
             switch (state)
             {
-            case GuiControlState::DISABLED:
-                break;
             case GuiControlState::NORMAL:
                 app->scene->settingsButtonAnim.loop = false;
                 break;
             case GuiControlState::FOCUSED:
                 app->scene->settingsButtonAnim.loop = true;
-                break;
-            case GuiControlState::PRESSED:
-                app->guimanager->DestroyAllGuiControls();
-                break;
-            case GuiControlState::SELECTED:
                 break;
             default:
                 break;
@@ -125,18 +103,11 @@ bool GuiButton::Draw(Render* render)
         case 4:
             switch (state)
             {
-            case GuiControlState::DISABLED:
-                break;
             case GuiControlState::NORMAL:
                 app->scene->creditsButtonAnim.loop = false;
                 break;
             case GuiControlState::FOCUSED:
                 app->scene->creditsButtonAnim.loop = true;
-                break;
-            case GuiControlState::PRESSED:
-                app->guimanager->DestroyAllGuiControls();
-                break;
-            case GuiControlState::SELECTED:
                 break;
             default:
                 break;
@@ -146,18 +117,11 @@ bool GuiButton::Draw(Render* render)
         case 5:
             switch (state)
             {
-            case GuiControlState::DISABLED:
-                break;
             case GuiControlState::NORMAL:
                 app->scene->exitButtonAnim.loop = false;
                 break;
             case GuiControlState::FOCUSED:
                 app->scene->exitButtonAnim.loop = true;
-                break;
-            case GuiControlState::PRESSED:
-                app->scene->exit = true;
-                break;
-            case GuiControlState::SELECTED:
                 break;
             default:
                 break;
@@ -195,8 +159,6 @@ bool GuiButton::Draw(Render* render)
             break;
         }
     }
-
-
 
     return false;
 }
