@@ -287,12 +287,6 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			}
 			break;
 
-		case GuiControlType::CHECKBOX:
-			break;
-
-		case GuiControlType::SLIDER:
-			break;
-
 		default:
 			break;
 		}
@@ -325,6 +319,21 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				break;
 
 			case 4:
+				app->guimanager->DestroyAllGuiControls();
+				app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ 199, 150, 41, 7 }), 5);
+				app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ 240, 150, 35, 7 }), 6);
+				app->ui->uiToRender = 4;
+				break;
+
+			case 5:
+				app->player->saveOnce1 = true;
+				app->player->saveOnce2 = true;
+				app->RequestSave();
+				LOG("SAVE REQUESTED");
+				exit = true;
+				break;
+
+			case 6:
 				exit = true;
 				break;
 
@@ -387,7 +396,6 @@ void Scene::ChangeGameplayState(GameplayState newState)
 			app->render->camera.x = 0;
 			app->render->camera.y = 0;
 			app->ui->uiToRender = 0;
-			//create buttons
 			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY, 101, 24 }), 1);
 			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 24, 101, 24 }), 2);
 			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 48, 101, 24 }), 3);
