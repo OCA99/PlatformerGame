@@ -2,6 +2,8 @@
 #include "App.h"
 #include "Scene.h"
 #include "GuiManager.h"
+#include "Audio.h"
+#include "Player.h"
 
 GuiButton::GuiButton(uint32 id, SDL_Rect bounds, SDL_Texture* tex) : GuiControl(GuiControlType::BUTTON, id)
 {
@@ -18,6 +20,7 @@ GuiButton::~GuiButton()
 bool GuiButton::Update(Input* input, float dt)
 {
     
+
     if (state != GuiControlState::DISABLED)
     {
         int mouseX, mouseY;
@@ -37,7 +40,7 @@ bool GuiButton::Update(Input* input, float dt)
             // If mouse button pressed -> Generate event!
             if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
             {
-                NotifyObserver();
+                state = GuiControlState::SELECTED;
             }
         }
         else state = GuiControlState::NORMAL;
@@ -50,7 +53,7 @@ bool GuiButton::Draw(Render* render)
 {
     // Draw the right button depending on state
 
-    int yOffset = 4;
+    int yOffset = 4;   
 
     if (app->scene->gameplayState == app->scene->GameplayState::TITLE_SCREEN)
     {
@@ -63,8 +66,22 @@ bool GuiButton::Draw(Render* render)
             case GuiControlState::NORMAL:
                 app->scene->continueButtonAnim.loop = false;
                 break;
+
             case GuiControlState::FOCUSED:
+                if (app->guimanager->lastId != id) playFxOnce = true;
+
+                if (playFxOnce)
+                {
+                    app->audio->PlayFx(app->guimanager->hoverButtonFx   , 0);
+                    playFxOnce = false;
+                    app->guimanager->lastId = id;
+                }
                 app->scene->continueButtonAnim.loop = true;
+                break;
+
+            case GuiControlState::SELECTED:
+                app->audio->PlayFx(app->guimanager->pressButtonFx, 0);
+                NotifyObserver();
                 break;
 
             default:
@@ -79,8 +96,22 @@ bool GuiButton::Draw(Render* render)
                 app->scene->newGameButtonAnim.loop = false;
                 break;
             case GuiControlState::FOCUSED:
+                if (app->guimanager->lastId != id) playFxOnce = true;
+
+                if (playFxOnce)
+                {
+                    app->audio->PlayFx(app->guimanager->hoverButtonFx, 0);
+                    playFxOnce = false;
+                    app->guimanager->lastId = id;
+                }
                 app->scene->newGameButtonAnim.loop = true;
                 break;
+
+            case GuiControlState::SELECTED:
+                app->audio->PlayFx(app->guimanager->pressButtonFx, 0);
+                NotifyObserver();
+                break;
+
             default:
                 break;
             }
@@ -93,8 +124,22 @@ bool GuiButton::Draw(Render* render)
                 app->scene->settingsButtonAnim.loop = false;
                 break;
             case GuiControlState::FOCUSED:
+                if (app->guimanager->lastId != id) playFxOnce = true;
+
+                if (playFxOnce)
+                {
+                    app->audio->PlayFx(app->guimanager->hoverButtonFx, 0);
+                    playFxOnce = false;
+                    app->guimanager->lastId = id;
+                }
                 app->scene->settingsButtonAnim.loop = true;
                 break;
+
+            case GuiControlState::SELECTED:
+                app->audio->PlayFx(app->guimanager->pressButtonFx, 0);
+                NotifyObserver();
+                break;
+
             default:
                 break;
             }
@@ -107,8 +152,22 @@ bool GuiButton::Draw(Render* render)
                 app->scene->creditsButtonAnim.loop = false;
                 break;
             case GuiControlState::FOCUSED:
+                if (app->guimanager->lastId != id) playFxOnce = true;
+
+                if (playFxOnce)
+                {
+                    app->audio->PlayFx(app->guimanager->hoverButtonFx, 0);
+                    playFxOnce = false;
+                    app->guimanager->lastId = id;
+                }
                 app->scene->creditsButtonAnim.loop = true;
                 break;
+
+            case GuiControlState::SELECTED:
+                app->audio->PlayFx(app->guimanager->pressButtonFx, 0);
+                NotifyObserver();
+                break;
+
             default:
                 break;
             }
@@ -121,8 +180,22 @@ bool GuiButton::Draw(Render* render)
                 app->scene->exitButtonAnim.loop = false;
                 break;
             case GuiControlState::FOCUSED:
+                if (app->guimanager->lastId != id) playFxOnce = true;
+
+                if (playFxOnce)
+                {
+                    app->audio->PlayFx(app->guimanager->hoverButtonFx, 0);
+                    playFxOnce = false;
+                    app->guimanager->lastId = id;
+                }
                 app->scene->exitButtonAnim.loop = true;
                 break;
+
+            case GuiControlState::SELECTED:
+                app->audio->PlayFx(app->guimanager->pressButtonFx, 0);
+                NotifyObserver();
+                break;
+
             default:
                 break;
             }
@@ -143,6 +216,14 @@ bool GuiButton::Draw(Render* render)
             break;
 
         case GuiControlState::FOCUSED:
+            if (app->guimanager->lastId != id) playFxOnce = true;
+
+            if (playFxOnce)
+            {
+                app->audio->PlayFx(app->guimanager->hoverButtonFx, 0);
+                playFxOnce = false;
+                app->guimanager->lastId = id;
+            }
             render->DrawTexture(texture, bounds.x, bounds.y - yOffset + bounds.h / 2, &SDL_Rect({ 0,0,9,7 }), 0, 0, 0, 0, false);
             render->DrawTexture(texture, bounds.x + bounds.w - 9, bounds.y - yOffset + bounds.h / 2, &SDL_Rect({ 18,0,9,7 }), 0, 0, 0, 0, false);
             break;
@@ -153,6 +234,8 @@ bool GuiButton::Draw(Render* render)
             break;
 
         case GuiControlState::SELECTED:
+            app->audio->PlayFx(app->guimanager->pressButtonFx, 0);
+            NotifyObserver();
             break;
 
         default:

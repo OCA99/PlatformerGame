@@ -27,6 +27,8 @@ private:
 
     int minValue;
     int maxValue;
+
+    bool playFxOnce = true;
 };
 
 #endif // __GUISLIDER_H__
