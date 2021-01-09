@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <renderer>
-	<camera x="-160" y="-1662" />
+	<camera x="-874" y="-1662" />
 </renderer>
 <audio volume="128" />
 <scene currentLevel="level1.tmx" />
@@ -32,24 +32,18 @@
 		<entity x="1680" y="864" type="0" />
 		<entity x="1472" y="880" type="0" />
 		<entity x="1696" y="880" type="0" />
-		<entity x="432" y="896" type="0" />
-		<entity x="448" y="896" type="0" />
 		<entity x="1200" y="896" type="0" />
 		<entity x="1488" y="896" type="0" />
 		<entity x="1680" y="896" type="0" />
-		<entity x="416" y="912" type="0" />
-		<entity x="464" y="912" type="0" />
 		<entity x="848" y="912" type="0" />
 		<entity x="1472" y="912" type="0" />
 		<entity x="1696" y="912" type="0" />
 		<entity x="2496" y="912" type="0" />
 		<entity x="2512" y="912" type="0" />
-		<entity x="242.660095" y="966.02356" type="5" verticalVelocity="0" availableJumps="2" score="0" health="3" checkpoint1="false" checkpoint2="false" />
-		<entity x="432" y="960" type="3" />
-		<entity x="1376" y="512.310608" type="4" health="2" />
-		<entity x="1120" y="784.310608" type="4" health="2" />
-		<entity x="608" y="976.310608" type="4" health="2" />
-		<entity x="1088" y="976.310608" type="4" health="2" />
+		<entity x="677.379639" y="966.687927" type="5" verticalVelocity="-17" availableJumps="2" score="39000" health="3" checkpoint1="false" checkpoint2="false" />
+		<entity x="1376" y="512.311279" type="4" health="2" />
+		<entity x="1120" y="784.311279" type="4" health="2" />
+		<entity x="1088" y="976.311279" type="4" health="2" />
 		<entity x="1584" y="480" type="1" />
 		<entity x="1056" y="928" type="1" />
 	</entities>

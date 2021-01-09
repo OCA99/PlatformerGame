@@ -316,7 +316,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 
 			case 3:
 				//lo q se tenga q hacer antes de cambiar
-				//gameplayState = TITLE_SCREEN;
+				app->guimanager->DestroyAllGuiControls();
+				FadeToNewState(TITLE_SCREEN);
 				break;
 
 			case 4:

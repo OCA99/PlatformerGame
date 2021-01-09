@@ -20,7 +20,8 @@ public:
 		TITLE_MENU,
 		PLAYING,
 		PAUSE,
-		GAME_OVER_SCREEN
+		GAME_OVER_SCREEN,
+		CREDITS_SCREEN
 	};
 
 	Scene();
@@ -75,7 +76,9 @@ public:
 
 private:
 	SDL_Texture* screenTexture = nullptr;
+	SDL_Texture* creditsTex = nullptr;
 	SDL_Texture* titleMenuTex = nullptr;
+
 	SDL_Texture* continueButtonTex = nullptr;
 	SDL_Texture* newGameButtonTex = nullptr;
 	SDL_Texture* settingsButtonTex = nullptr;
@@ -100,6 +103,7 @@ private:
 	const char* musicPath;
 	const char* screenTexturePath;
 	const char* titleMenuPath;
+	const char* creditsPath;
 	const char* titleButtonsPath;
 
 };
