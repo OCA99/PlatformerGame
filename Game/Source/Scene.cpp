@@ -44,6 +44,8 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	titleMenuPath = texture.attribute("titleMenu").as_string();
 
+
+
 	bool ret = true;
 
 	return ret;
