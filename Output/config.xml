@@ -27,7 +27,7 @@
 
   <scene>
     <music path="Assets/Audio/Music/song.ogg"/>
-    <texture screen="Assets/Textures/TitleScreen/reduced_title_screen.png" titleButtons="Assets/Textures/TitleScreen/title_buttons.png" titleMenu="Assets/Textures/TitleScreen/title_menu.png"/>
+    <texture screen="Assets/Textures/TitleScreen/reduced_title_screen.png" titleButtons="Assets/Textures/TitleScreen/title_buttons.png" titleMenu="Assets/Textures/TitleScreen/title_menu.png" creditsScreen="Assets/Textures/TitleScreen/credits.png" />
   </scene>
 
   <parallax>

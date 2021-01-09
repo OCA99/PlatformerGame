@@ -87,6 +87,10 @@ private:
 
 	int buttonsPosX = 183;
 	int buttonsPosY = 125;
+	int creditsPosY = 0;
+	int creditsSpeed = 70;
+	float creditCooldown = 0.0f;
+	float maxcreditCooldown = 2.5f;
 
 	Animation* screenDisplayAnim;
 	Animation titleScreenAnim;

@@ -44,7 +44,7 @@ bool Scene::Awake(pugi::xml_node& config)
 
 	titleMenuPath = texture.attribute("titleMenu").as_string();
 
-
+	creditsPath = texture.attribute("creditsScreen").as_string();
 
 	bool ret = true;
 
@@ -62,6 +62,7 @@ bool Scene::Start()
 		LOG("Couldn't load title screen");
 
 	titleMenuTex = app->tex->Load(titleMenuPath);
+	creditsTex = app->tex->Load(creditsPath);
 
 	continueButtonTex = app->tex->Load(titleButtonsPath);
 	newGameButtonTex = app->tex->Load(titleButtonsPath);
@@ -74,6 +75,9 @@ bool Scene::Start()
 
 	titleMenuAnim.PushBack({ 0,0,480,270 });
 	titleMenuAnim.PushBack({ 480,0,480,270 });
+
+	creditsAnim.PushBack({ 0,0,480,596 });
+	creditsAnim.PushBack({ 480,0,480,596 });
 
 	gameOverAnim.PushBack({ 0,540,480,270 });
 	gameOverAnim.PushBack({ 0,810,480,270 });
@@ -100,13 +104,14 @@ bool Scene::Start()
 
 	app->audio->PlayMusic(musicPath);
 
-	titleScreenAnim.loop = gameOverAnim.loop = logoAnim.loop = true;
+	titleScreenAnim.loop = gameOverAnim.loop = logoAnim.loop = creditsAnim.loop = true;
 	continueButtonAnim.loop = newGameButtonAnim.loop = settingsButtonAnim.loop = creditsButtonAnim.loop = exitButtonAnim.loop = false;
 
 	continueButtonAnim.speed = newGameButtonAnim.speed = settingsButtonAnim.speed = creditsButtonAnim.speed = exitButtonAnim.speed = 6.0f;
 	logoAnim.speed = 6.0f;
 	titleScreenAnim.speed = 6.0f;
 	titleMenuAnim.speed = 6.0f;
+	creditsAnim.speed = 3.0f;
 	gameOverAnim.speed = 1.8f;
 
 	screenDisplayAnim = &logoAnim;
@@ -140,6 +145,25 @@ bool Scene::Update(float dt)
 		{
 			app->guimanager->DestroyAllGuiControls();
 			FadeToNewState(TITLE_SCREEN);
+		}
+	}
+
+	if (gameplayState == CREDITS_SCREEN)
+	{
+
+
+
+		if (creditsPosY < 596)
+		{
+			creditsPosY += creditsSpeed * dt;
+		}
+		else
+		{
+			creditCooldown += dt;
+			if (creditCooldown > maxcreditCooldown)
+			{
+				FadeToNewState(TITLE_SCREEN);
+			}
 		}
 	}
 
@@ -278,7 +302,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 
 			case 4:
 				app->guimanager->DestroyAllGuiControls();
-
+				FadeToNewState(CREDITS_SCREEN);
 				break;
 
 			case 5:
@@ -317,7 +341,6 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				break;
 
 			case 3:
-				//lo q se tenga q hacer antes de cambiar
 				app->guimanager->DestroyAllGuiControls();
 				FadeToNewState(TITLE_SCREEN);
 				break;
@@ -426,7 +449,13 @@ void Scene::ChangeGameplayState(GameplayState newState)
 			break;
 
 		case CREDITS_SCREEN:
-
+			screenDisplayAnim = &creditsAnim;
+			gameplayState = CREDITS_SCREEN;
+			app->parallax->enabled = false;
+			app->map->CleanUp();
+			app->render->camera.x = 0;
+			app->render->camera.y = 0;
+			app->ui->uiToRender = 0;
 			break;
 	}
 }
@@ -475,6 +504,11 @@ bool Scene::PostUpdate()
 
 		SDL_Rect exitRect = exitButtonAnim.GetCurrentFrame();
 		app->render->DrawTexture(exitButtonTex, buttonsPosX, buttonsPosY + 96, &exitRect, 0, 0, 0, 0, false);
+	}
+	else if (gameplayState == CREDITS_SCREEN)
+	{
+		app->render->DrawRectangle(fullScreenRect, 0, 0, 0, 255, true, false);
+		app->render->DrawTexture(creditsTex, 0, fullScreenRect.h / 2 - creditsPosY, &rect, 0, 0, 0, false);
 	}
 
 	float adjustedFade = currentFade;
