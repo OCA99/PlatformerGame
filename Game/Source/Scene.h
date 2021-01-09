@@ -91,6 +91,7 @@ private:
 	Animation* screenDisplayAnim;
 	Animation titleScreenAnim;
 	Animation titleMenuAnim;
+	Animation creditsAnim;
 	Animation gameOverAnim;
 	Animation turnOffAnim;
 	Animation logoAnim;

@@ -422,6 +422,10 @@ void Scene::ChangeGameplayState(GameplayState newState)
 			app->render->camera.y = 0;
 			app->ui->uiToRender = 0;
 			break;
+
+		case CREDITS_SCREEN:
+
+			break;
 	}
 }
 
