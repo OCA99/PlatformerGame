@@ -9,6 +9,7 @@
 #include "Input.h"
 #include "Collisions.h"
 #include "Audio.h"
+#include "Entities.h"
 
 #include "Optick/include/optick.h"
 
@@ -201,31 +202,31 @@ bool ModuleUI::Update(float dt)
 
 		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 		{
-			app->audio->PlayFx(app->player->gameStartFx, 0);
+			app->audio->PlayFx(app->entities->GetPlayer()->gameStartFx, 0);
 
 			switch (destinationCheckpoint)
 			{
 			case 0:
-				app->player->position = fPoint(checkpointCoordinates[0].x, checkpointCoordinates[0].y);
-				app->player->collider->SetPos(app->player->position.x, app->player->position.y);
+				app->entities->GetPlayer()->position = fPoint(checkpointCoordinates[0].x, checkpointCoordinates[0].y);
+				app->entities->GetPlayer()->collider->SetPos(app->entities->GetPlayer()->position.x, app->entities->GetPlayer()->position.y);
 				uiToRender = 0;
 				break;
 
 			case 1:
-				app->player->position = fPoint(checkpointCoordinates[1].x, checkpointCoordinates[1].y);
-				app->player->collider->SetPos(app->player->position.x, app->player->position.y);
+				app->entities->GetPlayer()->position = fPoint(checkpointCoordinates[1].x, checkpointCoordinates[1].y);
+				app->entities->GetPlayer()->collider->SetPos(app->entities->GetPlayer()->position.x, app->entities->GetPlayer()->position.y);
 				uiToRender = 0;
 				break;
 
 			case 2:
-				app->player->position = fPoint(checkpointCoordinates[2].x, checkpointCoordinates[2].y);
-				app->player->collider->SetPos(app->player->position.x, app->player->position.y);
+				app->entities->GetPlayer()->position = fPoint(checkpointCoordinates[2].x, checkpointCoordinates[2].y);
+				app->entities->GetPlayer()->collider->SetPos(app->entities->GetPlayer()->position.x, app->entities->GetPlayer()->position.y);
 				uiToRender = 0;
 				break;
 
 			case 3:
-				app->player->position = fPoint(checkpointCoordinates[3].x, checkpointCoordinates[3].y);
-				app->player->collider->SetPos(app->player->position.x, app->player->position.y);
+				app->entities->GetPlayer()->position = fPoint(checkpointCoordinates[3].x, checkpointCoordinates[3].y);
+				app->entities->GetPlayer()->collider->SetPos(app->entities->GetPlayer()->position.x, app->entities->GetPlayer()->position.y);
 				uiToRender = 0;
 				break;
 
@@ -253,10 +254,10 @@ bool ModuleUI::Update(float dt)
 	canDrawSecret = false;
 	drawTeleportText = false;
 
-	toLoadBar = 24 * app->player->cooldown / app->player->maxCooldown;
+	toLoadBar = 24 * app->entities->GetPlayer()->cooldown / app->entities->GetPlayer()->maxCooldown;
 
-	boxCooldown = SDL_Rect({ (int)app->player->position.x, (int)app->player->position.y - 10, toLoadBar, 1 });
-	boxOuterCooldown = SDL_Rect({ (int)app->player->position.x - 1, (int)app->player->position.y - 11, 26, 3 });
+	boxCooldown = SDL_Rect({ (int)app->entities->GetPlayer()->position.x, (int)app->entities->GetPlayer()->position.y - 10, toLoadBar, 1 });
+	boxOuterCooldown = SDL_Rect({ (int)app->entities->GetPlayer()->position.x - 1, (int)app->entities->GetPlayer()->position.y - 11, 26, 3 });
 
 	return true;
 }
@@ -267,7 +268,7 @@ bool ModuleUI::PostUpdate()
 
 	app->render->DrawRectangle(box, 33, 31, 48, 255, true, false);
 
-	if (app->player->cooldown < app->player->maxCooldown)
+	if (app->entities->GetPlayer()->cooldown < app->entities->GetPlayer()->maxCooldown)
 	{
 		app->render->DrawRectangle(boxOuterCooldown, 33, 31, 48, 255, true, true);
 		app->render->DrawRectangle(boxCooldown, 71, 174, 72, 255, false, true);
@@ -280,7 +281,7 @@ bool ModuleUI::PostUpdate()
 
 	BlitText(uiposx + 90, 5, font, "HEALTH", false);
 	
-	for (int i = 0; i < app->player->health; i++)
+	for (int i = 0; i < app->entities->GetPlayer()->health; i++)
 	{
 		if (i < 3)
 		{
@@ -292,7 +293,7 @@ bool ModuleUI::PostUpdate()
 		}
 	}
 
-	if (app->player->godMode)
+	if (app->entities->GetPlayer()->godMode)
 	{
 		app->render->DrawRectangle(boxGodMode, 33, 31, 48, 255, true, false);
 		BlitText(5, 259, font, "G", false);
@@ -310,8 +311,8 @@ bool ModuleUI::PostUpdate()
 
 	if (canDrawSecret)
 	{
-		BlitText(app->player->position.x - 70, app->player->position.y + 30, font, "ONLY A GOD CAN REACH", true);
-		BlitText(app->player->position.x - 70, app->player->position.y + 40, font, "MIDAS' HALL", true);
+		BlitText(app->entities->GetPlayer()->position.x - 70, app->entities->GetPlayer()->position.y + 30, font, "ONLY A GOD CAN REACH", true);
+		BlitText(app->entities->GetPlayer()->position.x - 70, app->entities->GetPlayer()->position.y + 40, font, "MIDAS' HALL", true);
 	}
 
 	switch (uiToRender)

@@ -1,6 +1,7 @@
 #include "Fruit.h"
 #include "Render.h"
 #include "Player.h"
+#include "Entities.h"
 
 Fruit::Fruit(Module* parent, fPoint position, SDL_Texture* texture, Type type, int r) : Entity(parent, position, texture, type)
 {
@@ -51,9 +52,9 @@ bool Fruit::Draw()
 	return true;
 }
 
-void Fruit::Collision(Collider* other)
+void Fruit::Collision(Collider* other, float dt)
 {
-	if (other == app->player->collider)
+	if (other == app->entities->GetPlayer()->collider)
 	{
 		state = State::DISAPPEAR;
 		collider->pendingToDelete = true;

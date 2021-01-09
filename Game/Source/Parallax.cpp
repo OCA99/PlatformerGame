@@ -6,6 +6,7 @@
 #include "Render.h"
 #include "Input.h"
 #include "Player.h"
+#include "Entities.h"
 
 #include "Optick/include/optick.h"
 
@@ -82,21 +83,21 @@ bool Parallax::CleanUp()
 
 void Parallax::ParallaxBackground0()
 {
-	x0 = -app->player->position.x * 0.05f;
+	x0 = -app->entities->GetPlayer()->position.x * 0.05f;
 
 	x0 = std::floor(x0);
 }
 
 void Parallax::ParallaxBackground1()
 {
-	x1 = -app->player->position.x * 0.15f;
+	x1 = -app->entities->GetPlayer()->position.x * 0.15f;
 
 	x1 = std::floor(x1);
 }
 
 void Parallax::ParallaxBackground2()
 {
-	x2 = -app->player->position.x * 0.35f;
+	x2 = -app->entities->GetPlayer()->position.x * 0.35f;
 
 	x2 = std::floor(x2);
 }

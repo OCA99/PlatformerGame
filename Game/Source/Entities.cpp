@@ -38,6 +38,10 @@ bool Entities::Awake(pugi::xml_node& config)
 	heartTexturePath = config.child("heartTexture").child_value();
 	knifeTexturePath = config.child("knifeTexture").child_value();
 
+	playerConfig = config.child("player");
+	placeholderPlayer = new Player((Module*)this, fPoint(-1000.0f, -1000.0f), Entity::Type::PLAYER);
+	placeholderPlayer->Awake(playerConfig);
+
 	return true;
 }
 
@@ -131,6 +135,8 @@ bool Entities::Start()
 
 	srand(time(NULL));
 
+	placeholderPlayer->Start();
+
 	return true;
 }
 
@@ -180,7 +186,8 @@ bool Entities::CleanUp()
 	for (int i = 0; i < entityList.Count(); i++)
 	{
 		ListItem<Entity*>* e = entityList.At(i);
-		delete e->data;
+		if (e->data->type != Entity::Type::PLAYER)
+			delete e->data;
 	}
 
 	entityList.Clear();
@@ -214,8 +221,13 @@ void Entities::AddEntity(fPoint position, Entity::Type type)
 		entityList.Add(e);
 		break;
 	case Entity::Type::KNIFE:
-		knifeDirection = app->player->knifeDirection;
+		knifeDirection = GetPlayer()->knifeDirection;
 		e = (Entity*)(new Knife((Module*)this, position, knifetexture, type, knifeDirection, knifeSpeed));
+		entityList.Add(e);
+		break;
+	case Entity::Type::PLAYER:
+		placeholderPlayer->position = position;
+		e = (Entity*)(placeholderPlayer);
 		entityList.Add(e);
 		break;
 	}
@@ -229,7 +241,7 @@ void Entities::OnCollision(Collider* a, Collider* b, float dt)
 
 		if (e->data->collider == a && b != nullptr)
 		{
-			e->data->Collision(b);
+			e->data->Collision(b, dt);
 		}
 	}
 }
@@ -242,4 +254,19 @@ void Entities::ResetEntities()
 
 		e->data->Reset();
 	}
+}
+
+Player* Entities::GetPlayer()
+{
+	for (int i = 0; i < entityList.Count(); i++)
+	{
+		ListItem<Entity*>* e = entityList.At(i);
+
+		if (e->data->type == Entity::Type::PLAYER)
+		{
+			return (Player*)(e->data);
+		}
+	}
+
+	return placeholderPlayer;
 }

@@ -4,6 +4,7 @@
 #include "Module.h"
 #include "Animation.h"
 #include "Point.h"
+#include "Entity.h"
 
 struct Animation;
 struct Collider;
@@ -22,19 +23,19 @@ enum PlayerState
 	DYING
 };
 
-class Player : public Module
+class Player : public Entity
 {
 
 public:
 	PlayerState playerState = PlayerState::PREPARE_TO_SPAWN;
 	bool isDead;
 
-	Player();
+	Player(Module* parent, fPoint position, Type type);
 	bool Awake(pugi::xml_node&);
 	bool Start();
 	bool Update(float dt);
-	bool PostUpdate();
-	void OnCollision(Collider* a, Collider* b, float dt);
+	bool Draw();
+	void Collision(Collider* other, float dt) override;
 
 	void UpdateState(float dt);
 	void UpdateLogic(float dt);
@@ -45,9 +46,6 @@ public:
 	bool Save(pugi::xml_node&);
 
 	void Reload();
-
-	bool xCausesCollision(Collider& other, float dt);
-	bool yCausesCollision(Collider& other, float dt);
 
 	void SafeMovementX(float deltaX);
 	void SafeMovementY(float deltaY);
@@ -96,8 +94,6 @@ public:
 	float knifeCooldown = 0.75f;
 	float maxKnifeCooldown = 0.75f;
 
-
-	Collider* collider;
 	float jumpForce;
 
 	uint doubleJumpFx = 0;

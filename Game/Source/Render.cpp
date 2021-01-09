@@ -3,6 +3,7 @@
 #include "Render.h"
 #include "Scene.h"
 #include "Player.h"
+#include "Entities.h"
 
 #include "Optick/include/optick.h"
 
@@ -79,8 +80,8 @@ bool Render::Update(float dt)
 
 	if (app->scene->gameplayState == Scene::GameplayState::PLAYING)
 	{
-		camera.x = -(int)app->player->position.x * scale + camera.w / 2;
-		camera.y = -(int)app->player->position.y * scale + camera.h / 2;
+		camera.x = -(int)app->entities->GetPlayer()->position.x * scale + camera.w / 2;
+		camera.y = -(int)app->entities->GetPlayer()->position.y * scale + camera.h / 2;
 
 		//Camera limits ---> HARDCODED
 		if (camera.x > -160)

@@ -50,7 +50,7 @@ bool Knife::Draw()
 	return true;
 }
 
-void Knife::Collision(Collider* other)
+void Knife::Collision(Collider* other, float dt)
 {
 
 	switch (other->type)
