@@ -12,6 +12,8 @@
 
 #include "Player.h"
 
+#include "ModuleUI.h"
+
 #include "Optick/include/optick.h"
 
 #include <stdlib.h>
@@ -60,6 +62,7 @@ bool Entities::Load(pugi::xml_node& savedGame)
 		int r;
 		Entity* en;
 		int dir = 1;
+		int h;
 		switch (type)
 		{
 		case 0:
@@ -81,9 +84,26 @@ bool Entities::Load(pugi::xml_node& savedGame)
 			entityList.Add(en);
 			break;
 		case 4:
-			int h = e.attribute("health").as_int();
+			h = e.attribute("health").as_int();
 			en = (Entity*)(new Pig((Module*)this, position, pigTexture, Entity::Type::PIG, enemySpeed, h, enemyGravity, enemyJumpForce));
 			entityList.Add(en);
+			break;
+		case 5:
+			placeholderPlayer->position = position;
+			int verticalVelocity = e.attribute("verticalVelocity").as_int();
+			placeholderPlayer->verticalVelocity = verticalVelocity;
+			int availableJumps = e.attribute("availableJumps").as_int();
+			placeholderPlayer->availableJumps = availableJumps;
+			int score = e.attribute("score").as_int();
+			app->ui->score = score;
+			int health = e.attribute("health").as_int();
+			placeholderPlayer->health = health;
+			bool checkpoint1 = e.attribute("checkpoint1").as_bool();
+			placeholderPlayer->unlockedChekpoint1 = checkpoint1;
+			bool checkpoint2 = e.attribute("checkpoint2").as_bool();
+			placeholderPlayer->unlockedChekpoint2 = checkpoint2;
+			entityList.Add(placeholderPlayer);
+			placeholderPlayer->Reload();
 			break;
 		}
 	}
@@ -107,6 +127,8 @@ bool Entities::Save(pugi::xml_node& savedGame)
 		type.set_value((int)e->type);
 		pugi::xml_attribute h;
 		Pig* p;
+		Knife* k;
+		pugi::xml_attribute dir;
 		switch (e->type)
 		{
 		case Entity::Type::PIG:
@@ -115,9 +137,24 @@ bool Entities::Save(pugi::xml_node& savedGame)
 			h.set_value(p->health);
 			break;
 		case Entity::Type::KNIFE:
-			Knife* k = (Knife*)e;
-			pugi::xml_attribute dir = eNode.append_attribute("direction");
+			k = (Knife*)e;
+			dir = eNode.append_attribute("direction");
 			dir.set_value(k->knifeDirection);
+			break;
+		case Entity::Type::PLAYER:
+			Player* p = (Player*)e;
+			pugi::xml_attribute vert = eNode.append_attribute("verticalVelocity");
+			vert.set_value(p->verticalVelocity);
+			pugi::xml_attribute availableJumps = eNode.append_attribute("availableJumps");
+			availableJumps.set_value(p->availableJumps);
+			pugi::xml_attribute score = eNode.append_attribute("score");
+			score.set_value(app->ui->score);
+			pugi::xml_attribute health = eNode.append_attribute("health");
+			health.set_value(p->health);
+			pugi::xml_attribute checkpoint1 = eNode.append_attribute("checkpoint1");
+			checkpoint1.set_value(p->unlockedChekpoint1);
+			pugi::xml_attribute checkpoint2 = eNode.append_attribute("checkpoint2");
+			checkpoint2.set_value(p->unlockedChekpoint2);
 			break;
 		}
 	}

@@ -407,12 +407,6 @@ bool App::Load()
 			LOG("window not loading");
 		}
 
-		pugi::xml_node pl = saveGame.child("player");
-		if (pl == NULL)
-		{
-			LOG("player not loading");
-		}
-
 		pugi::xml_node en = saveGame.child("entities");
 		if (en == NULL)
 		{

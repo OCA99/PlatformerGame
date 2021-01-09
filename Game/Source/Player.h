@@ -65,8 +65,6 @@ public:
 	Animation disappearRightAnim;
 	Animation disappearLeftAnim;
 
-	Point<float> position;
-
 	bool godMode = false;
 	float gravity;
 	float verticalVelocity = 0.0f;
@@ -101,6 +99,7 @@ public:
 	bool saveOnce1;
 	bool saveOnce2;
 
+	int availableJumps = 2;
 private:
 	SDL_Texture* texture = nullptr;
 	Animation* currentAnim = nullptr;
@@ -122,7 +121,6 @@ private:
 	bool dashing;
 
 	int maxJumps = 2;
-	int availableJumps = 2;
 
 
 	bool canMoveRight = true;
