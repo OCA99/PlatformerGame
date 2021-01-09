@@ -265,8 +265,10 @@ bool Scene::Save(pugi::xml_node& savedGame)
 
 void Scene::FadeToNewState(GameplayState newState)
 {
-	if (gameplayState == newState) return;
-	if (fading) return;
+	if (gameplayState == newState)
+		return;
+	if (fading)
+		return;
 	targetState = newState;
 	currentFade = 0.0f;
 	fading = true;
@@ -274,6 +276,9 @@ void Scene::FadeToNewState(GameplayState newState)
 
 bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 {
+	if (fading)
+		return true;
+
 	if (gameplayState == TITLE_SCREEN)
 	{
 		switch (control->type)
@@ -318,7 +323,30 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			break;
 		}
 	}
-	else if (gameplayState == PLAYING)
+	else if (gameplayState == TITLE_MENU)
+	{
+		switch (control->type)
+		{
+			case GuiControlType::CHECKBOX:
+				switch (control->id)
+				{
+				case 1:
+					//fullscreen
+					break;
+
+				case 2:
+					LOG("VSYNC switched.");
+					break;
+
+				default:
+					break;
+				}
+				break;
+
+		default:
+			break;
+		}
+	} else if (gameplayState == PLAYING)
 	{
 
 		switch (control->type)
@@ -373,19 +401,11 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			switch (control->id)
 			{
 			case 1:
-				//music
-				break;
-
-			case 2:
-				//fx
-				break;
-
-			case 3:
 				//do fullscreen
 				break;
 
-			case 4:
-				app->render->vSync = !app->render->vSync;
+			case 2:
+				LOG("VSYNC switched.");
 				break;
 
 			default:
