@@ -42,9 +42,13 @@ public:
 
 public:
 	int score;
+	int highScore;
 	int lifes;
 	int currentLevel;
 	int destinationCheckpoint;
+
+	float timer = 0.0f;
+	bool paused = false;
 
 	bool drawTeleportText;
 	bool canDrawSecret;
@@ -122,7 +126,7 @@ public:
 
 	// Create a surface from text
 	void BlitText(int x, int y, int fontIndex, const char* text, bool useCamera) const;
-	void IntToDynamicString(char* buffer, int k);
+	void IntToDynamicString(char* buffer, int k, int len = 10);
 	void IntToString(char* buffer, int k, int length);
 
 	List<iPoint> checkpointCoordinates;

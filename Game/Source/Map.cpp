@@ -267,6 +267,8 @@ bool Map::Load(const char* filename, bool loadEntities)
 
 	app->pathfinding->SetMap(data.width, data.height, pathfindingWalkabilityMap);
 	
+	app->ui->timer = 0.0f;
+
 	mapLoaded = ret;
 	
 	return ret;

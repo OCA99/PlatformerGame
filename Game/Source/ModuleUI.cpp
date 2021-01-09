@@ -48,6 +48,7 @@ bool ModuleUI::Awake(pugi::xml_node& config)
 
 
 	score = 0;
+	highScore = 0;
 
 	currentLevel = 1;
 
@@ -58,7 +59,7 @@ bool ModuleUI::Start()
 {
 	bool ret = true;
 
-	char lookupTable[] = { "0123456789.,\"!'-�ABCDEFGHIJKLMNOPQRSTUVWXYZ.    " };
+	char lookupTable[] = { "0123456789.,\"!'-�ABCDEFGHIJKLMNOPQRSTUVWXYZ.:   " };
 
 	font = Load(fontPath, lookupTable, 3);
 
@@ -93,6 +94,14 @@ bool ModuleUI::Start()
 // Update: draw background
 bool ModuleUI::Update(float dt)
 {
+	if (uiToRender == 2)
+		paused = true;
+	else
+		paused = false;
+
+	if (!paused)
+		timer += dt;
+
 	switch (currentLevel)
 	{
 	case 1:
@@ -292,6 +301,9 @@ bool ModuleUI::Update(float dt)
 	boxCooldown = SDL_Rect({ (int)app->entities->GetPlayer()->position.x, (int)app->entities->GetPlayer()->position.y - 10, toLoadBar, 1 });
 	boxOuterCooldown = SDL_Rect({ (int)app->entities->GetPlayer()->position.x - 1, (int)app->entities->GetPlayer()->position.y - 11, 26, 3 });
 
+	if (score > highScore)
+		highScore = score;
+
 	return true;
 }
 
@@ -341,6 +353,29 @@ bool ModuleUI::PostUpdate()
 	BlitText(uiposx + 320, 5, font, "SCORE", false);
 	IntToDynamicString(scoreText, score);
 	BlitText(uiposx + 375, 5, font, scoreText, false);
+
+
+
+	int seconds = (int)timer;
+	int minutes = seconds / 60;
+	seconds = seconds % 60;
+
+	app->render->DrawRectangle(SDL_Rect({ 0, app->render->camera.h - 30, app->render->camera.w, 30 }), 33, 31, 48, 255, true, false);
+
+	BlitText(10, app->render->camera.h / 2 - 10, font, "HIGHSCORE", false);
+
+	char highscoreText[11];
+	IntToDynamicString(highscoreText, highScore);
+	BlitText(100, app->render->camera.h / 2 - 10, font, highscoreText, false);
+
+	char minutesText[2];
+	IntToDynamicString(minutesText, minutes, 2);
+	char secondsText[2];
+	IntToDynamicString(secondsText, seconds, 2);
+	BlitText(app->render->camera.w / 2 - 99, app->render->camera.h / 2 - 10, font, "TIMER", false);
+	BlitText(app->render->camera.w / 2 - 45, app->render->camera.h / 2 - 10, font, minutesText, false);
+	BlitText(app->render->camera.w / 2 - 29, app->render->camera.h / 2 - 11, font, ":", false);
+	BlitText(app->render->camera.w / 2 - 21, app->render->camera.h / 2 - 10, font, secondsText, false);
 
 	if (canDrawSecret)
 	{
@@ -489,17 +524,17 @@ void ModuleUI::BlitText(int x, int y, int fontId, const char* text, bool useCame
 	}
 }
 
-void ModuleUI::IntToDynamicString(char* buffer, int k)
+void ModuleUI::IntToDynamicString(char* buffer, int k, int len)
 {
 
-	for (int i = 0; i < DYNAMIC_TEXT_LEN; i++)
+	for (int i = 0; i < len; i++)
 	{
 		buffer[i] = '0';
 	}
 
-	buffer[DYNAMIC_TEXT_LEN] = 0;
+	buffer[len] = 0;
 
-	int i = DYNAMIC_TEXT_LEN - 1;
+	int i = len - 1;
 	while (k != 0)
 	{
 		if (i < 0) break;

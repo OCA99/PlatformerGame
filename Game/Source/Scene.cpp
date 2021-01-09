@@ -293,6 +293,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 
 			case 2:
 				app->guimanager->DestroyAllGuiControls();
+				app->ui->score = 0;
 				FadeToNewState(PLAYING);
 				break;
 

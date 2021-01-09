@@ -1,50 +1,17 @@
 <?xml version="1.0"?>
 <renderer>
-	<camera x="-874" y="-1662" />
+	<camera x="-4264" y="-674" />
 </renderer>
 <audio volume="128" />
 <scene currentLevel="level1.tmx" />
 <entities>
 	<entities>
-		<entity x="2000" y="464" type="0" />
-		<entity x="2096" y="464" type="0" />
-		<entity x="2192" y="464" type="0" />
-		<entity x="2288" y="464" type="0" />
-		<entity x="1472" y="496" type="0" />
-		<entity x="1696" y="496" type="0" />
 		<entity x="2496" y="544" type="0" />
 		<entity x="2512" y="544" type="0" />
-		<entity x="1104" y="592" type="0" />
-		<entity x="928" y="640" type="0" />
 		<entity x="2608" y="720" type="0" />
 		<entity x="2624" y="720" type="0" />
-		<entity x="1200" y="800" type="0" />
-		<entity x="1488" y="800" type="0" />
-		<entity x="1680" y="800" type="0" />
-		<entity x="1472" y="816" type="0" />
-		<entity x="1696" y="816" type="0" />
-		<entity x="1488" y="832" type="0" />
-		<entity x="1680" y="832" type="0" />
-		<entity x="1136" y="848" type="0" />
-		<entity x="1472" y="848" type="0" />
-		<entity x="1696" y="848" type="0" />
-		<entity x="1488" y="864" type="0" />
-		<entity x="1680" y="864" type="0" />
-		<entity x="1472" y="880" type="0" />
-		<entity x="1696" y="880" type="0" />
-		<entity x="1200" y="896" type="0" />
-		<entity x="1488" y="896" type="0" />
-		<entity x="1680" y="896" type="0" />
-		<entity x="848" y="912" type="0" />
-		<entity x="1472" y="912" type="0" />
-		<entity x="1696" y="912" type="0" />
 		<entity x="2496" y="912" type="0" />
 		<entity x="2512" y="912" type="0" />
-		<entity x="677.379639" y="966.687927" type="5" verticalVelocity="-17" availableJumps="2" score="39000" health="3" checkpoint1="false" checkpoint2="false" />
-		<entity x="1376" y="512.311279" type="4" health="2" />
-		<entity x="1120" y="784.311279" type="4" health="2" />
-		<entity x="1088" y="976.311279" type="4" health="2" />
-		<entity x="1584" y="480" type="1" />
-		<entity x="1056" y="928" type="1" />
+		<entity x="2372.87939" y="472.379608" type="5" verticalVelocity="-228" availableJumps="1" score="157000" health="5" checkpoint1="true" checkpoint2="true" />
 	</entities>
 </entities>

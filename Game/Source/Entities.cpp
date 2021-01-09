@@ -186,6 +186,9 @@ bool Entities::Update(float dt)
 {
 	OPTICK_EVENT("EntitiesUpdate", Optick::Category::GameLogic);
 
+	if (app->ui->paused)
+		return true;
+
 	ListItem<Entity*>* start = entityList.start;
 
 	while (start != nullptr)
