@@ -327,8 +327,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				break;
 
 			case 5:
-				app->player->saveOnce1 = true;
-				app->player->saveOnce2 = true;
+				app->entities->GetPlayer()->saveOnce1 = true;
+				app->entities->GetPlayer()->saveOnce2 = true;
 				app->RequestSave();
 				LOG("SAVE REQUESTED");
 				exit = true;
