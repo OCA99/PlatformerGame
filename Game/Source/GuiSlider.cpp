@@ -1,9 +1,14 @@
 #include "GuiSlider.h"
+#include "App.h"
+#include "Scene.h"
+#include "GuiManager.h"
+#include "Audio.h"
 
-GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, const char* text) : GuiControl(GuiControlType::SLIDER, id)
+GuiSlider::GuiSlider(uint32 id, SDL_Rect bounds, SDL_Texture* tex) : GuiControl(GuiControlType::SLIDER, id)
 {
     this->bounds = bounds;
-    this->text = text;
+    this->texture = tex;
+    sliderPosx = bounds.x + bounds.w - 9;
 }
 
 GuiSlider::~GuiSlider()
@@ -24,6 +29,27 @@ bool GuiSlider::Update(Input* input, float dt)
             state = GuiControlState::FOCUSED;
 
             // TODO.
+            unit = bounds.w / 100;
+            value = (mouseX - bounds.x) / unit;
+            value = round(value);
+
+            if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+            {
+                state = GuiControlState::PRESSED;
+                for (int i = 1; i <= 100; i++)
+                {
+                    if (i == value)
+                    {
+                        sliderPosx = ((i * unit) + bounds.x) - unit;
+                    }
+                }
+            }
+
+            // If mouse button pressed -> Generate event!
+            if (input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
+            {
+                NotifyObserver();
+            }
         }
         else state = GuiControlState::NORMAL;
     }
@@ -34,21 +60,38 @@ bool GuiSlider::Update(Input* input, float dt)
 bool GuiSlider::Draw(Render* render)
 {
     // Draw the right button depending on state
-    switch (state)
+    if (app->scene->fading == false)
     {
-    case GuiControlState::DISABLED: render->DrawRectangle(bounds, 100, 100, 100, 255);
-        break;
-    case GuiControlState::NORMAL: render->DrawRectangle(bounds, 0, 255, 0, 255);
-        break;
-    case GuiControlState::FOCUSED: render->DrawRectangle(bounds, 255, 255, 0, 255);
-        break;
-    case GuiControlState::PRESSED: render->DrawRectangle(bounds, 0, 255, 255, 255);
-        break;
-    case GuiControlState::SELECTED: render->DrawRectangle(bounds, 0, 255, 0, 255);
-        break;
-    default:
-        break;
-    }
+        switch (state)
+        {
+        case GuiControlState::DISABLED:
+            break;
+        case GuiControlState::NORMAL:
+            render->DrawTexture(texture, bounds.x, bounds.y, &SDL_Rect({ 0, 0, 116, 23 }), 0, 0, 0, 0, false);
+            render->DrawTexture(texture, sliderPosx, bounds.y, &SDL_Rect({ 116, 0, 16, 23 }), 0, 0, 0, 0, false);
+            break;
+        case GuiControlState::FOCUSED:
+            if (app->guimanager->lastId != id) playFxOnce = true;
 
+            if (playFxOnce)
+            {
+                app->audio->PlayFx(app->guimanager->hoverButtonFx, 0);
+                playFxOnce = false;
+                app->guimanager->lastId = id;
+            }
+            render->DrawTexture(texture, bounds.x, bounds.y, &SDL_Rect({ 0, 23, 116, 23 }), 0, 0, 0, 0, false);
+            render->DrawTexture(texture, sliderPosx, bounds.y, &SDL_Rect({ 116, 0, 16, 23 }), 0, 0, 0, 0, false);
+            break;
+        case GuiControlState::PRESSED:
+            render->DrawTexture(texture, bounds.x, bounds.y, &SDL_Rect({ 0, 23, 116, 23 }), 0, 0, 0, 0, false);
+            render->DrawTexture(texture, sliderPosx, bounds.y, &SDL_Rect({ 116, 23 , 16, 23 }), 0, 0, 0, 0, false);
+            break;
+        case GuiControlState::SELECTED:
+            break;
+
+        default:
+            break;
+        }
+   }
     return false;
 }

@@ -52,11 +52,11 @@ App::App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(entities);
 	AddModule(map);
 	AddModule(ui);
-	AddModule(guimanager);
 	AddModule(collisions);
 	AddModule(pathfinding);
 	AddModule(debug);
 	AddModule(scene);
+	AddModule(guimanager);
 
 	// Render last to swap buffer
 	AddModule(render);

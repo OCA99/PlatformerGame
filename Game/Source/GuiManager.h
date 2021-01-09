@@ -6,6 +6,8 @@
 
 #include "List.h"
 
+struct SDL_Texture;
+
 class GuiManager : public Module
 {
 public:
@@ -29,8 +31,10 @@ public:
 	bool CleanUp();
 
 	// Additional methods
-	GuiControl* CreateGuiControl(GuiControlType type);
+	GuiControl* CreateGuiControl(GuiControlType type, int x, int y, SDL_Rect bounds, int id);
 	void DestroyGuiControl(GuiControl* entity);
+
+	void DestroyAllGuiControls();
 
 	void AddGuiControl(GuiControl* entity);
 
@@ -45,7 +49,24 @@ public:
 	float accumulatedTime = 0.0f;
 	float updateMsCycle = 0.0f;
 	bool doLogic = false;
-	int id = 0;
+
+	const char* arrowMenuPath;
+	const char* checkBoxPath;
+	const char* sliderPath;
+
+	SDL_Texture* arrowMenuTex;
+	SDL_Texture* checkBoxTex;
+	SDL_Texture* sliderTex;
+
+	const char* hoverButtonFxPath;
+	const char* pressButtonFxPath;
+	const char* checkboxFxPath;
+
+	uint hoverButtonFx = 0;
+	uint pressButtonFx = 0;
+	uint checkboxFx;
+
+	int lastId = 0;
 };
 
 #endif // __GUIMANAGER_H__

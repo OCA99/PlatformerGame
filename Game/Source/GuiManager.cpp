@@ -4,6 +4,8 @@
 #include "GuiButton.h"
 #include "GuiCheckBox.h"
 #include "GuiSlider.h"
+#include "Textures.h"
+#include "Audio.h"
 
 GuiManager::GuiManager() : Module()
 {
@@ -15,11 +17,32 @@ GuiManager::~GuiManager()
 
 bool GuiManager::Awake(pugi::xml_node& config)
 {
+	pugi::xml_node guimanagerPathN = config.child("guimanager");
+
+	checkBoxPath = guimanagerPathN.attribute("checkbox").as_string();
+	arrowMenuPath = guimanagerPathN.attribute("menuArrow").as_string();
+	sliderPath = guimanagerPathN.attribute("slider").as_string();
+
+	pugi::xml_node audio = config.child("audio");
+
+	pressButtonFxPath = audio.attribute("pressButton").as_string();
+	hoverButtonFxPath = audio.attribute("hoverButton").as_string();
+	checkboxFxPath = audio.attribute("checkboxButton").as_string();
+
 	return true;
 }
 
 bool GuiManager::Start()
 {
+
+	checkBoxTex = app->tex->Load(checkBoxPath);
+	arrowMenuTex = app->tex->Load(arrowMenuPath);
+	sliderTex = app->tex->Load(sliderPath);
+
+	hoverButtonFx = app->audio->LoadFx(hoverButtonFxPath);
+	pressButtonFx = app->audio->LoadFx(pressButtonFxPath);
+	checkboxFx = app->audio->LoadFx(checkboxFxPath);
+
 	return true;
 }
 
@@ -52,25 +75,27 @@ bool GuiManager::CleanUp()
 	return true;
 }
 
-GuiControl* GuiManager::CreateGuiControl(GuiControlType type)
+GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int x, int y, SDL_Rect bounds, int id)
 {
 	GuiControl* control = nullptr;
 
 	switch (type)
 	{
 		case GuiControlType::BUTTON: 
-			control = new GuiButton(id, { 0, 0, 20, 20 }, "EXIT");
+			control = new GuiButton(id, bounds, arrowMenuTex);
+			control->SetObserver(app->scene);
 			break;
 		case GuiControlType::CHECKBOX:
-			control = new GuiCheckBox(id, { 1280 / 2 - 300 / 2, 200, 20, 20 }, "EXIT");
+			control = new GuiCheckBox(id, bounds, checkBoxTex);
+			control->SetObserver(app->scene);
 			break;
 		case GuiControlType::SLIDER:
-			control = new GuiSlider(id, { 1280 / 2 - 300 / 2, 200, 20, 20 }, "EXIT");
+			control = new GuiSlider(id, bounds, sliderTex);
+			control->SetObserver(app->scene);
 			break;
 
 		default: break;
 	}
-	id++;
 
 	// Created entities are added to the list
 	if (control != nullptr) controls.Add(control);
@@ -83,6 +108,16 @@ void GuiManager::DestroyGuiControl(GuiControl* entity)
 	int i = controls.Find(entity);
 	ListItem<GuiControl*>* c = controls.At(i);
 	controls.Del(c);
+}
+
+void GuiManager::DestroyAllGuiControls()
+{
+	int u = controls.Count();
+
+	for (int i = 0; i < u; i++)
+	{
+		controls.Del(controls.At(0));
+	}
 }
 
 void GuiManager::AddGuiControl(GuiControl* entity)

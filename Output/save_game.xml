@@ -4,6 +4,9 @@
 </renderer>
 <audio volume="128" />
 <scene currentLevel="level1.tmx" />
+<audio volume="128" />
+<scene currentLevel="level1.tmx" />
+<player verticalVelocity="0" availableJumps="2" x="176" y="966.856506" score="0" health="3" checkpoint1="false" checkpoint2="false" />
 <entities>
 	<entities>
 		<entity x="2288" y="464" type="0" />
