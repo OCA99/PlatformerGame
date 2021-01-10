@@ -468,6 +468,10 @@ bool Map::CreateColliders()
 			{
 				app->collisions->AddCollider(section, Collider::Type::SECRETTEXT, this);
 			}
+			else if (data.maplayers[i]->properties.GetProperty("win", 0) == 1)
+			{
+				app->collisions->AddCollider(section, Collider::Type::WIN, this);
+			}
 			else
 			{
 				app->collisions->AddCollider(section, Collider::Type::STATIC, this);
