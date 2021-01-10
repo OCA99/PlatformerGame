@@ -7,6 +7,8 @@
 #include "Input.h"
 #include "Collisions.h"
 #include "Entities.h"
+#include "GuiManager.h"
+#include "ModuleUI.h"
 #include "Log.h";
 
 Debug::Debug() : Module()
@@ -38,6 +40,12 @@ bool Debug::PreUpdate()
 bool Debug::Update(float dt)
 {
 	bool ret = true;
+
+	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
+	{
+		app->guimanager->showDebug = !app->guimanager->showDebug;
+		app->ui->showDebug = !app->ui->showDebug;
+	}
 
 	if (app->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)
 	{

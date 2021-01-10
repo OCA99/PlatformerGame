@@ -140,6 +140,8 @@ void GuiManager::DrawAll()
 {
 	for (int i = 0; i < controls.Count(); i++)
 	{
+		if (showDebug)
+			controls[i]->DrawDebug(app->render);
 		controls[i]->Draw(app->render);
 	}
 }
