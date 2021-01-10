@@ -10,6 +10,7 @@
 #include "GuiManager.h"
 #include "ModuleUI.h"
 #include "Log.h";
+#include "Window.h"
 
 Debug::Debug() : Module()
 {
@@ -43,6 +44,7 @@ bool Debug::Update(float dt)
 
 	if (app->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)
 	{
+		app->win->SwitchFullScreen();
 		app->guimanager->showDebug = !app->guimanager->showDebug;
 		app->ui->showDebug = !app->ui->showDebug;
 	}
