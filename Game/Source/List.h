@@ -178,8 +178,6 @@ public:
 			pItem = pItem->next;
 		}
 
-		//ASSERT(p_item);
-
 		return(pItem->data);
 	}
 
