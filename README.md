@@ -33,8 +33,13 @@ A platformer game prototype made by students from the CITM Barcelona using SDL. 
  - Ability to throw knives at enemies.
  - Audio feedback for nearly all interactions.
  - Debug keys to visualize collisions, paths, change levels, and set god-mode for player.
- - Profiling funcionality using [Optick](https://github.com/bombomby/optick).
- 
+ - Profiling functionality using [Optick](https://github.com/bombomby/optick).
+ - Entity system that handles the player, enemies and items.
+ - GUI system with responsive buttons, checkboxes and sliders.
+ - Credits screen.
+ - Pause menu.
+ - GUI debugging.
+
 ## Controls
 
  - Walk left: A.
@@ -49,14 +54,17 @@ A platformer game prototype made by students from the CITM Barcelona using SDL. 
  - F3: Restart current level.
  - F5: Save current game state.
  - F6: Load previous game state.
+ - F8: Show GUI bounds and state.
  - F9: View colliders, paths and logic.
  - F10: God Mode.
   - God Mode movement: WASD.
  - F11: Enable / Disable FPS cap to 30.
+ - ESC: Pause game and move to the previous menu.
+ - ENTER: Move from logo screen to menu.
 
 ## Developers
 
- - Oscar Cuatrecases - developer.
+ - Oscar Cuatrecasas - developer.
  - Martí Davicino - developer, art, testing.
  - Eduard Minguell - developer, art.
 
