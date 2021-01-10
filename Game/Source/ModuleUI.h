@@ -49,10 +49,11 @@ public:
 
 	float timer = 0.0f;
 	bool paused = false;
+	float saveTimer = 1.5f;
+	float maxSaveTimer = 1.5f;
 
 	bool drawTeleportText;
 	bool canDrawSecret;
-
 	int uiToRender;
 
 	int font = -1;
@@ -68,6 +69,7 @@ public:
 	const char* optionsMenuPath;
 	const char* settingsMenuPath;
 	const char* saveMenuPath;
+	const char* saveDiskPath;
 
 	const char* menuArrowPath;
 
@@ -95,6 +97,7 @@ public:
 	SDL_Texture* settingsMenuTex = nullptr;
 	SDL_Texture* saveMenuTex = nullptr;
 	SDL_Texture* menuArrowTex = nullptr;
+	SDL_Texture* saveDiskTex = nullptr;
 
 	SDL_Texture* teleportArrowTex = nullptr;
 	iPoint arrow1;

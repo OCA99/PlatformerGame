@@ -103,6 +103,7 @@ bool GuiSlider::Draw(Render* render)
 			break;
 		}
 	}
+	
 	return false;
 }
 
