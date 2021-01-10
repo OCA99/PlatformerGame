@@ -283,7 +283,7 @@ void Player::Collision(Collider* b, float dt)
 		break;
 
 	case(Collider::Type::WIN):
-		app->scene->FadeToNewState(app->scene->GameplayState::TITLE_SCREEN);
+		app->scene->FadeToNewState(app->scene->GameplayState::CREDITS_SCREEN);
 		break;
 
 	default:

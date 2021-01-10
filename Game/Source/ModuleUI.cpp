@@ -64,8 +64,8 @@ bool ModuleUI::Start()
 	font = Load(fontPath, lookupTable, 3);
 
 	box = SDL_Rect({ 0, 0, app->render->camera.w, 30 });
-	boxGodMode = SDL_Rect({ 0, 510, 38, 30 });
-	boxShowColl = SDL_Rect({ 38, 510, 38, 30 });
+	boxGodMode = SDL_Rect({ 0, 480, 38, 30 });
+	boxShowColl = SDL_Rect({ 38, 480, 38, 30 });
 
 	drawTeleportText = false;
 
@@ -341,13 +341,13 @@ bool ModuleUI::PostUpdate()
 	if (app->entities->GetPlayer()->godMode)
 	{
 		app->render->DrawRectangle(boxGodMode, 33, 31, 48, 255, true, false);
-		BlitText(5, 259, font, "G", false);
+		BlitText(5, app->render->camera.h / 2 - 25, font, "G", false);
 	}
 
 	if (app->collisions->showColliders)
 	{
 		app->render->DrawRectangle(boxShowColl, 33, 31, 48, 255, true, false);
-		BlitText(24, 259, font, "C", false);
+		BlitText(24, app->render->camera.h / 2 - 25, font, "C", false);
 	}
 
 	BlitText(uiposx + 320, 5, font, "SCORE", false);
