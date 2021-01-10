@@ -57,12 +57,12 @@ bool Map::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Map Parser");
 	bool ret = true;
-	
+
 	folder.Create(config.child("folder").child_value());
 	pugi::xml_node mapPathN = config.child("mapcomponent");
-	
+
 	flagPath = mapPathN.attribute("endFlag").as_string();
-	
+
 	return ret;
 }
 
@@ -187,7 +187,7 @@ bool Map::CleanUp()
 
 	// Clean up the pugui tree
 	mapFile.reset();
-	
+
 	return true;
 }
 
@@ -195,24 +195,24 @@ bool Map::CleanUp()
 bool Map::Load(const char* filename, bool loadEntities)
 {
 	CleanUp();
-	
+
 	bool ret = true;
 	SString tmp("%s%s", folder.GetString(), filename);
-	
+
 	pugi::xml_parse_result result = mapFile.load_file(tmp.GetString());
-	
-	if(result == NULL)
+
+	if (result == NULL)
 	{
 		LOG("Could not load map xml file %s. pugi error: %s", filename, result.description());
 		ret = false;
 	}
-	
-	if(ret == true)
+
+	if (ret == true)
 	{
 		// L03: DONE 3: Create and call a private function to load and fill all your map data
 		ret = LoadMap();
 	}
-	
+
 	// L03: DONE 4: Create and call a private function to load a tileset
 	// remember to support more any number of tilesets!
 	pugi::xml_node tileset;
@@ -237,8 +237,8 @@ bool Map::Load(const char* filename, bool loadEntities)
 
 		data.maplayers.Add(layerSet);
 	}
-	
-	if(ret == true)
+
+	if (ret == true)
 	{
 		// L03: DONE 5: LOG all the data loaded iterate all tilesets and LOG everything
 		LOG("Successfully parsed map XML file: %s", filename);
@@ -266,11 +266,11 @@ bool Map::Load(const char* filename, bool loadEntities)
 	CreatePathfindingWalkabilityMap();
 
 	app->pathfinding->SetMap(data.width, data.height, pathfindingWalkabilityMap);
-	
+
 	app->ui->timer = 0.0f;
 
 	mapLoaded = ret;
-	
+
 	return ret;
 }
 

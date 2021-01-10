@@ -64,7 +64,7 @@ public:
 	const char* teleportArrowPath;
 
 	const char* teleportCrossPath;
-	
+
 	const char* optionsMenuPath;
 	const char* settingsMenuPath;
 	const char* saveMenuPath;
@@ -106,7 +106,7 @@ public:
 	SDL_Texture* teleportCrossTex = nullptr;
 	iPoint crossPos1;
 	iPoint crossPos2;
-	
+
 	SDL_Texture* pointSpritesheetTex;
 	SDL_Rect pointsRect;
 

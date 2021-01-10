@@ -286,7 +286,7 @@ bool Pig::Draw()
 		app->render->DrawTexture(texture, position.x - 19, position.y - 26, &currentAnimation->GetCurrentFrame());
 	else
 		app->render->DrawTexture(texture, position.x - 10, position.y - 14, &currentAnimation->GetCurrentFrame());
-	
+
 	if (hasPath && app->debug->showPaths)
 	{
 		if (pathIndex < path.Count())
@@ -312,8 +312,8 @@ void Pig::Collision(Collider* other, float dt)
 		{
 			app->audio->PlayFx(app->entities->GetPlayer()->doubleJumpFx, 0);
 
-			
-			health --;
+
+			health--;
 			if (health > 0)
 			{
 				state = State::HIT;
@@ -371,11 +371,11 @@ void Pig::Collision(Collider* other, float dt)
 	{
 		app->audio->PlayFx(app->entities->GetPlayer()->doubleJumpFx, 0);
 		health--;
-		if(health > 0)
+		if (health > 0)
 		{
-		state = State::HIT;
-		hitLeftAnimation.Reset();
-		hitRightAnimation.Reset();
+			state = State::HIT;
+			hitLeftAnimation.Reset();
+			hitRightAnimation.Reset();
 		}
 		else if (health == 0)
 		{
@@ -385,7 +385,7 @@ void Pig::Collision(Collider* other, float dt)
 			state = State::DYING;
 		}
 	}
-	
+
 }
 
 void Pig::SafeMovementX(float deltaX)

@@ -72,7 +72,7 @@ bool Scene::Start()
 	creditsButtonTex = app->tex->Load(titleButtonsPath);
 	exitButtonTex = app->tex->Load(titleButtonsPath);
 
-	titleScreenAnim.PushBack({ 0,0,480,270});
+	titleScreenAnim.PushBack({ 0,0,480,270 });
 	titleScreenAnim.PushBack({ 0,270, 480, 270 });
 
 	titleMenuAnim.PushBack({ 0,0,480,270 });
@@ -139,7 +139,7 @@ bool Scene::Update(float dt)
 	{
 		app->scene->FadeToNewState(Scene::GameplayState::PLAYING);
 		LOG("LOAD REQUESTED");
-	} 
+	}
 	else if (gameplayState == TITLE_MENU)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
@@ -168,7 +168,7 @@ bool Scene::Update(float dt)
 	}
 	else if (gameplayState == GAME_OVER_SCREEN)
 	{
-		if(app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+		if (app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 			FadeToNewState(TITLE_SCREEN);
 	}
 
@@ -249,7 +249,7 @@ bool Scene::Load(pugi::xml_node& savedGame)
 
 bool Scene::Save(pugi::xml_node& savedGame)
 {
-	
+
 	pugi::xml_attribute lvl = savedGame.append_attribute("currentLevel");
 	lvl.set_value(currentLevel.GetString());
 
@@ -324,43 +324,44 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 		int volume;
 		switch (control->type)
 		{
-			case GuiControlType::CHECKBOX:
-				switch (control->id)
-				{
-				case 1:
-					app->win->SwitchFullScreen();
-					break;
-
-				case 2:
-					LOG("VSYNC switched.");
-					break;
-
-				default:
-					break;
-				}
+		case GuiControlType::CHECKBOX:
+			switch (control->id)
+			{
+			case 1:
+				app->win->SwitchFullScreen();
 				break;
-			case GuiControlType::SLIDER:
-				g = (GuiSlider*)control;
-				switch (control->id)
-				{
-				case 1:
-					
-					volume = (g->value / 100) * MIX_MAX_VOLUME;
-					app->guimanager->musicVolume = g->value;
-					Mix_VolumeMusic(volume);
-					break;
-				case 2:
-					volume = (g->value / 100) * MIX_MAX_VOLUME;
-					app->guimanager->fxVolume = g->value;
-					Mix_Volume(-1, volume);
-					break;
-				}
+
+			case 2:
+				LOG("VSYNC switched.");
 				break;
+
+			default:
+				break;
+			}
+			break;
+		case GuiControlType::SLIDER:
+			g = (GuiSlider*)control;
+			switch (control->id)
+			{
+			case 1:
+
+				volume = (g->value / 100) * MIX_MAX_VOLUME;
+				app->guimanager->musicVolume = g->value;
+				Mix_VolumeMusic(volume);
+				break;
+			case 2:
+				volume = (g->value / 100) * MIX_MAX_VOLUME;
+				app->guimanager->fxVolume = g->value;
+				Mix_Volume(-1, volume);
+				break;
+			}
+			break;
 
 		default:
 			break;
 		}
-	} else if (gameplayState == PLAYING)
+	}
+	else if (gameplayState == PLAYING)
 	{
 		GuiSlider* g;
 		int volume;
@@ -458,59 +459,59 @@ void Scene::ChangeGameplayState(GameplayState newState)
 
 	switch (newState)
 	{
-		case PLAYING:
-			screenDisplayAnim = &turnOffAnim;
-			app->parallax->enabled = true;
-			gameplayState = PLAYING;
-			currentLevel.Create("level1.tmx");
-			app->map->Load("level1.tmx");
-			app->entities->GetPlayer()->Reload();
-			app->entities->GetPlayer()->unlockedChekpoint1 = false;
-			app->entities->GetPlayer()->unlockedChekpoint2 = false;
-			break;
-		case TITLE_SCREEN:
-			screenDisplayAnim = &titleScreenAnim;
-			gameplayState = TITLE_SCREEN;
-			app->parallax->enabled = false;
-			app->map->CleanUp();
-			app->render->camera.x = 0;
-			app->render->camera.y = 0;
-			app->ui->uiToRender = 0;
-			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY, 101, 24 }), 1);
-			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 24, 101, 24 }), 2);
-			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 48, 101, 24 }), 3);
-			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 72, 101, 24 }), 4);
-			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 96, 101, 24 }), 5);
-			break;
-		case TITLE_MENU:
-			screenDisplayAnim = &titleMenuAnim;
-			gameplayState = TITLE_MENU;
-			app->parallax->enabled = false;
-			app->map->CleanUp();
-			app->render->camera.x = 0;
-			app->render->camera.y = 0;
-			app->ui->uiToRender = 0;
-			break;
-		case GAME_OVER_SCREEN:
-			screenDisplayAnim = &gameOverAnim;
-			gameplayState = GAME_OVER_SCREEN;
-			app->parallax->enabled = false;
-			app->map->CleanUp();
-			app->render->camera.x = 0;
-			app->render->camera.y = 0;
-			app->ui->uiToRender = 0;
-			break;
+	case PLAYING:
+		screenDisplayAnim = &turnOffAnim;
+		app->parallax->enabled = true;
+		gameplayState = PLAYING;
+		currentLevel.Create("level1.tmx");
+		app->map->Load("level1.tmx");
+		app->entities->GetPlayer()->Reload();
+		app->entities->GetPlayer()->unlockedChekpoint1 = false;
+		app->entities->GetPlayer()->unlockedChekpoint2 = false;
+		break;
+	case TITLE_SCREEN:
+		screenDisplayAnim = &titleScreenAnim;
+		gameplayState = TITLE_SCREEN;
+		app->parallax->enabled = false;
+		app->map->CleanUp();
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		app->ui->uiToRender = 0;
+		app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY, 101, 24 }), 1);
+		app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 24, 101, 24 }), 2);
+		app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 48, 101, 24 }), 3);
+		app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 72, 101, 24 }), 4);
+		app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ buttonsPosX, buttonsPosY + 96, 101, 24 }), 5);
+		break;
+	case TITLE_MENU:
+		screenDisplayAnim = &titleMenuAnim;
+		gameplayState = TITLE_MENU;
+		app->parallax->enabled = false;
+		app->map->CleanUp();
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		app->ui->uiToRender = 0;
+		break;
+	case GAME_OVER_SCREEN:
+		screenDisplayAnim = &gameOverAnim;
+		gameplayState = GAME_OVER_SCREEN;
+		app->parallax->enabled = false;
+		app->map->CleanUp();
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		app->ui->uiToRender = 0;
+		break;
 
-		case CREDITS_SCREEN:
-			screenDisplayAnim = &creditsAnim;
-			gameplayState = CREDITS_SCREEN;
-			app->parallax->enabled = false;
-			app->map->CleanUp();
-			app->render->camera.x = 0;
-			app->render->camera.y = 0;
-			app->ui->uiToRender = 0;
-			creditsPosY = 0;
-			break;
+	case CREDITS_SCREEN:
+		screenDisplayAnim = &creditsAnim;
+		gameplayState = CREDITS_SCREEN;
+		app->parallax->enabled = false;
+		app->map->CleanUp();
+		app->render->camera.x = 0;
+		app->render->camera.y = 0;
+		app->ui->uiToRender = 0;
+		creditsPosY = 0;
+		break;
 	}
 }
 
@@ -532,16 +533,16 @@ bool Scene::PostUpdate()
 
 	bool ret = true;
 
-	if(exit)
+	if (exit)
 		ret = false;
-		
+
 	SDL_Rect rect = screenDisplayAnim->GetCurrentFrame();
 	app->render->DrawTexture(screenTexture, 0, 0, &rect);
 
 	if (gameplayState == TITLE_MENU)
 	{
 		app->render->DrawTexture(titleMenuTex, 0, 0, &rect, 0, 0, 0, false);
-	} 
+	}
 	else if (gameplayState == TITLE_SCREEN)
 	{
 		SDL_Rect continueRect;

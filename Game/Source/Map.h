@@ -122,12 +122,12 @@ struct MapData
 class Map : public Module
 {
 public:
-	
+
 	Map();
-	
+
 	// Destructor
 	virtual ~Map();
-	
+
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
 
@@ -136,13 +136,13 @@ public:
 	bool Update(float dt);
 
 	bool PostUpdate();
-	
+
 	// Called each loop iteration
 	void Draw();
-	
+
 	// Called before quitting
 	bool CleanUp();
-	
+
 	// Load new map
 	bool Load(const char* path, bool loadEntities = true);
 
@@ -167,7 +167,7 @@ private:
 	void CreatePathfindingWalkabilityMap();
 
 public:
-	
+
 	// L03: DONE 1: Add your struct for map info
 	MapData data;
 
@@ -177,7 +177,7 @@ private:
 	SDL_Texture* flagTex = nullptr;
 
 	Animation flagAnimation;
-	
+
 	pugi::xml_document mapFile;
 	SString folder;
 	bool mapLoaded;

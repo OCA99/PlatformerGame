@@ -234,9 +234,9 @@ void Player::Collision(Collider* b, float dt)
 
 		app->ui->drawTeleportText = true;
 
-		if(saveOnce2)
-		app->RequestSave();
-		
+		if (saveOnce2)
+			app->RequestSave();
+
 		saveOnce2 = false;
 		saveOnce1 = true;
 
@@ -265,7 +265,7 @@ void Player::Collision(Collider* b, float dt)
 	case(Collider::Type::PIG):
 		if (dashing)
 			break;
-		
+
 		center = iPoint(collider->rect.x + (collider->rect.w / 2), collider->rect.y + (collider->rect.h / 2));
 		batCenter = iPoint(b->rect.x + (b->rect.w / 2), b->rect.y + (b->rect.h / 2));
 
@@ -344,93 +344,26 @@ void Player::UpdateState(float dt)
 
 	switch (playerState)
 	{
-		case PREPARE_TO_SPAWN:
+	case PREPARE_TO_SPAWN:
+	{
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			ChangeState(PREPARE_TO_SPAWN, SPAWNING);
+		break;
+	}
+	case SPAWNING:
+	{
+		if (currentAnim->HasFinished() == true)
+			ChangeState(SPAWNING, IDLE);
+		break;
+	}
+	case IDLE:
+	{
+		if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+			ChangeState(playerState, RUNNING);
+
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !godMode)
 		{
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
-				ChangeState(PREPARE_TO_SPAWN,SPAWNING);
-			break;
-		}
-		case SPAWNING:
-		{
-			if (currentAnim->HasFinished() == true)
-				ChangeState(SPAWNING, IDLE);
-			break;
-		}
-		case IDLE:
-		{
-			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT || app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-				ChangeState(playerState, RUNNING);
-
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !godMode)
-			{
-				if (app->scene->gameplayState == Scene::GameplayState::PLAYING)
-				{
-					app->audio->PlayFx(jumpFx, 0);
-					if (availableJumps > 0)
-					{
-						availableJumps--;
-					}
-
-					verticalVelocity = jumpForce;
-
-					if (verticalVelocity > maxVerticalVelocity)
-					{
-						verticalVelocity = maxVerticalVelocity;
-					}
-
-					if (verticalVelocity < -maxVerticalVelocity)
-					{
-						verticalVelocity = -maxVerticalVelocity;
-					}
-
-					ChangeState(playerState, JUMPING);
-				}
-
-			}
-			
-			if (cooldown == maxCooldown)
-			{
-				if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
-				{
-					app->audio->PlayFx(dashFx, 0);
-					cooldown = 0.0f;
-					frameCounter = 0;
-					impulse = initialImpulse;
-					//position.y -= 1;
-					ChangeState(playerState, DASHING);
-				}
-			}
-
-			if (knifeCooldown == maxKnifeCooldown)
-			{
-				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
-				{
-					app->audio->PlayFx(throwKnifeFx, 0);
-					knifeCooldown = 0.0f;
-					knifeDirection = 1;
-					app->entities->AddEntity(position, Entity::Type::KNIFE);
-				}
-
-				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
-				{
-					app->audio->PlayFx(throwKnifeFx, 0);
-					knifeCooldown = 0.0f;
-					knifeDirection = -1;
-					app->entities->AddEntity(position, Entity::Type::KNIFE);
-				}
-			}
-
-			break;
-		}
-
-		case RUNNING:
-		{
-			if (!(app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && !(app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT))
-			{
-				ChangeState(playerState, IDLE);
-			}
-
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !godMode)
+			if (app->scene->gameplayState == Scene::GameplayState::PLAYING)
 			{
 				app->audio->PlayFx(jumpFx, 0);
 				if (availableJumps > 0)
@@ -453,113 +386,180 @@ void Player::UpdateState(float dt)
 				ChangeState(playerState, JUMPING);
 			}
 
-			if (cooldown == maxCooldown)
-			{
-				if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
-				{
-					app->audio->PlayFx(dashFx, 0);
-					cooldown = 0.0f;
-					frameCounter = 0;
-					impulse = initialImpulse;
-					//position.y -= 1;
-					ChangeState(playerState, DASHING);
-				}
-			}
-
-			if (knifeCooldown == maxKnifeCooldown)
-			{
-				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
-				{
-					app->audio->PlayFx(throwKnifeFx, 0);
-					knifeCooldown = 0.0f;
-					knifeDirection = 1;
-					app->entities->AddEntity(position, Entity::Type::KNIFE);
-				}
-
-				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
-				{
-					app->audio->PlayFx(throwKnifeFx, 0);
-					knifeCooldown = 0.0f;
-					knifeDirection = -1;
-					app->entities->AddEntity(position, Entity::Type::KNIFE);
-				}
-			}
-
-			break;
 		}
 
-		case JUMPING:
+		if (cooldown == maxCooldown)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
+			{
+				app->audio->PlayFx(dashFx, 0);
+				cooldown = 0.0f;
+				frameCounter = 0;
+				impulse = initialImpulse;
+				//position.y -= 1;
+				ChangeState(playerState, DASHING);
+			}
+		}
+
+		if (knifeCooldown == maxKnifeCooldown)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
+			{
+				app->audio->PlayFx(throwKnifeFx, 0);
+				knifeCooldown = 0.0f;
+				knifeDirection = 1;
+				app->entities->AddEntity(position, Entity::Type::KNIFE);
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
+			{
+				app->audio->PlayFx(throwKnifeFx, 0);
+				knifeCooldown = 0.0f;
+				knifeDirection = -1;
+				app->entities->AddEntity(position, Entity::Type::KNIFE);
+			}
+		}
+
+		break;
+	}
+
+	case RUNNING:
+	{
+		if (!(app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT) && !(app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT))
+		{
+			ChangeState(playerState, IDLE);
+		}
+
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN && !godMode)
+		{
+			app->audio->PlayFx(jumpFx, 0);
+			if (availableJumps > 0)
+			{
+				availableJumps--;
+			}
+
+			verticalVelocity = jumpForce;
+
+			if (verticalVelocity > maxVerticalVelocity)
+			{
+				verticalVelocity = maxVerticalVelocity;
+			}
+
+			if (verticalVelocity < -maxVerticalVelocity)
+			{
+				verticalVelocity = -maxVerticalVelocity;
+			}
+
+			ChangeState(playerState, JUMPING);
+		}
+
+		if (cooldown == maxCooldown)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
+			{
+				app->audio->PlayFx(dashFx, 0);
+				cooldown = 0.0f;
+				frameCounter = 0;
+				impulse = initialImpulse;
+				//position.y -= 1;
+				ChangeState(playerState, DASHING);
+			}
+		}
+
+		if (knifeCooldown == maxKnifeCooldown)
+		{
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
+			{
+				app->audio->PlayFx(throwKnifeFx, 0);
+				knifeCooldown = 0.0f;
+				knifeDirection = 1;
+				app->entities->AddEntity(position, Entity::Type::KNIFE);
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
+			{
+				app->audio->PlayFx(throwKnifeFx, 0);
+				knifeCooldown = 0.0f;
+				knifeDirection = -1;
+				app->entities->AddEntity(position, Entity::Type::KNIFE);
+			}
+		}
+
+		break;
+	}
+
+	case JUMPING:
+	{
+
+		if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
 		{
 
-			if (app->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+			if (availableJumps > 0)
 			{
+				availableJumps--;
 
-				if (availableJumps > 0)
+				app->audio->PlayFx(doubleJumpFx, 0);
+
+				verticalVelocity = jumpForce;
+
+				if (verticalVelocity > maxVerticalVelocity)
 				{
-					availableJumps--;
+					verticalVelocity = maxVerticalVelocity;
+				}
 
-					app->audio->PlayFx(doubleJumpFx, 0);
-
-					verticalVelocity = jumpForce;
-
-					if (verticalVelocity > maxVerticalVelocity)
-					{
-						verticalVelocity = maxVerticalVelocity;
-					}
-
-					if (verticalVelocity < -maxVerticalVelocity)
-					{
-						verticalVelocity = -maxVerticalVelocity;
-					}
+				if (verticalVelocity < -maxVerticalVelocity)
+				{
+					verticalVelocity = -maxVerticalVelocity;
 				}
 			}
-
-			if (cooldown == maxCooldown)
-			{
-				if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
-				{
-					app->audio->PlayFx(dashFx, 0);
-					cooldown = 0.0f;
-					frameCounter = 0;
-					impulse = initialImpulse;
-					//position.y -= 1;
-					ChangeState(playerState, DASHING);
-				}
-			}
-
-
-			if (knifeCooldown == maxKnifeCooldown)
-			{
-				if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
-				{
-					app->audio->PlayFx(throwKnifeFx, 0);
-					knifeCooldown = 0.0f;
-					knifeDirection = 1;
-					app->entities->AddEntity(position, Entity::Type::KNIFE);
-				}
-
-				if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
-				{
-					app->audio->PlayFx(throwKnifeFx, 0);
-					knifeCooldown = 0.0f;
-					knifeDirection = -1;
-					app->entities->AddEntity(position, Entity::Type::KNIFE);
-				}
-			}
-
-			break;
 		}
 
-		case DASHING:
+		if (cooldown == maxCooldown)
 		{
-			dashing = true;
-			break;
+			if (app->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN && !godMode)
+			{
+				app->audio->PlayFx(dashFx, 0);
+				cooldown = 0.0f;
+				frameCounter = 0;
+				impulse = initialImpulse;
+				//position.y -= 1;
+				ChangeState(playerState, DASHING);
+			}
 		}
 
-		case DYING:
+
+		if (knifeCooldown == maxKnifeCooldown)
 		{
-			break;
+			if (app->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
+			{
+				app->audio->PlayFx(throwKnifeFx, 0);
+				knifeCooldown = 0.0f;
+				knifeDirection = 1;
+				app->entities->AddEntity(position, Entity::Type::KNIFE);
+			}
+
+			if (app->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN && !godMode && app->ui->uiToRender == 0)
+			{
+				app->audio->PlayFx(throwKnifeFx, 0);
+				knifeCooldown = 0.0f;
+				knifeDirection = -1;
+				app->entities->AddEntity(position, Entity::Type::KNIFE);
+			}
 		}
+
+		break;
+	}
+
+	case DASHING:
+	{
+		dashing = true;
+		break;
+	}
+
+	case DYING:
+	{
+		break;
+	}
 
 	}
 
@@ -578,11 +578,11 @@ void Player::UpdateLogic(float dt)
 
 	if (gravityOn == false)
 		gravityOn = true;
-		//initialWaitCount += dt;
+	//initialWaitCount += dt;
 
-	//if (initialWaitCount > initialWait)
+//if (initialWaitCount > initialWait)
 
-	if(!godMode && gravityOn && !dashing && playerState != DYING) verticalVelocity -= gravity * dt;
+	if (!godMode && gravityOn && !dashing && playerState != DYING) verticalVelocity -= gravity * dt;
 
 	if (verticalVelocity > maxVerticalVelocity)
 	{
@@ -605,103 +605,83 @@ void Player::UpdateLogic(float dt)
 
 	switch (playerState)
 	{
-		case PREPARE_TO_SPAWN:
+	case PREPARE_TO_SPAWN:
+	{
+		currentAnim = &prepareToSpawnAnim;
+		xDirection = 0;
+		break;
+	}
+	case SPAWNING:
+	{
+		currentAnim = &appearAnim;
+		xDirection = 0;
+		break;
+	}
+
+	case(IDLE):
+	{
+		if (isGoingRight == true)
+			currentAnim = &idleRightAnim;
+		else
+			currentAnim = &idleLeftAnim;
+
+		xDirection = 0;
+		break;
+	}
+	case(RUNNING):
+	{
+		if (isGoingRight == true)
 		{
-			currentAnim = &prepareToSpawnAnim;
-			xDirection = 0;
-			break;
+			currentAnim = &runRightAnim;
+			SafeMovementX(speed * dt);
+			//position.x += speed * dt;
+			xDirection = 1;
 		}
-		case SPAWNING:
+		else
 		{
-			currentAnim = &appearAnim;
-			xDirection = 0;
-			break;
+			currentAnim = &runLeftAnim;
+			SafeMovementX(-speed * dt);
+			//position.x -= speed * dt;
+			xDirection = -1;
 		}
 
-		case(IDLE):
+		break;
+	}
+	case(JUMPING):
+	{
+		if (verticalVelocity > 0.0f)
 		{
-			if (isGoingRight == true)
-				currentAnim = &idleRightAnim;
-			else
-				currentAnim = &idleLeftAnim;
-
-			xDirection = 0;
-			break;
-		}
-		case(RUNNING):
-		{
-			if (isGoingRight == true)
-			{
-				currentAnim = &runRightAnim;
-				SafeMovementX(speed * dt);
-				//position.x += speed * dt;
-				xDirection = 1;
-			}
-			else
-			{
-				currentAnim = &runLeftAnim;
-				SafeMovementX(-speed * dt);
-				//position.x -= speed * dt;
-				xDirection = -1;
-			}
-
-			break;
-		}
-		case(JUMPING):
-		{
-			if (verticalVelocity > 0.0f)
-			{
-				if (availableJumps == 1)
-				{
-					if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-					{
-						currentAnim = &jumpLeftAnim;
-						SafeMovementX(-speed * dt);
-						//position.x -= speed * dt;
-						xDirection = -1;
-					}
-					else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-					{
-						currentAnim = &jumpRightAnim;
-						SafeMovementX(speed * dt);
-						//position.x += speed * dt;
-						xDirection = 1;
-					}
-					else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
-						xDirection = 0;
-				}
-				if (availableJumps == 0)
-				{
-					if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
-					{
-						currentAnim = &doubleJumpLeftAnim;
-						SafeMovementX(-speed * dt);
-						//position.x -= speed*dt;
-						xDirection = -1;
-					}
-					else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
-					{
-						currentAnim = &doubleJumpRightAnim;
-						SafeMovementX(speed * dt);
-						//position.x += speed*dt;
-						xDirection = 1;
-					}
-					else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
-						xDirection = 0;
-				}
-			}
-			else
+			if (availableJumps == 1)
 			{
 				if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 				{
-					currentAnim = &fallLeftAnim;
+					currentAnim = &jumpLeftAnim;
+					SafeMovementX(-speed * dt);
+					//position.x -= speed * dt;
+					xDirection = -1;
+				}
+				else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
+				{
+					currentAnim = &jumpRightAnim;
+					SafeMovementX(speed * dt);
+					//position.x += speed * dt;
+					xDirection = 1;
+				}
+				else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
+					xDirection = 0;
+			}
+			if (availableJumps == 0)
+			{
+				if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
+				{
+					currentAnim = &doubleJumpLeftAnim;
 					SafeMovementX(-speed * dt);
 					//position.x -= speed*dt;
 					xDirection = -1;
 				}
 				else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 				{
-					currentAnim = &fallRightAnim;
+					currentAnim = &doubleJumpRightAnim;
 					SafeMovementX(speed * dt);
 					//position.x += speed*dt;
 					xDirection = 1;
@@ -709,93 +689,113 @@ void Player::UpdateLogic(float dt)
 				else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
 					xDirection = 0;
 			}
-
-
-			break;
 		}
-		case(DYING):
+		else
 		{
-			gravityOn = false;
-			verticalVelocity = 0.0f;
-
-			if (isGoingRight == true)
-				currentAnim = &disappearRightAnim;
-			else
-				currentAnim = &disappearLeftAnim;
-
-			xDirection = 0;
-
-			if (isDead == false)
+			if (app->input->GetKey(SDL_SCANCODE_A) == KEY_REPEAT)
 			{
-				app->audio->PlayFx(gameOverFx, 0);
-				isDead = true;
+				currentAnim = &fallLeftAnim;
+				SafeMovementX(-speed * dt);
+				//position.x -= speed*dt;
+				xDirection = -1;
 			}
-
-			if (currentAnim->HasFinished())
+			else if (app->input->GetKey(SDL_SCANCODE_D) == KEY_REPEAT)
 			{
-				health--;
-
-				if (health < 0)
-					health = 0;
-
-				if (health == 0)
-				{
-					app->scene->FadeToNewState(Scene::GAME_OVER_SCREEN);
-				}
-				else
-				{
-					app->audio->PlayFx(gameStartFx, 0);
-					playerState = PlayerState::IDLE;
-					verticalVelocity = 0.0f;
-					position = respawnPosition;
-					isDead = false;
-					app->entities->ResetEntities();
-				}
+				currentAnim = &fallRightAnim;
+				SafeMovementX(speed * dt);
+				//position.x += speed*dt;
+				xDirection = 1;
 			}
-
-			break;
-
-		case DASHING:
-			verticalVelocity = 0.0f;
-
-			if (frameCounter <= 1)
-			{
-				if (isGoingRight)
-				{
-					SafeMovementX(impulse * dt);
-					//position.x += impulse * dt;
-				}
-				else
-				{
-					SafeMovementX(-impulse * dt);
-					//position.x -= impulse * dt;
-				}
-			}
-			else
-			{
-				impulseAcceleration = 200.0f;
-				impulse -= impulseAcceleration;
-				if (impulse < 0)
-				{
-					ChangeState(playerState, IDLE);
-					dashing = false;
-					break;
-				}
-				if (isGoingRight)
-				{
-					SafeMovementX(impulse * dt);
-					//position.x += impulse * dt;
-				}
-				else
-				{
-					SafeMovementX(-impulse * dt);
-					//position.x -= impulse * dt;
-				}
-			}
-
-			frameCounter++;
-			break;
+			else if (app->input->GetKey(SDL_SCANCODE_A) == KEY_IDLE && app->input->GetKey(SDL_SCANCODE_D) == KEY_IDLE)
+				xDirection = 0;
 		}
+
+
+		break;
+	}
+	case(DYING):
+	{
+		gravityOn = false;
+		verticalVelocity = 0.0f;
+
+		if (isGoingRight == true)
+			currentAnim = &disappearRightAnim;
+		else
+			currentAnim = &disappearLeftAnim;
+
+		xDirection = 0;
+
+		if (isDead == false)
+		{
+			app->audio->PlayFx(gameOverFx, 0);
+			isDead = true;
+		}
+
+		if (currentAnim->HasFinished())
+		{
+			health--;
+
+			if (health < 0)
+				health = 0;
+
+			if (health == 0)
+			{
+				app->scene->FadeToNewState(Scene::GAME_OVER_SCREEN);
+			}
+			else
+			{
+				app->audio->PlayFx(gameStartFx, 0);
+				playerState = PlayerState::IDLE;
+				verticalVelocity = 0.0f;
+				position = respawnPosition;
+				isDead = false;
+				app->entities->ResetEntities();
+			}
+		}
+
+		break;
+
+	case DASHING:
+		verticalVelocity = 0.0f;
+
+		if (frameCounter <= 1)
+		{
+			if (isGoingRight)
+			{
+				SafeMovementX(impulse * dt);
+				//position.x += impulse * dt;
+			}
+			else
+			{
+				SafeMovementX(-impulse * dt);
+				//position.x -= impulse * dt;
+			}
+		}
+		else
+		{
+			impulseAcceleration = 200.0f;
+			impulse -= impulseAcceleration;
+			if (impulse < 0)
+			{
+				ChangeState(playerState, IDLE);
+				dashing = false;
+				break;
+			}
+			if (isGoingRight)
+			{
+				SafeMovementX(impulse * dt);
+				//position.x += impulse * dt;
+			}
+			else
+			{
+				SafeMovementX(-impulse * dt);
+				//position.x -= impulse * dt;
+			}
+		}
+
+		frameCounter++;
+		break;
+	}
 	}
 
 	collider->SetPos(position.x + 3, position.y + 10);

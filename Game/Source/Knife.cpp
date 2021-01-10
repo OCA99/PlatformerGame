@@ -12,7 +12,7 @@ Knife::Knife(Module* parent, fPoint position, SDL_Texture* texture_, Type type, 
 	knifeDirection = knifeDirection_;
 
 	texture = texture_;
-	
+
 	speed = s;
 }
 
@@ -27,7 +27,7 @@ bool Knife::Update(float dt)
 {
 	position.y = initialPosition.y + 8.0f;
 	SafeMovementX(speed * knifeDirection * dt);
-	
+
 	if (knifeDirection == 1)
 	{
 		knifeRect = SDL_Rect({ 0, 0, 25, 6 });

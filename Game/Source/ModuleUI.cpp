@@ -38,7 +38,7 @@ bool ModuleUI::Awake(pugi::xml_node& config)
 
 	teleportCrossPath = uiPathN.attribute("teleportCross").as_string();
 
-	livesTexturePath= uiPathN.attribute("livesTexturePath").as_string();
+	livesTexturePath = uiPathN.attribute("livesTexturePath").as_string();
 
 	optionsMenuPath = uiPathN.attribute("optionsMenu").as_string();
 	settingsMenuPath = uiPathN.attribute("settingsMenu").as_string();
@@ -73,7 +73,7 @@ bool ModuleUI::Start()
 	teleportMapLevel2 = app->tex->Load(teleportMapPath2);
 
 	teleportArrowTex = app->tex->Load(teleportArrowPath);
-	
+
 	teleportCrossTex = app->tex->Load(teleportCrossPath);
 
 	optionsMenuTex = app->tex->Load(optionsMenuPath);
@@ -86,7 +86,7 @@ bool ModuleUI::Start()
 	livesRect = SDL_Rect({ 0,0,12,10 });
 	extraLivesRect = SDL_Rect({ 12,0,12,10 });
 
-	destinationCheckpoint = 0;	
+	destinationCheckpoint = 0;
 
 	return ret;
 }
@@ -166,7 +166,7 @@ bool ModuleUI::Update(float dt)
 		break;
 	}
 
-	
+
 
 	switch (uiToRender)
 	{
@@ -256,10 +256,10 @@ bool ModuleUI::Update(float dt)
 		}
 		break;
 
-	case 3:	
+	case 3:
 		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN && app->scene->gameplayState == Scene::GameplayState::PLAYING)
 		{
-			app->guimanager->DestroyAllGuiControls(); 
+			app->guimanager->DestroyAllGuiControls();
 			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ 204, 69, 73, 35 }), 1);
 			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ 197, 105, 87, 35 }), 2);
 			app->guimanager->CreateGuiControl(GuiControlType::BUTTON, 0, 0, SDL_Rect({ 177, 141, 127, 35 }), 3);
@@ -292,7 +292,7 @@ bool ModuleUI::Update(float dt)
 		}
 		break;
 	}
-	
+
 	canDrawSecret = false;
 	drawTeleportText = false;
 
@@ -325,7 +325,7 @@ bool ModuleUI::PostUpdate()
 	BlitText(uiposx + 55, 5, font, shortNumberText, false);
 
 	BlitText(uiposx + 90, 5, font, "HEALTH", false);
-	
+
 	for (int i = 0; i < app->entities->GetPlayer()->health; i++)
 	{
 		if (i < 3)

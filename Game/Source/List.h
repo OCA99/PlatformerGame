@@ -62,7 +62,7 @@ public:
 		ListItem<tdata>* dataItem;
 		dataItem = new ListItem<tdata>(item);
 
-		if(start == NULL)
+		if (start == NULL)
 		{
 			start = end = dataItem;
 		}
@@ -80,17 +80,17 @@ public:
 	// Deletes an item from the list
 	bool Del(ListItem<tdata>* item)
 	{
-		if(item == NULL)
+		if (item == NULL)
 		{
 			return (false);
 		}
 
 		// Now reconstruct the list
-		if(item->prev != NULL)
+		if (item->prev != NULL)
 		{
 			item->prev->next = item->next;
 
-			if(item->next != NULL)
+			if (item->next != NULL)
 			{
 				item->next->prev = item->prev;
 			}
@@ -101,7 +101,7 @@ public:
 		}
 		else
 		{
-			if(item->next)
+			if (item->next)
 			{
 				item->next->prev = NULL;
 				start = item->next;
@@ -124,7 +124,7 @@ public:
 		ListItem<tdata>* pNext;
 		pData = start;
 
-		while(pData != NULL)
+		while (pData != NULL)
 		{
 			pNext = pData->next;
 			RELEASE(pData);
@@ -143,9 +143,9 @@ public:
 		pos = 0;
 		pItem = start;
 
-		while(pItem != NULL)
+		while (pItem != NULL)
 		{
-			if(pos == index)
+			if (pos == index)
 			{
 				break;
 			}
@@ -167,9 +167,9 @@ public:
 		pos = 0;
 		pItem = start;
 
-		while(pItem != NULL)
+		while (pItem != NULL)
 		{
-			if(pos == index)
+			if (pos == index)
 			{
 				break;
 			}
@@ -190,7 +190,7 @@ public:
 	{
 		ListItem<tdata>* pItem = otherList.start;
 
-		while(pItem != NULL)
+		while (pItem != NULL)
 		{
 			Add(pItem->data);
 			pItem = pItem->next;
@@ -207,9 +207,9 @@ public:
 		long pos = 0;
 		ListItem<tdata>* pItem = start;
 
-		while(pItem != NULL)
+		while (pItem != NULL)
 		{
-			if(pos++ == index)
+			if (pos++ == index)
 				break;
 
 			pItem = pItem->next;
@@ -226,9 +226,9 @@ public:
 		long pos = 0;
 		ListItem<tdata>* pItem = start;
 
-		while(pItem != NULL)
+		while (pItem != NULL)
 		{
-			if(pos++ == index)
+			if (pos++ == index)
 				break;
 
 			pItem = pItem->next;
@@ -243,15 +243,15 @@ public:
 		int ret = 0;
 		bool swapped = true;
 
-		while(swapped)
+		while (swapped)
 		{
 			swapped = false;
 			ListItem<tdata>* tmp = start;
 
-			while(tmp != NULL && tmp->next != NULL)
+			while (tmp != NULL && tmp->next != NULL)
 			{
 				++ret;
-				if(tmp->data > tmp->next->data)
+				if (tmp->data > tmp->next->data)
 				{
 					SWAP(tmp->data, tmp->next->data);
 					swapped = true;
@@ -272,9 +272,9 @@ public:
 		ListItem<tdata>* tmp = start;
 		int index = 0;
 
-		while(tmp != NULL)
+		while (tmp != NULL)
 		{
-			if(tmp->data == data)
+			if (tmp->data == data)
 				return(index);
 
 			++index;
@@ -288,20 +288,20 @@ public:
 		ListItem<tdata>* pMyList = At(position);
 		ListItem<tdata>* pOtherList = list.start;
 
-		while(pOtherList != NULL)
+		while (pOtherList != NULL)
 		{
 			ListItem<tdata>* pNewItem = new ListItem<tdata>(pOtherList->data);
 
 			pNewItem->next = (pMyList)? pMyList->next : NULL;
 
-			if(pNewItem->next != NULL)
+			if (pNewItem->next != NULL)
 				pNewItem->next->prev = pNewItem;
 			else
 				end = pNewItem;
 
 			pNewItem->prev = pMyList;
 
-			if(pNewItem->prev != NULL)
+			if (pNewItem->prev != NULL)
 				pNewItem->prev->next = pNewItem;
 			else
 				start = pNewItem;
