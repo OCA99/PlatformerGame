@@ -118,7 +118,7 @@ private:
 	float impulse = 0.0f;
 	float impulseAcceleration = 0.0f;
 	int frameCounter = 0;
-	bool dashing;
+	bool dashing = false;
 
 	int maxJumps = 2;
 
