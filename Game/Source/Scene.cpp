@@ -260,6 +260,7 @@ bool Scene::Load(pugi::xml_node& savedGame)
 
 bool Scene::Save(pugi::xml_node& savedGame)
 {
+	
 	pugi::xml_attribute lvl = savedGame.append_attribute("currentLevel");
 	lvl.set_value(currentLevel.GetString());
 
@@ -515,7 +516,13 @@ bool Scene::PostUpdate()
 	} 
 	else if (gameplayState == TITLE_SCREEN)
 	{
-		SDL_Rect continueRect = continueButtonAnim.GetCurrentFrame();
+		SDL_Rect continueRect;
+
+		if (continueButtonDisabled)
+			continueRect = SDL_Rect({ 0,120,101,24 });
+		else
+			continueRect = continueButtonAnim.GetCurrentFrame();
+
 		app->render->DrawTexture(continueButtonTex, buttonsPosX, buttonsPosY, &continueRect, 0, 0, 0, 0, false);
 
 		SDL_Rect newGameRect = newGameButtonAnim.GetCurrentFrame();
