@@ -430,6 +430,7 @@ bool App::Save()
 {
 	bool ret = true;
 	requestSave = false;
+	saving = true;
 
 	app->scene->continueButtonDisabled = false;
 

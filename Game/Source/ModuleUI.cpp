@@ -43,6 +43,7 @@ bool ModuleUI::Awake(pugi::xml_node& config)
 	optionsMenuPath = uiPathN.attribute("optionsMenu").as_string();
 	settingsMenuPath = uiPathN.attribute("settingsMenu").as_string();
 	saveMenuPath = uiPathN.attribute("saveMenu").as_string();
+	saveDiskPath = uiPathN.attribute("saveDisk").as_string();
 
 	menuArrowPath = uiPathN.attribute("menuArrow").as_string();
 
@@ -79,6 +80,7 @@ bool ModuleUI::Start()
 	optionsMenuTex = app->tex->Load(optionsMenuPath);
 	settingsMenuTex = app->tex->Load(settingsMenuPath);
 	saveMenuTex = app->tex->Load(saveMenuPath);
+	saveDiskTex = app->tex->Load(saveDiskPath);
 
 	menuArrowTex = app->tex->Load(menuArrowPath);
 
@@ -101,6 +103,17 @@ bool ModuleUI::Update(float dt)
 
 	if (!paused)
 		timer += dt;
+
+	if (app->saving)
+	{
+		app->saving = false;
+		saveTimer = 0.0f;
+	}
+
+	if (saveTimer < maxSaveTimer)
+		saveTimer += dt;
+	else
+		saveTimer = maxSaveTimer;
 
 	switch (currentLevel)
 	{
@@ -403,6 +416,9 @@ bool ModuleUI::PostUpdate()
 	default:
 		break;
 	}
+
+	if (saveTimer < maxSaveTimer)
+		app->render->DrawTexture(saveDiskTex, 10, 25, NULL, 0, 0, 0, 0, false);
 
 	return true;
 }

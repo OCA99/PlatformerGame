@@ -96,6 +96,7 @@ public:
 
 	bool Load();
 	bool Save();
+	bool saving = false;
 
 	void RequestSave()
 	{
