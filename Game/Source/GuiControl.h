@@ -1,7 +1,6 @@
 #ifndef __GUICONTROL_H__
 #define __GUICONTROL_H__
 
-#include "App.h"
 #include "Input.h"
 #include "Render.h"
 #include "Scene.h"
@@ -76,9 +75,9 @@ public:
         observer->OnGuiMouseClickEvent(this);
     }
 
-    void DrawDebug()
+    virtual bool DrawDebug(Render* render)
     {
-        
+        return true;
     }
 
 public:
