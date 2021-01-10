@@ -354,8 +354,6 @@ bool ModuleUI::PostUpdate()
 	IntToDynamicString(scoreText, score);
 	BlitText(uiposx + 375, 5, font, scoreText, false);
 
-
-
 	int seconds = (int)timer;
 	int minutes = seconds / 60;
 	seconds = seconds % 60;

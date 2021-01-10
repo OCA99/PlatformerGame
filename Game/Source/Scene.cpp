@@ -336,7 +336,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				switch (control->id)
 				{
 				case 1:
-					//fullscreen
+					app->win->SwitchFullScreen();
 					break;
 
 				case 2:
@@ -406,7 +406,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 			switch (control->id)
 			{
 			case 1:
-				//do fullscreen
+				app->win->SwitchFullScreen();
 				break;
 
 			case 2:
