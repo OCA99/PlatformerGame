@@ -23,7 +23,8 @@ struct Collider
 		DEATH,
 		BAT,
 		PIG,
-		KNIFE
+		KNIFE,
+		WIN
 	};
 
 	//Methods

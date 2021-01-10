@@ -54,7 +54,7 @@ bool Fruit::Draw()
 
 void Fruit::Collision(Collider* other, float dt)
 {
-	if (other == app->entities->GetPlayer()->collider)
+	if (other == app->entities->GetPlayer()->collider && !app->entities->GetPlayer()->godMode)
 	{
 		state = State::DISAPPEAR;
 		collider->pendingToDelete = true;

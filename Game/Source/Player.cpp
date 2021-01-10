@@ -281,11 +281,16 @@ void Player::Collision(Collider* b, float dt)
 			app->ui->score += 10000;
 		}
 		break;
+
+	case(Collider::Type::WIN):
+		app->scene->FadeToNewState(app->scene->GameplayState::TITLE_SCREEN);
+		break;
+
 	default:
 		break;
 	}
 
-	if (b->type != Collider::Type::ENDLEVEL && b->type != Collider::Type::KNIFE && b->type != Collider::Type::PIG && b->type != Collider::Type::BAT && b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::SECRETTEXT && b->type != Collider::Type::CHECKPOINT1 && b->type != Collider::Type::CHECKPOINT2)
+	if (b->type != Collider::Type::ENDLEVEL && b->type != Collider::Type::KNIFE && b->type != Collider::Type::PIG && b->type != Collider::Type::BAT && b->type != Collider::Type::ITEMHEALTH && b->type != Collider::Type::ITEMSCORE && b->type != Collider::Type::SECRETTEXT && b->type != Collider::Type::CHECKPOINT1 && b->type != Collider::Type::CHECKPOINT2 && b->type != Collider::Type::WIN)
 	{
 		int deltaX = collider->rect.x - b->rect.x;
 		int deltaY = collider->rect.y - b->rect.y;

@@ -160,6 +160,10 @@ bool Collisions::PostUpdate()
 			{
 				DrawCollider(&staticColliders[i]->rect, 48, 171, 54, 80);
 			}
+			else if (staticColliders[i]->type == Collider::Type::WIN)
+			{
+				DrawCollider(&staticColliders[i]->rect, 55, 255, 0, 80);
+			}
 			else
 			{
 				DrawCollider(&staticColliders[i]->rect, 59, 198, 191, 80);
