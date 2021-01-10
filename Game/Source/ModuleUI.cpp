@@ -368,9 +368,9 @@ bool ModuleUI::PostUpdate()
 	IntToDynamicString(highscoreText, highScore);
 	BlitText(100, app->render->camera.h / 2 - 10, font, highscoreText, false);
 
-	char minutesText[2];
+	char minutesText[3];
 	IntToDynamicString(minutesText, minutes, 2);
-	char secondsText[2];
+	char secondsText[3];
 	IntToDynamicString(secondsText, seconds, 2);
 	BlitText(app->render->camera.w / 2 - 99, app->render->camera.h / 2 - 10, font, "TIMER", false);
 	BlitText(app->render->camera.w / 2 - 45, app->render->camera.h / 2 - 10, font, minutesText, false);

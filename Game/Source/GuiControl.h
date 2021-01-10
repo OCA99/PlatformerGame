@@ -1,6 +1,7 @@
 #ifndef __GUICONTROL_H__
 #define __GUICONTROL_H__
 
+#include "App.h"
 #include "Input.h"
 #include "Render.h"
 #include "Scene.h"
@@ -73,6 +74,11 @@ public:
     void NotifyObserver()
     {
         observer->OnGuiMouseClickEvent(this);
+    }
+
+    void DrawDebug()
+    {
+        
     }
 
 public:
