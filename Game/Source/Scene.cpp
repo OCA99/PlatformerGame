@@ -137,9 +137,8 @@ bool Scene::Update(float dt)
 	{
 		app->scene->FadeToNewState(Scene::GameplayState::PLAYING);
 		LOG("LOAD REQUESTED");
-	}
-
-	if (gameplayState == TITLE_MENU)
+	} 
+	else if (gameplayState == TITLE_MENU)
 	{
 		if (app->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		{
@@ -147,8 +146,7 @@ bool Scene::Update(float dt)
 			FadeToNewState(TITLE_SCREEN);
 		}
 	}
-
-	if (gameplayState == CREDITS_SCREEN)
+	else if (gameplayState == CREDITS_SCREEN)
 	{
 
 
@@ -165,6 +163,11 @@ bool Scene::Update(float dt)
 				FadeToNewState(TITLE_SCREEN);
 			}
 		}
+	}
+	else if (gameplayState == GAME_OVER_SCREEN)
+	{
+		if(app->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+			FadeToNewState(TITLE_SCREEN);
 	}
 
 	if (gameplayState == PLAYING)
