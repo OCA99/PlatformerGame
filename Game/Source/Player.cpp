@@ -830,6 +830,7 @@ void Player::Reload()
 	collider = app->collisions->AddCollider(SDL_Rect({ (int)(position.x + 3.0f), (int)(position.y + 10.0f), 16, 16 }), Collider::Type::DYNAMIC, parent);
 	initialPosition = position;
 	respawnPosition = initialPosition;
+	dashing = false;
 	gravityOn = false;
 	initialWaitCount = 0.0f;
 }
