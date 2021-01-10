@@ -572,10 +572,10 @@ void Player::UpdateLogic(float dt)
 		knifeCooldown = maxKnifeCooldown;
 
 	if (gravityOn == false)
-		initialWaitCount += dt;
-
-	if (initialWaitCount > initialWait)
 		gravityOn = true;
+		//initialWaitCount += dt;
+
+	//if (initialWaitCount > initialWait)
 
 	if(!godMode && gravityOn && !dashing && playerState != DYING) verticalVelocity -= gravity * dt;
 
