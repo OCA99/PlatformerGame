@@ -46,6 +46,10 @@ bool GuiCheckBox::Update(Input* input, float dt)
 
 bool GuiCheckBox::Draw(Render* render)
 {
+    if (id == 1 && app->guimanager->fullscreenChecked)
+        checked;
+    if (id == 2 && app->guimanager->VsyncChecked)
+        checked;
     // Draw the right button depending on state
     if (app->scene->fading == false)
     {

@@ -67,6 +67,9 @@ public:
 	uint checkboxFx;
 
 	int lastId = 0;
+
+	bool fullscreenChecked = false;
+	bool VsyncChecked = false;
 };
 
 #endif // __GUIMANAGER_H__
