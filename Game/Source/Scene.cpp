@@ -12,8 +12,10 @@
 #include "ModuleUI.h"
 #include "GuiManager.h"
 #include "Entities.h"
+#include "GuiSlider.h"
 
 #include "Optick/include/optick.h"
+#include "SDL_mixer/include/SDL_mixer.h"
 
 #include "Defs.h"
 #include "Log.h"
@@ -207,19 +209,6 @@ bool Scene::Update(float dt)
 		}
 	}
 
-	// 8 to volume down and 9 to volume up
-	if (app->input->GetKey(SDL_SCANCODE_8) == KEY_REPEAT)
-	{
-		app->audio->VolumeDown();
-		LOG("Volume down");
-	}
-
-	if (app->input->GetKey(SDL_SCANCODE_9) == KEY_REPEAT)
-	{
-		app->audio->VolumeUp();
-		LOG("Volume up");
-	}
-
 	if (gameplayState != targetState)
 	{
 		currentFade += 1.3f * dt;
@@ -285,6 +274,7 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 
 	if (gameplayState == TITLE_SCREEN)
 	{
+		GuiSlider* g;
 		switch (control->type)
 		{
 		case GuiControlType::BUTTON:
@@ -330,6 +320,8 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 	}
 	else if (gameplayState == TITLE_MENU)
 	{
+		GuiSlider* g;
+		int volume;
 		switch (control->type)
 		{
 			case GuiControlType::CHECKBOX:
@@ -347,12 +339,31 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 					break;
 				}
 				break;
+			case GuiControlType::SLIDER:
+				g = (GuiSlider*)control;
+				switch (control->id)
+				{
+				case 1:
+					
+					volume = (g->value / 100) * MIX_MAX_VOLUME;
+					app->guimanager->musicVolume = g->value;
+					Mix_VolumeMusic(volume);
+					break;
+				case 2:
+					volume = (g->value / 100) * MIX_MAX_VOLUME;
+					app->guimanager->fxVolume = g->value;
+					Mix_Volume(-1, volume);
+					break;
+				}
+				break;
 
 		default:
 			break;
 		}
 	} else if (gameplayState == PLAYING)
 	{
+		GuiSlider* g;
+		int volume;
 
 		switch (control->type)
 		{
@@ -414,6 +425,23 @@ bool Scene::OnGuiMouseClickEvent(GuiControl* control)
 				break;
 
 			default:
+				break;
+			}
+			break;
+
+		case GuiControlType::SLIDER:
+			g = (GuiSlider*)control;
+			switch (control->id)
+			{
+			case 1:
+				volume = (g->value / 100) * MIX_MAX_VOLUME;
+				app->guimanager->musicVolume = g->value;
+				Mix_VolumeMusic(volume);
+				break;
+			case 2:
+				volume = (g->value / 100) * MIX_MAX_VOLUME;
+				app->guimanager->fxVolume = g->value;
+				Mix_Volume(-1, volume);
 				break;
 			}
 			break;

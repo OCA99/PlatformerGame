@@ -81,20 +81,20 @@ GuiControl* GuiManager::CreateGuiControl(GuiControlType type, int x, int y, SDL_
 
 	switch (type)
 	{
-		case GuiControlType::BUTTON: 
-			control = new GuiButton(id, bounds, arrowMenuTex);
-			control->SetObserver(app->scene);
-			break;
-		case GuiControlType::CHECKBOX:
-			control = new GuiCheckBox(id, bounds, checkBoxTex);
-			control->SetObserver(app->scene);
-			break;
-		case GuiControlType::SLIDER:
-			control = new GuiSlider(id, bounds, sliderTex);
-			control->SetObserver(app->scene);
-			break;
+	case GuiControlType::BUTTON:
+		control = new GuiButton(id, bounds, arrowMenuTex);
+		control->SetObserver(app->scene);
+		break;
+	case GuiControlType::CHECKBOX:
+		control = new GuiCheckBox(id, bounds, checkBoxTex);
+		control->SetObserver(app->scene);
+		break;
+	case GuiControlType::SLIDER:
+		control = new GuiSlider(id, bounds, sliderTex);
+		control->SetObserver(app->scene);
+		break;
 
-		default: break;
+	default: break;
 	}
 
 	// Created entities are added to the list
