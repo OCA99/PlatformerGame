@@ -102,6 +102,10 @@ bool Entities::Load(pugi::xml_node& savedGame)
 			placeholderPlayer->unlockedChekpoint1 = checkpoint1;
 			bool checkpoint2 = e.attribute("checkpoint2").as_bool();
 			placeholderPlayer->unlockedChekpoint2 = checkpoint2;
+			float timer = e.attribute("timer").as_float();
+			app->ui->timer = timer;
+			int highScore = e.attribute("highscore").as_int();
+			app->ui->highScore = highScore;
 			entityList.Add(placeholderPlayer);
 			placeholderPlayer->Reload();
 			break;
@@ -155,6 +159,10 @@ bool Entities::Save(pugi::xml_node& savedGame)
 			checkpoint1.set_value(p->unlockedChekpoint1);
 			pugi::xml_attribute checkpoint2 = eNode.append_attribute("checkpoint2");
 			checkpoint2.set_value(p->unlockedChekpoint2);
+			pugi::xml_attribute timer = eNode.append_attribute("timer");
+			timer.set_value(app->ui->timer);
+			pugi::xml_attribute highScore = eNode.append_attribute("highscore");
+			highScore.set_value(app->ui->highScore);
 			break;
 		}
 	}
