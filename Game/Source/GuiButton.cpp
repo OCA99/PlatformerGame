@@ -20,7 +20,8 @@ GuiButton::~GuiButton()
 
 bool GuiButton::Update(Input* input, float dt)
 {
-    
+    if (app->scene->continueButtonDisabled && id == 1 && app->scene->gameplayState == app->scene->GameplayState::TITLE_SCREEN)
+        state = GuiControlState::DISABLED;
 
     if (state != GuiControlState::DISABLED)
     {
@@ -64,6 +65,7 @@ bool GuiButton::Draw(Render* render)
         case 1:
             switch (state)
             {
+
             case GuiControlState::NORMAL:
                 app->scene->continueButtonAnim.loop = false;
                 break;

@@ -431,6 +431,8 @@ bool App::Save()
 	bool ret = true;
 	requestSave = false;
 
+	app->scene->continueButtonDisabled = false;
+
 	pugi::xml_document newSave;
 
 	pugi::xml_node rend = newSave.append_child("renderer");
